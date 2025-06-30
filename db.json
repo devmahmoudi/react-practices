@@ -1,0 +1,16 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "name": "Mahdi",
+            "family": "Mahmoudi",
+            "job": "Teacher|Programmer"
+        },
+        {
+            "id": 3,
+            "name": "Amir",
+            "family": "Mahmoudi",
+            "job": "Programmer"
+        }
+    ]
+}
