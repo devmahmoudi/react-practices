@@ -10,6 +10,6 @@
   font-display: swap;
 }
 
-body {
-  font-family: 'Vazir', sans-serif;
+* {
+  font-family: 'Vazir', sans-serif !important;
 }
