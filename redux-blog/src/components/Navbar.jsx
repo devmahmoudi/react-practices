@@ -1,8 +1,8 @@
 const Navbar = () => {
     return (
         <section>
-            <nav className="navbar">
-                <h1>
+            <nav className="navbar padding-bottom" >
+                <h1 className="alternate-color">
                     وبلاگ ریداکسی من
                 </h1>
             </nav>
