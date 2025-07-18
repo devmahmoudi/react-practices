@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { Card } from "../components/ui/Card";
+import { Link } from "react-router-dom";
 
 const Blogs = () => {
     const blogs = useSelector((state) => state.blogs)
@@ -13,7 +14,9 @@ const Blogs = () => {
                 <Card key={blog.id}>
                     <h3>{blog.title}</h3>
                     <p>{blog.body.substring(0, 100)}...</p>
-                    <button>مشاهده</button>
+                    <Link to={`/blogs/${blog.id}`}>
+                    مشاهده  
+                    </Link>
                 </Card>
             ))}
         </Card>
