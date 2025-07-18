@@ -1,6 +1,7 @@
 import App from '../App.jsx'
 import { createBrowserRouter } from 'react-router-dom'
 import MainLayout from '../layouts/MainLayout.jsx'
+import Blogs from '../pages/Blogs.jsx'
 
 export const routes = createBrowserRouter([
     {
@@ -11,6 +12,10 @@ export const routes = createBrowserRouter([
         {
           path : '/', 
           element: <App/>
+        },
+        {
+          path: '/blogs',
+          element: <Blogs/>
         }
       ]
     }
