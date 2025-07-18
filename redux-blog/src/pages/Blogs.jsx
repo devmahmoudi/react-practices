@@ -1,20 +1,22 @@
 import { useSelector } from "react-redux";
+import { Card } from "../components/ui/Card";
 
 const Blogs = () => {
     const blogs = useSelector((state) => state.blogs)
 
     console.log(blogs);
-    
+
 
     return (
-        <div>
+        <Card>
             {blogs.map((blog) => (
-                <div key={blog.id}>
+                <Card key={blog.id}>
                     <h3>{blog.title}</h3>
                     <p>{blog.body.substring(0, 100)}...</p>
-                </div>
+                    <button>مشاهده</button>
+                </Card>
             ))}
-        </div>
+        </Card>
     )
 }
 
