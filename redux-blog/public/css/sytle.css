@@ -38,3 +38,7 @@ body{
   color: white;
   text-align: center !important;
 }
+
+input, textarea{
+  color: black;
+}
