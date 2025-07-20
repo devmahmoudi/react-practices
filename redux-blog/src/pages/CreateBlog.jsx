@@ -20,7 +20,7 @@ const CreateBlog = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         if(data.title && data.body){
-            dispatch(blogAdded(data))
+            dispatch(blogAdded(data.title, data.body))
 
             navigate('/blogs')
         }

@@ -19,12 +19,23 @@ const blogSlice = createSlice({
     name: "blog",
     initialState: initialState,
     reducers: {
-        blogAdded: (state, action) => {
-            state.push(action.payload)
+        blogAdded: {
+            reducer(state, action) {
+                state.push(action.payload)
+            },
+            prepare(title, body){
+                return {
+                    payload: {
+                        id: nanoid(),
+                        title,
+                        body
+                    }
+                }
+            }
         }
     }
 })
 
 export default blogSlice.reducer
 
-export const {blogAdded} = blogSlice.actions;
+export const { blogAdded } = blogSlice.actions;
