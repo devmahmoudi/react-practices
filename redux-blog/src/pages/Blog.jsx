@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Card } from "../components/ui/Card";
+import { Link } from "react-router-dom";
 
 const Blog = () => {
     const {blogId} = useParams()
@@ -18,6 +19,7 @@ const Blog = () => {
         <Card>
             <h3>{blog.title}</h3>
             <p>{blog.body}</p>
+            <Link to={`/blogs/edit-blog/${blogId}`}>ویرایش</Link>
         </Card>
     )
 }

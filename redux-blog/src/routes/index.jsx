@@ -4,6 +4,7 @@ import MainLayout from '../layouts/MainLayout.jsx'
 import Blogs from '../pages/Blogs.jsx'
 import Blog from '../pages/Blog.jsx'
 import CreateBlog from '../pages/CreateBlog.jsx'
+import EditBlog from '../pages/EditBlog.jsx'
 
 export const routes = createBrowserRouter([
     {
@@ -26,6 +27,10 @@ export const routes = createBrowserRouter([
         {
           path: '/blogs/:blogId',
           element: <Blog/>
+        },
+        {
+          path: '/blogs/edit-blog/:blogId',
+          element: <EditBlog/>
         }
       ]
     }
