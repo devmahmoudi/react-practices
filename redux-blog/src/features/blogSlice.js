@@ -44,6 +44,11 @@ const blogSlice = createSlice({
                 blog.title = title
                 blog.body = body
             }
+        },
+        blogDelete: (state, action) => {
+            const {blogId} = action.payload
+
+            state.blogs = state.blogs.filter(blog => blog.id != blogId)
         }
     }
 })
@@ -54,4 +59,4 @@ export const allBlogsSelector = state => state.blogs.blogs
 
 export const blogSelector = (state, blogId) => state.blogs.blogs.find(blog => blog.id == blogId)
 
-export const { blogAdded, blogUpdated } = blogSlice.actions;
+export const { blogAdded, blogUpdated, blogDelete } = blogSlice.actions;
