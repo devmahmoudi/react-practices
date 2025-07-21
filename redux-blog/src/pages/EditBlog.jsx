@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { blogUpdated } from "../features/blogSlice"
+import { blogSelector, blogUpdated } from "../features/blogSlice"
 
 const EditBlog = () => {
     const { blogId } = useParams()
 
-    const blog = useSelector((state) => state.blogs.find(blog => blog.id == blogId))
+    const blog = useSelector((state) => blogSelector(state, blogId))
 
     if (!blog)
         return (

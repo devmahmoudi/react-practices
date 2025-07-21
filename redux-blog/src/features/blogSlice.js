@@ -1,19 +1,21 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
 
-const initialState = [
-    {
-        id: nanoid(),
-        title: "اولین پست من",
-        body: "محتوای اولین پست من",
-        date: new Date().toISOString()
-    },
-    {
-        id: nanoid(),
-        title: "دومین پست من",
-        body: "محتوای دومین پست من",
-        date: new Date().toISOString()
-    }
-]
+const initialState = {
+    blogs: [
+        {
+            id: nanoid(),
+            title: "اولین پست من",
+            body: "محتوای اولین پست من",
+            date: new Date().toISOString()
+        },
+        {
+            id: nanoid(),
+            title: "دومین پست من",
+            body: "محتوای دومین پست من",
+            date: new Date().toISOString()
+        }
+    ]
+}
 
 const blogSlice = createSlice({
     name: "blog",
@@ -21,9 +23,9 @@ const blogSlice = createSlice({
     reducers: {
         blogAdded: {
             reducer(state, action) {
-                state.push(action.payload)
+                state.blogs.push(action.payload)
             },
-            prepare(title, body){
+            prepare(title, body) {
                 return {
                     payload: {
                         id: nanoid(),
@@ -34,11 +36,11 @@ const blogSlice = createSlice({
             }
         },
         blogUpdated: (state, action) => {
-            const {id, title, body} = action.payload
+            const { id, title, body } = action.payload
 
-            const blog = state.find(blog => blog.id == id)
+            const blog = state.blogs.find(blog => blog.id == id)
 
-            if(blog){
+            if (blog) {
                 blog.title = title
                 blog.body = body
             }
@@ -47,5 +49,9 @@ const blogSlice = createSlice({
 })
 
 export default blogSlice.reducer
+
+export const allBlogsSelector = state => state.blogs.blogs
+
+export const blogSelector = (state, blogId) => state.blogs.blogs.find(blog => blog.id == blogId)
 
 export const { blogAdded, blogUpdated } = blogSlice.actions;

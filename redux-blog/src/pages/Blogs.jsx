@@ -1,16 +1,17 @@
 import { useSelector } from "react-redux";
 import { Card } from "../components/ui/Card";
 import { Link } from "react-router-dom";
+import { allBlogsSelector } from "../features/blogSlice"
 
 const Blogs = () => {
-    const blogs = useSelector((state) => state.blogs)
+    const blogs = useSelector((state) => allBlogsSelector(state))
 
     console.log(blogs);
 
 
     return (
-        <div style={{padding:10}}>
-            <Link style={{padding: 20}} to={'/blogs/create-blog'}>ایجاد بلاگ جدید</Link>
+        <div style={{ padding: 10 }}>
+            <Link style={{ padding: 20 }} to={'/blogs/create-blog'}>ایجاد بلاگ جدید</Link>
             <Card>
                 {blogs.map((blog) => (
                     <Card key={blog.id}>
