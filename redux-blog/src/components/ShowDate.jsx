@@ -8,13 +8,13 @@ const ShowDate = ({timestamp}) => {
 
         const time = formatDistanceToNow(date)
 
-        age = `${time} قبل`
+        ago = `${time} قبل`
     }
 
     return (
-        <span>
+        <small>
              {ago}
-        </span>
+        </small>
     )
 }
 
