@@ -1,4 +1,5 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
+import {sub} from "date-fns-jalali"
 
 const initialState = {
     blogs: [
@@ -12,7 +13,7 @@ const initialState = {
             id: nanoid(),
             title: "دومین پست من",
             body: "محتوای دومین پست من",
-            date: new Date().toISOString()
+            date: sub(new Date().toISOString(), {hours: 3, minutes: 45})
         }
     ]
 }
