@@ -13,7 +13,7 @@ const initialState = {
             id: nanoid(),
             title: "دومین پست من",
             body: "محتوای دومین پست من",
-            date: sub(new Date().toISOString(), {hours: 3, minutes: 45})
+            date: sub(new Date(), {hours: 3, minutes: 45}).toISOString()
         }
     ]
 }

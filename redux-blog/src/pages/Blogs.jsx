@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { Card } from "../components/ui/Card";
 import { Link } from "react-router-dom";
 import { allBlogsSelector } from "../features/blogSlice"
+import ShowDate from "../components/ShowDate"
 
 const Blogs = () => {
     const blogs = useSelector((state) => allBlogsSelector(state))
@@ -16,6 +17,9 @@ const Blogs = () => {
                 {blogs.map((blog) => (
                     <Card key={blog.id}>
                         <h3>{blog.title}</h3>
+                        <div style={{ marginTop: 10 }}>
+                            <ShowDate timestamp={blog.date} />
+                        </div>
                         <p>{blog.body.substring(0, 100)}...</p>
                         <Link to={`/blogs/${blog.id}`}>
                             مشاهده
