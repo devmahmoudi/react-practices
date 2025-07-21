@@ -5,10 +5,9 @@ import { allBlogsSelector } from "../features/blogSlice"
 import ShowDate from "../components/ShowDate"
 
 const Blogs = () => {
-    const blogs = useSelector((state) => allBlogsSelector(state))
+    let blogs = useSelector((state) => allBlogsSelector(state))
 
-    console.log(blogs);
-
+    blogs = blogs.slice().sort((current, next) => next.date.localeCompare(current.date))
 
     return (
         <div style={{ padding: 10 }}>
