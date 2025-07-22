@@ -25,4 +25,6 @@ export default userSlice.reducer
 
 export const userSelector = (state, userId) => state.users.users.find(user => user.id == userId)
 
+export const allUsersSelector = state => state.users.users
+
 export const { } = userSlice.actions
