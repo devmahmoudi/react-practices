@@ -7,12 +7,14 @@ const initialState = {
             id: nanoid(),
             title: "اولین پست من",
             body: "محتوای اولین پست من",
+            userId: 1,
             date: new Date().toISOString()
         },
         {
             id: nanoid(),
             title: "دومین پست من",
             body: "محتوای دومین پست من",
+            userId: 2,
             date: sub(new Date(), {hours: 3, minutes: 45}).toISOString()
         }
     ]
@@ -26,13 +28,14 @@ const blogSlice = createSlice({
             reducer(state, action) {
                 state.blogs.push(action.payload)
             },
-            prepare(title, body) {
+            prepare(title, body, userId) {
                 return {
                     payload: {
                         id: nanoid(),
                         date: new Date().toISOString(),
                         title,
-                        body
+                        body,
+                        userId
                     }
                 }
             }

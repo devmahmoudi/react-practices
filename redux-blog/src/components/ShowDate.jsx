@@ -13,7 +13,7 @@ const ShowDate = ({timestamp}) => {
 
     return (
         <small>
-             {ago}
+             {ago} &ensp;
         </small>
     )
 }
