@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { allBlogsSelector } from "../features/blogSlice";
 import ShowDate from "../components/ShowDate";
 import ShowAuthor from "../components/ShowAuthor";
+import ActionButtons from "../components/ActionButtons";
 
 const Blogs = () => {
   let blogs = useSelector((state) => allBlogsSelector(state));
@@ -27,6 +28,7 @@ const Blogs = () => {
             </div>
             <p>{blog.body.substring(0, 100)}...</p>
             <Link to={`/blogs/${blog.id}`}>مشاهده</Link>
+            <ActionButtons blog={blog} />
           </Card>
         ))}
       </Card>
