@@ -1,3 +1,6 @@
+import { useDispatch } from "react-redux";
+import { reactionIncrement } from "../features/blogSlice";
+
 const reactionEmoji = {
   thumbsUp: "👍",
   hooray: "🎉",
@@ -7,11 +10,15 @@ const reactionEmoji = {
 };
 
 const ActionButtons = ({ blog }) => {
+  const dispatch = useDispatch();
+
   const buttons = Object.entries(reactionEmoji).map(([name, emoji]) => {
     return (
       <button
         key={name}
-        onClick={() => {}}
+        onClick={() => {
+          dispatch(reactionIncrement({blogId: blog.id, reaction: name}));
+        }}
         style={{
           marginLeft: 10,
           marginTop: 10,
