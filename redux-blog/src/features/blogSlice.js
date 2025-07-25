@@ -9,6 +9,13 @@ const initialState = {
       body: "محتوای اولین پست من",
       userId: 1,
       date: new Date().toISOString(),
+      reactions: {
+        thumbsUp: 0,
+        hooray: 0,
+        heart: 0,
+        rocket: 0,
+        eyes: 0,
+      },
     },
     {
       id: nanoid(),
@@ -16,6 +23,13 @@ const initialState = {
       body: "محتوای دومین پست من",
       userId: 2,
       date: sub(new Date(), { hours: 3, minutes: 45 }).toISOString(),
+      reactions: {
+        thumbsUp: 0,
+        hooray: 0,
+        heart: 0,
+        rocket: 0,
+        eyes: 0,
+      },
     },
   ],
 };
