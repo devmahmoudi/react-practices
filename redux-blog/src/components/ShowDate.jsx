@@ -1,21 +1,17 @@
 import { formatDistanceToNow, parseISO } from "date-fns-jalali";
 
-const ShowDate = ({timestamp}) => {
-    let ago = ''
+const ShowDate = ({ timestamp }) => {
+  let ago = "";
 
-    if(timestamp){
-        const date = parseISO(timestamp)
+  if (timestamp) {
+    const date = parseISO(timestamp);
 
-        const time = formatDistanceToNow(date)
+    const time = formatDistanceToNow(date);
 
-        ago = `${time} قبل`
-    }
+    ago = `${time} قبل`;
+  }
 
-    return (
-        <small>
-             {ago} &ensp;
-        </small>
-    )
-}
+  return <small>{ago} &ensp;</small>;
+};
 
 export default ShowDate;
