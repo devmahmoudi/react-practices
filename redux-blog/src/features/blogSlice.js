@@ -9,6 +9,13 @@ const initialState = {
       body: "محتوای اولین پست من",
       userId: 1,
       date: new Date().toISOString(),
+      reactions: {
+        thumbsUp: 0,
+        hooray: 0,
+        heart: 0,
+        rocket: 0,
+        eyes: 0,
+      },
     },
     {
       id: nanoid(),
@@ -16,6 +23,13 @@ const initialState = {
       body: "محتوای دومین پست من",
       userId: 2,
       date: sub(new Date(), { hours: 3, minutes: 45 }).toISOString(),
+      reactions: {
+        thumbsUp: 0,
+        hooray: 0,
+        heart: 0,
+        rocket: 0,
+        eyes: 0,
+      },
     },
   ],
 };
@@ -55,6 +69,13 @@ const blogSlice = createSlice({
 
       state.blogs = state.blogs.filter((blog) => blog.id != id);
     },
+    reactionIncrement: (state, action) => {
+      const { blogId, reaction } = action.payload;
+
+      const blog = state.blogs.find((blog) => blog.id == blogId);
+
+      if (blog) blog.reactions[reaction]++;
+    },
   },
 });
 
@@ -65,4 +86,5 @@ export const allBlogsSelector = (state) => state.blogs.blogs;
 export const blogSelector = (state, blogId) =>
   state.blogs.blogs.find((blog) => blog.id == blogId);
 
-export const { blogAdded, blogUpdated, blogDeleted } = blogSlice.actions;
+export const { blogAdded, blogUpdated, blogDeleted, reactionIncrement } =
+  blogSlice.actions;

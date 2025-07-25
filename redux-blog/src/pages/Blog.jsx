@@ -6,6 +6,7 @@ import ShowDate from "../components/ShowDate";
 import { Link } from "react-router-dom";
 import { blogDeleted, blogSelector } from "../features/blogSlice";
 import { userSelector } from "../features/userSlice";
+import ActionButtons from "../components/ActionButtons";
 
 const Blog = () => {
   const { blogId } = useParams();
@@ -33,6 +34,7 @@ const Blog = () => {
         <ShowAuthor userId={blog.userId} />
       </div>
       <p>{blog.body}</p>
+      <ActionButtons blog={blog} />
       <button
         className="button"
         style={{ marginLeft: 20 }}
