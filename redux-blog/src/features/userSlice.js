@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { getAllUsers } from "../services/usersService";
 
 const initialState = {
   users: [
@@ -12,6 +13,11 @@ const initialState = {
     },
   ],
 };
+
+export const fetchUsers = createAsyncThunk("fetch/users", () => {
+  const res = getAllUsers();
+  return res.data
+});
 
 const userSlice = createSlice({
   name: "user",
