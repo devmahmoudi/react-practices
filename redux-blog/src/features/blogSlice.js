@@ -1,11 +1,16 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
-import { sub } from "date-fns-jalali";
+import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
+import {getAllBlogs} from "../services/blogService"
 
 const initialState = {
   blogs: [],
   status: 'idle',
   error: null
 };
+
+const fetchBlogs = createAsyncThunk('fetch/blogs', async () => {
+  const response = await getAllBlogs()
+  return response.data
+})
 
 const blogSlice = createSlice({
   name: "blog",
