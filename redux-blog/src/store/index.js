@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import blogReducers from "../features/blogSlice";
-import userReducers from "../features/userSlice";
+import userReducers, { fetchUsers } from "../features/userSlice";
 
 const store = configureStore({
   reducer: {
@@ -8,5 +8,7 @@ const store = configureStore({
     users: userReducers,
   },
 });
+
+store.dispatch(fetchUsers())
 
 export default store;

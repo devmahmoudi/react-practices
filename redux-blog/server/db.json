@@ -1,4 +1,13 @@
 {
-    "blogs" : [],
-    "users" : []
+  "blogs": [],
+  "users": [
+    {
+      "id": 1,
+      "fullname": "Mahdi Mahmoudi"
+    },
+    {
+      "id": 2,
+      "fullname": "Amir Ali Mahmoudi"
+    }
+  ]
 }
