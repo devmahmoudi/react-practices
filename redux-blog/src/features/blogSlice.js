@@ -3,6 +3,8 @@ import { sub } from "date-fns-jalali";
 
 const initialState = {
   blogs: [],
+  status: 'idle',
+  error: null
 };
 
 const blogSlice = createSlice({
