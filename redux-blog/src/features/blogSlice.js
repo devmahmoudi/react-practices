@@ -2,36 +2,7 @@ import { createSlice, nanoid } from "@reduxjs/toolkit";
 import { sub } from "date-fns-jalali";
 
 const initialState = {
-  blogs: [
-    {
-      id: nanoid(),
-      title: "اولین پست من",
-      body: "محتوای اولین پست من",
-      userId: 1,
-      date: new Date().toISOString(),
-      reactions: {
-        thumbsUp: 0,
-        hooray: 0,
-        heart: 0,
-        rocket: 0,
-        eyes: 0,
-      },
-    },
-    {
-      id: nanoid(),
-      title: "دومین پست من",
-      body: "محتوای دومین پست من",
-      userId: 2,
-      date: sub(new Date(), { hours: 3, minutes: 45 }).toISOString(),
-      reactions: {
-        thumbsUp: 0,
-        hooray: 0,
-        heart: 0,
-        rocket: 0,
-        eyes: 0,
-      },
-    },
-  ],
+  blogs: [],
 };
 
 const blogSlice = createSlice({
