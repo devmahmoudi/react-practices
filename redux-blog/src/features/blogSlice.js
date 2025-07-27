@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
-import {getAllBlogs} from "../services/blogService"
+import { getAllBlogs } from "../services/blogService"
 
 const initialState = {
   blogs: [],
@@ -7,7 +7,7 @@ const initialState = {
   error: null
 };
 
-const fetchBlogs = createAsyncThunk('fetch/blogs', async () => {
+export const fetchBlogs = createAsyncThunk('fetch/blogs', async () => {
   const response = await getAllBlogs()
   return response.data
 })
@@ -17,12 +17,16 @@ const blogSlice = createSlice({
   initialState: initialState,
   extraReducers: (builder) => {
     builder
-    .addCase(fetchBlogs.pending, (state, action) => state.status == 'pending')
-    .addCase(fetchBlogs.fulfilled, (state, action) => state.blogs = action.payload)
-    .addCase(fetchBlogs.rejected, (state, action) => {
-      state.status = 'error'
-      state.error = action.error.message
-    })
+      .addCase(fetchBlogs.pending, (state, action) => {
+        state.status = 'pending'
+      })
+      .addCase(fetchBlogs.fulfilled, (state, action) => {
+        state.blogs = action.payload
+      })
+      .addCase(fetchBlogs.rejected, (state, action) => {
+        state.status = 'error'
+        state.error = action.error.message
+      })
   },
   reducers: {
     blogAdded: {
@@ -68,10 +72,12 @@ const blogSlice = createSlice({
 
 export default blogSlice.reducer;
 
-export const allBlogsSelector = (state) => state.blogs.blogs;
+export const blogSliceStatusSelector = (state) => state.blogs.status
+
+export const allBlogsSelector = (state) => state.blogs.blogs
 
 export const blogSelector = (state, blogId) =>
-  state.blogs.blogs.find((blog) => blog.id == blogId);
+  state.blogs.blogs.find((blog) => blog.id == blogId)
 
 export const { blogAdded, blogUpdated, blogDeleted, reactionIncrement } =
   blogSlice.actions;
