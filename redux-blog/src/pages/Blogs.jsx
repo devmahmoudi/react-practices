@@ -1,12 +1,23 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Card } from "../components/ui/Card";
 import { Link } from "react-router-dom";
-import { allBlogsSelector } from "../features/blogSlice";
+import { allBlogsSelector, blogSliceStatusSelector } from "../features/blogSlice";
 import ShowDate from "../components/ShowDate";
 import ShowAuthor from "../components/ShowAuthor";
 import ActionButtons from "../components/ActionButtons";
+import { useEffect } from "react";
+import {fetchBlogs} from "../features/blogSlice"
 
 const Blogs = () => {
+  const blogSliceStatus = useSelector((state) => blogSliceStatusSelector(state))
+  const dispatch = useDispatch()
+
+
+  useEffect(() => {
+    if(blogSliceStatus == 'idle')    
+      dispatch(fetchBlogs())
+  }, [blogSliceStatus, dispatch])
+
   let blogs = useSelector((state) => allBlogsSelector(state));
 
   blogs = blogs

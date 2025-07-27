@@ -1,42 +1,33 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
-import { sub } from "date-fns-jalali";
+import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
+import { getAllBlogs } from "../services/blogService"
 
 const initialState = {
-  blogs: [
-    {
-      id: nanoid(),
-      title: "اولین پست من",
-      body: "محتوای اولین پست من",
-      userId: 1,
-      date: new Date().toISOString(),
-      reactions: {
-        thumbsUp: 0,
-        hooray: 0,
-        heart: 0,
-        rocket: 0,
-        eyes: 0,
-      },
-    },
-    {
-      id: nanoid(),
-      title: "دومین پست من",
-      body: "محتوای دومین پست من",
-      userId: 2,
-      date: sub(new Date(), { hours: 3, minutes: 45 }).toISOString(),
-      reactions: {
-        thumbsUp: 0,
-        hooray: 0,
-        heart: 0,
-        rocket: 0,
-        eyes: 0,
-      },
-    },
-  ],
+  blogs: [],
+  status: 'idle',
+  error: null
 };
+
+export const fetchBlogs = createAsyncThunk('fetch/blogs', async () => {
+  const response = await getAllBlogs()
+  return response.data
+})
 
 const blogSlice = createSlice({
   name: "blog",
   initialState: initialState,
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchBlogs.pending, (state, action) => {
+        state.status = 'pending'
+      })
+      .addCase(fetchBlogs.fulfilled, (state, action) => {
+        state.blogs = action.payload
+      })
+      .addCase(fetchBlogs.rejected, (state, action) => {
+        state.status = 'error'
+        state.error = action.error.message
+      })
+  },
   reducers: {
     blogAdded: {
       reducer(state, action) {
@@ -81,10 +72,12 @@ const blogSlice = createSlice({
 
 export default blogSlice.reducer;
 
-export const allBlogsSelector = (state) => state.blogs.blogs;
+export const blogSliceStatusSelector = (state) => state.blogs.status
+
+export const allBlogsSelector = (state) => state.blogs.blogs
 
 export const blogSelector = (state, blogId) =>
-  state.blogs.blogs.find((blog) => blog.id == blogId);
+  state.blogs.blogs.find((blog) => blog.id == blogId)
 
 export const { blogAdded, blogUpdated, blogDeleted, reactionIncrement } =
   blogSlice.actions;
