@@ -15,6 +15,15 @@ const fetchBlogs = createAsyncThunk('fetch/blogs', async () => {
 const blogSlice = createSlice({
   name: "blog",
   initialState: initialState,
+  extraReducers: (builder) => {
+    builder
+    .addCase(fetchBlogs.pending, (state, action) => state.status == 'pending')
+    .addCase(fetchBlogs.fulfilled, (state, action) => state.blogs = action.payload)
+    .addCase(fetchBlogs.rejected, (state, action) => {
+      state.status = 'error'
+      state.error = action.error.message
+    })
+  },
   reducers: {
     blogAdded: {
       reducer(state, action) {
