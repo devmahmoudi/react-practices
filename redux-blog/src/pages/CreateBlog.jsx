@@ -1,15 +1,25 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { blogAdded } from "../features/blogSlice";
 import { allUsersSelector } from "../features/userSlice";
+import { storeBlog } from "../features/blogSlice";
 
 const CreateBlog = () => {
   const [data, setData] = useState({
     title: "",
     body: "",
     userId: "",
+    date: "",
+    reactions: {
+      thumbsUp: 0,
+      hooray: 0,
+      heart: 0,
+      rocket: 0,
+      eyes: 0,
+    },
   });
+
+  const [status, setStatus] = useState("idle");
 
   const dispatch = useDispatch();
 
@@ -21,12 +31,24 @@ const CreateBlog = () => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (data.title && data.body) {
-      dispatch(blogAdded(data.title, data.body, data.userId));
+      try {
+        setStatus("loading");
 
-      navigate("/blogs");
+        const blog = data
+
+        blog.date = new Date().toISOString();
+
+        await dispatch(storeBlog(blog));
+
+        navigate("/blogs");
+      } catch (error) {
+        console.error("Error creating blog:", error);
+      } finally {
+        setStatus("idle");
+      }
     }
   };
 

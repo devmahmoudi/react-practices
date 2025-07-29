@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
-import { getAllBlogs } from "../services/blogService";
+import { getAllBlogs, createBlog } from "../services/blogService";
 
 const initialState = {
   blogs: [],
@@ -7,11 +7,19 @@ const initialState = {
   error: null,
 };
 
+// ASYNC REDUCERS
 export const fetchBlogs = createAsyncThunk("fetch/blogs", async () => {
   const response = await getAllBlogs();
   return response.data;
 });
 
+export const storeBlog = createAsyncThunk("store/blog", async (blog) => {
+  const response = await createBlog(blog)
+  return response.data;
+});
+
+
+// SLICE
 const blogSlice = createSlice({
   name: "blog",
   initialState: initialState,
@@ -27,6 +35,12 @@ const blogSlice = createSlice({
       .addCase(fetchBlogs.rejected, (state, action) => {
         state.status = "error";
         state.error = action.error.message;
+      })
+      .addCase(storeBlog.fulfilled, (state, action) => {
+        state.blogs.push(action.payload);
+      })
+      .addCase(storeBlog.rejected, (state, action) => {
+        console.error("store/blog/rejected", action.error.message);
       });
   },
   reducers: {

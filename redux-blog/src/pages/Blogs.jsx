@@ -43,6 +43,11 @@ const Blogs = () => {
   if (blogSliceStatus === "success") {
     return (
       <div className="blogs">
+        <div style={{ marginTop: 10 }}>
+          <Link to={"/blogs/create-blog"} style={{ padding: 15 }}>
+            ساخت پست جدید
+          </Link>
+        </div>
         {blogs.map((blog) => (
           <Card key={blog.id} className="blog">
             <h2>{blog.title}</h2>
