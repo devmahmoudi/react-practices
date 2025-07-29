@@ -1,50 +1,63 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Card } from "../components/ui/Card";
 import { Link } from "react-router-dom";
-import { allBlogsSelector, blogSliceStatusSelector } from "../features/blogSlice";
+import {
+  allBlogsSelector,
+  blogSliceErrorSelector,
+  blogSliceStatusSelector,
+} from "../features/blogSlice";
 import ShowDate from "../components/ShowDate";
 import ShowAuthor from "../components/ShowAuthor";
 import ActionButtons from "../components/ActionButtons";
 import { useEffect } from "react";
-import {fetchBlogs} from "../features/blogSlice"
+import { fetchBlogs } from "../features/blogSlice";
+import Spinner from "../components/ui/Spinner";
 
 const Blogs = () => {
-  const blogSliceStatus = useSelector((state) => blogSliceStatusSelector(state))
-  const dispatch = useDispatch()
+  const blogSliceStatus = useSelector((state) =>
+    blogSliceStatusSelector(state)
+  );
 
+  const blogSliceError = useSelector((state) => blogSliceErrorSelector(state));
+
+  const blogs = useSelector((state) => allBlogsSelector(state));
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if(blogSliceStatus == 'idle')    
-      dispatch(fetchBlogs())
-  }, [blogSliceStatus, dispatch])
+    if (blogSliceStatus === "idle") {
+      dispatch(fetchBlogs());
+    }
+  }, [blogSliceStatus, dispatch]);
 
-  let blogs = useSelector((state) => allBlogsSelector(state));
+  console.log(blogSliceStatus);
 
-  blogs = blogs
-    .slice()
-    .sort((current, next) => next.date.localeCompare(current.date));
+  if (blogSliceStatus === "loading") {
+    return <Spinner />;
+  }
 
-  return (
-    <div style={{ padding: 10 }}>
-      <Link style={{ padding: 20 }} to={"/blogs/create-blog"}>
-        ایجاد بلاگ جدید
-      </Link>
-      <Card>
+  if (blogSliceStatus === "error") {
+    return <p style={{ textAlign: "center" }}>{blogSliceError}</p>;
+  }
+
+  if (blogSliceStatus === "success") {
+    return (
+      <div className="blogs">
         {blogs.map((blog) => (
-          <Card key={blog.id}>
-            <h3>{blog.title}</h3>
-            <div style={{ marginTop: 10 }}>
-              <ShowDate timestamp={blog.date} />
-              <ShowAuthor userId={blog.userId} />
-            </div>
-            <p>{blog.body.substring(0, 100)}...</p>
-            <Link to={`/blogs/${blog.id}`}>مشاهده</Link>
+          <Card key={blog.id} className="blog">
+            <h2>{blog.title}</h2>
+            <ShowDate date={blog.createdAt} />
+            <ShowAuthor userId={blog.userId} />
+            <p>{blog.body}</p>
             <ActionButtons blog={blog} />
+            <Link to={`/blogs/${blog.id}`}>مشاهده پست</Link>
           </Card>
         ))}
-      </Card>
-    </div>
-  );
+      </div>
+    );
+  }
+
+  return <p style={{ textAlign: "center" }}>No blogs found</p>;
 };
 
 export default Blogs;
