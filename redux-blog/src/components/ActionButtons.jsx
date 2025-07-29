@@ -12,6 +12,8 @@ const reactionEmoji = {
 const ActionButtons = ({ blog }) => {
   const dispatch = useDispatch();
 
+  if(!blog) return null
+
   const buttons = Object.entries(reactionEmoji).map(([name, emoji]) => {
     return (
       <button
