@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
-import { getAllBlogs } from "../services/blogService";
+import { getAllBlogs, createBlog } from "../services/blogService";
 
 const initialState = {
   blogs: [],
@@ -39,6 +39,9 @@ const blogSlice = createSlice({
       .addCase(storeBlog.fulfilled, (state, action) => {
         state.blogs.push(action.payload);
       })
+      .addCase(storeBlog.rejected, (state, action) => {
+        console.error("store/blog/rejected", action.error.message);
+      });
   },
   reducers: {
     blogAdded: {
