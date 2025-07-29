@@ -12,8 +12,6 @@ export const getAllBlogs = async () => {
 // @desc store new blog into server
 // @route POST http://localhost:9000/blogs
 export const createBlog = async (blog) => {
-  console.log(blog);
-  
   const url = `${SERVER_URL}/blogs`;
   return axios.post(url, blog);
 };
