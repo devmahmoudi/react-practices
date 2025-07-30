@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
-import { getAllBlogs, createBlog, deleteBlog } from "../services/blogService";
+import { getAllBlogs, createBlog, deleteBlog, updateBlog } from "../services/blogService";
 
 const initialState = {
   blogs: [],
@@ -13,7 +13,7 @@ export const fetchBlogs = createAsyncThunk("fetch/blogs", async () => {
   return response.data;
 });
 
-export const storeBlog = createAsyncThunk("store/blog", async (blog) => {
+export const storeBlog = createAsyncThunk("store/blog", async (blog) => { 
   const response = await createBlog(blog)
   return response.data;
 });
@@ -21,6 +21,11 @@ export const storeBlog = createAsyncThunk("store/blog", async (blog) => {
 export const destoryBlog = createAsyncThunk("destory/blog", async (blogId) => {
   await deleteBlog(blogId)
   return blogId
+})
+
+export const modifyBlog = createAsyncThunk("update/blog", async blog => {
+  const response = await updateBlog(blog.id, blog)
+  return response.data
 })
 
 
@@ -52,6 +57,13 @@ const blogSlice = createSlice({
       })
       .addCase(destoryBlog.rejected, (state, action) => {
         console.error(`Delete blog failed: ${action.error.message}`);
+      })
+      .addCase(modifyBlog.fulfilled, (state, action) => {
+        const blogIndex = state.blogs.findIndex(blog => blog.id === action.payload.id)
+        state.blogs[blogIndex] = action.payload
+      })
+      .addCase(modifyBlog.rejected, (state, action) => {
+        console.error(action.error.message)
       })
   },
   reducers: {
