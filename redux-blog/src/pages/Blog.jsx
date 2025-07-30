@@ -4,7 +4,7 @@ import { Card } from "../components/ui/Card";
 import ShowAuthor from "../components/ShowAuthor";
 import ShowDate from "../components/ShowDate";
 import { Link } from "react-router-dom";
-import { blogDeleted, blogSelector } from "../features/blogSlice";
+import { blogDeleted, blogSelector, destoryBlog } from "../features/blogSlice";
 import { userSelector } from "../features/userSlice";
 import ActionButtons from "../components/ActionButtons";
 
@@ -19,7 +19,7 @@ const Blog = () => {
   const navigate = useNavigate();
 
   const handleDelete = () => {
-    dispatch(blogDeleted({ id: blogId }));
+    dispatch(destoryBlog(blogId));
 
     navigate("/blogs");
   };
