@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { blogSelector, blogUpdated } from "../features/blogSlice";
+import { blogSelector, blogUpdated, modifyBlog } from "../features/blogSlice";
 
 const EditBlog = () => {
   const { blogId } = useParams();
@@ -25,7 +25,17 @@ const EditBlog = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (data.title && data.body) {
-      dispatch(blogUpdated({ id: blogId, title: data.title, body: data.body }));
+      const finalData = { id: blogId, title: data.title, body: data.body }
+
+      finalData.reactions = {
+        "thumbsUp": 0,
+        "hooray": 0,
+        "heart": 0,
+        "rocket": 0,
+        "eyes": 0
+      }
+
+      dispatch(modifyBlog(finalData));
 
       navigate("/blogs");
     }

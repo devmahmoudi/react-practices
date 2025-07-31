@@ -17,8 +17,15 @@ export const createBlog = async (blog) => {
 };
 
 // @desc delete blog from server
-// @route DELETE http://localhost:9000/blogs
+// @route DELETE http://localhost:9000/blogs/{blogId}
 export const deleteBlog = async (blogId) => {
   const url = `${SERVER_URL}/blogs/${blogId}`;
   return axios.delete(url, blogId);
 };
+
+// @desc update blog in server
+// @route PUT http://localhost:9000/blogs/{blogId}
+export const updateBlog = async (blogId, data) => {
+  const url = `${SERVER_URL}/blogs/${blogId}`;
+  return axios.put(url, data);
+}
