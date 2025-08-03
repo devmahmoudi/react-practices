@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Card } from "../../components/ui/Card";
-import { Link } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import {
   allBlogsSelector,
   blogSliceErrorSelector,
@@ -14,13 +14,16 @@ import { fetchBlogs } from "../../features/blogSlice";
 import Spinner from "../../components/ui/Spinner";
 
 const Blogs = () => {
+  const [searchParams] = useSearchParams();
+  const userId = searchParams.get('userId'); // Correct way to get a param
+
   const blogSliceStatus = useSelector((state) =>
     blogSliceStatusSelector(state)
   );
 
   const blogSliceError = useSelector((state) => blogSliceErrorSelector(state));
 
-  const blogs = useSelector((state) => allBlogsSelector(state));
+  const blogs = useSelector((state) => allBlogsSelector(state, userId));
 
   const dispatch = useDispatch();
 
@@ -29,8 +32,6 @@ const Blogs = () => {
       dispatch(fetchBlogs());
     }
   }, [blogSliceStatus, dispatch]);
-
-  console.log(blogSliceStatus);
 
   if (blogSliceStatus === "loading") {
     return <Spinner />;
