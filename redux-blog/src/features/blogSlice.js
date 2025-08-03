@@ -114,7 +114,9 @@ export const blogSliceStatusSelector = (state) => state.blogs.status;
 
 export const blogSliceErrorSelector = (state) => state.blogs.error;
 
-export const allBlogsSelector = (state) => state.blogs.blogs;
+export const allBlogsSelector = (state, userId = null) => {
+  return !userId ? state.blogs.blogs : state.blogs.blogs.filter(blog => blog.userId == userId)
+};
 
 export const blogSelector = (state, blogId) =>
   state.blogs.blogs.find((blog) => blog.id == blogId);
