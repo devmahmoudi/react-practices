@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { Card } from "../components/ui/Card";
-import ShowAuthor from "../components/ShowAuthor";
-import ShowDate from "../components/ShowDate";
+import { Card } from "../../components/ui/Card";
+import ShowAuthor from "../../components/ShowAuthor";
+import ShowDate from "../../components/ShowDate";
 import { Link } from "react-router-dom";
-import { blogDeleted, blogSelector, destoryBlog } from "../features/blogSlice";
-import { userSelector } from "../features/userSlice";
-import ActionButtons from "../components/ActionButtons";
+import { blogDeleted, blogSelector, destoryBlog } from "../../features/blogSlice";
+import { userSelector } from "../../features/userSlice";
+import ActionButtons from "../../components/ActionButtons";
 
 const Blog = () => {
   const { blogId } = useParams();

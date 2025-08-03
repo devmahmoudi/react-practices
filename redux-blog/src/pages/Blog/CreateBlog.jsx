@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { allUsersSelector } from "../features/userSlice";
-import { storeBlog } from "../features/blogSlice";
+import { allUsersSelector } from "../../features/userSlice";
+import { storeBlog } from "../../features/blogSlice";
 
 const CreateBlog = () => {
   const [data, setData] = useState({
