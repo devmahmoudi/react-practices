@@ -5,6 +5,7 @@ import Blogs from "../pages/blog/Blogs.jsx";
 import Blog from "../pages/blog/Blog.jsx";
 import CreateBlog from "../pages/blog/CreateBlog.jsx";
 import EditBlog from "../pages/blog/EditBlog.jsx";
+import UserIndex from "../pages/user/UserIndex.jsx";
 
 export const routes = createBrowserRouter([
   {
@@ -32,6 +33,15 @@ export const routes = createBrowserRouter([
         path: "/blogs/edit-blog/:blogId",
         element: <EditBlog />,
       },
+      {
+        path: "/users",
+        children: [
+          {
+            path: "",
+            element: <UserIndex />,
+          }
+        ]
+      }
     ],
   },
 ]);
