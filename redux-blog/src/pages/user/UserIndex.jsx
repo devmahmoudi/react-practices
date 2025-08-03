@@ -6,10 +6,6 @@ import { fetchUsers } from "../../features/userSlice";
 const UserIndex = () => {
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(fetchUsers())
-    }, [])
-
     const users = useSelector((state) => allUsersSelector(state))
 
     return (
