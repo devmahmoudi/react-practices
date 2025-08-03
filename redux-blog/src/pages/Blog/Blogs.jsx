@@ -1,17 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Card } from "../components/ui/Card";
+import { Card } from "../../components/ui/Card";
 import { Link } from "react-router-dom";
 import {
   allBlogsSelector,
   blogSliceErrorSelector,
   blogSliceStatusSelector,
-} from "../features/blogSlice";
-import ShowDate from "../components/ShowDate";
-import ShowAuthor from "../components/ShowAuthor";
-import ActionButtons from "../components/ActionButtons";
+} from "../../features/blogSlice";
+import ShowDate from "../../components/ShowDate";
+import ShowAuthor from "../../components/ShowAuthor";
+import ActionButtons from "../../components/ActionButtons";
 import { useEffect } from "react";
-import { fetchBlogs } from "../features/blogSlice";
-import Spinner from "../components/ui/Spinner";
+import { fetchBlogs } from "../../features/blogSlice";
+import Spinner from "../../components/ui/Spinner";
 
 const Blogs = () => {
   const blogSliceStatus = useSelector((state) =>
