@@ -42,3 +42,15 @@ body{
 input, textarea{
   color: black;
 }
+
+/* In your CSS file */
+.rtl-table {
+  direction: rtl;  /* Right-to-Left text */
+  text-align: right;  /* Align text to the right */
+}
+
+/* Optional: Fix table layout for RTL */
+.rtl-table th,
+.rtl-table td {
+  text-align: right;
+}
