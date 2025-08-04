@@ -8,7 +8,7 @@ export const fetchUsers = createAsyncThunk("fetch/users", async () => {
 });
 
 export const createUser = createAsyncThunk("create/user", async (fullname) => {
-  const res = storeUser(fullname);
+  const res = await storeUser(fullname);
 
   if (res) return res.data;
 });
