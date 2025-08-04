@@ -8,3 +8,13 @@ export const getAllUsers = async () => {
   const url = `${SERVER_URL}/users`;
   return axios.get(url);
 };
+
+export const storeUser = async (fullname) => {
+  const url = `${SERVER_URL}/users`;
+  try {
+    return axios.post(url, { fullname });
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
