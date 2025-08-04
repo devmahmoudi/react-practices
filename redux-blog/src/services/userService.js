@@ -20,3 +20,15 @@ export const storeUser = async (fullname) => {
     return null;
   }
 };
+
+// @desc delete user
+// @route DELETE http://localhost:9000/users
+export const deleteUser = async (userId) => {
+  const url = `${SERVER_URL}/users/${userId}`;
+  try {
+    return await axios.delete(url);
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
