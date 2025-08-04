@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { allUsersSelector } from "../../features/userSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchUsers, createUser } from "../../features/userSlice";
+import { createUser, destroyUser } from "../../features/userSlice";
 import { Link } from "react-router-dom";
 import CreateUser from "../../components/user/CreateUser";
 
@@ -10,13 +10,13 @@ const UserIndex = () => {
 
   const users = useSelector((state) => allUsersSelector(state));
 
-  const handleCreateNewUser = fullname => {
+  const handleCreateNewUser = (fullname) => {
     dispatch(createUser(fullname));
-  }
+  };
 
   return (
     <>
-      <CreateUser onSubmit={handleCreateNewUser}/>
+      <CreateUser onSubmit={handleCreateNewUser} />
       <table className="rtl-table">
         {" "}
         {/* Add class */}
@@ -24,6 +24,7 @@ const UserIndex = () => {
           <tr>
             <th>آیدی</th>
             <th>نام</th>
+            <th>عملیات</th>
           </tr>
         </thead>
         <tbody>
@@ -32,6 +33,11 @@ const UserIndex = () => {
               <td>{user.id}</td>
               <td>
                 <Link to={`/blogs?userId=${user.id}`}>{user.fullname}</Link>
+              </td>
+              <td>
+                <button onClick={() => dispatch(destroyUser(user.id))}>
+                  حذف
+                </button>
               </td>
             </tr>
           ))}
