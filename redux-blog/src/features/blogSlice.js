@@ -1,5 +1,15 @@
-import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
-import { getAllBlogs, createBlog, deleteBlog, updateBlog } from "../services/blogService";
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+  nanoid,
+} from "@reduxjs/toolkit";
+import {
+  getAllBlogs,
+  createBlog,
+  deleteBlog,
+  updateBlog,
+} from "../services/blogService";
 
 const initialState = {
   blogs: [],
@@ -13,21 +23,20 @@ export const fetchBlogs = createAsyncThunk("fetch/blogs", async () => {
   return response.data;
 });
 
-export const storeBlog = createAsyncThunk("store/blog", async (blog) => { 
-  const response = await createBlog(blog)
+export const storeBlog = createAsyncThunk("store/blog", async (blog) => {
+  const response = await createBlog(blog);
   return response.data;
 });
 
 export const destoryBlog = createAsyncThunk("destory/blog", async (blogId) => {
-  await deleteBlog(blogId)
-  return blogId
-})
+  await deleteBlog(blogId);
+  return blogId;
+});
 
-export const modifyBlog = createAsyncThunk("update/blog", async blog => {
-  const response = await updateBlog(blog.id, blog)
-  return response.data
-})
-
+export const modifyBlog = createAsyncThunk("update/blog", async (blog) => {
+  const response = await updateBlog(blog.id, blog);
+  return response.data;
+});
 
 // SLICE
 const blogSlice = createSlice({
@@ -53,18 +62,20 @@ const blogSlice = createSlice({
         console.error("store/blog/rejected", action.error.message);
       })
       .addCase(destoryBlog.fulfilled, (state, action) => {
-        state.blogs = state.blogs.filter(blog => blog.id != action.payload)
+        state.blogs = state.blogs.filter((blog) => blog.id != action.payload);
       })
       .addCase(destoryBlog.rejected, (state, action) => {
         console.error(`Delete blog failed: ${action.error.message}`);
       })
       .addCase(modifyBlog.fulfilled, (state, action) => {
-        const blogIndex = state.blogs.findIndex(blog => blog.id === action.payload.id)
-        state.blogs[blogIndex] = action.payload
+        const blogIndex = state.blogs.findIndex(
+          (blog) => blog.id === action.payload.id
+        );
+        state.blogs[blogIndex] = action.payload;
       })
       .addCase(modifyBlog.rejected, (state, action) => {
-        console.error(action.error.message)
-      })
+        console.error(action.error.message);
+      });
   },
   reducers: {
     blogAdded: {
@@ -114,9 +125,14 @@ export const blogSliceStatusSelector = (state) => state.blogs.status;
 
 export const blogSliceErrorSelector = (state) => state.blogs.error;
 
-export const allBlogsSelector = (state, userId = null) => {
-  return !userId ? state.blogs.blogs : state.blogs.blogs.filter(blog => blog.userId == userId)
-};
+// export const allBlogsSelector = (state, userId = null) => {
+//   return !userId ? state.blogs.blogs : state.blogs.blogs.filter(blog => blog.userId == userId)
+// };
+
+export const allBlogsSelector = createSelector(
+  [(state, _) => state.blogs.blogs, (_, userId) => userId],
+  (blogs, userId) => (userId ? blogs : blogs.filter((blog) => userId == userId))
+);
 
 export const blogSelector = (state, blogId) =>
   state.blogs.blogs.find((blog) => blog.id == blogId);
