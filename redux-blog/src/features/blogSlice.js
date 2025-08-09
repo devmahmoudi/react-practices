@@ -68,23 +68,17 @@ const blogSlice = createSlice({
       .addCase(modifyBlog.fulfilled, (state, action) => {
         // const blogIndex = state.blogs.findIndex(blog => blog.id === action.payload.id)
         // state.blogs[blogIndex] = action.payload
-        blogAdaptor.updateOne(state, action.payload)
+        
+        blogAdaptor.updateOne(state, {
+          id: action.payload.id,
+          changes: action.payload
+        })
       })
       .addCase(modifyBlog.rejected, (state, action) => {
         console.error(action.error.message)
       })
   },
   reducers: {
-    blogUpdated: (state, action) => {
-      const { id, title, body } = action.payload;
-
-      const blog = state.blogs.find((blog) => blog.id == id);
-
-      if (blog) {
-        blog.title = title;
-        blog.body = body;
-      }
-    },
     blogDeleted: (state, action) => {
       const { id } = action.payload;
 
@@ -119,5 +113,5 @@ export const {
   selectById: blogSelector
 } = blogAdaptor.getSelectors(state => state.blogs)
 
-export const { blogUpdated, blogDeleted, reactionIncrement } =
+export const { blogDeleted, reactionIncrement } =
   blogSlice.actions;
