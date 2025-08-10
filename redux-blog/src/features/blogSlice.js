@@ -41,7 +41,10 @@ export const destoryBlog = createAsyncThunk("destory/blog", async (blogId) => {
 
 export const modifyBlog = createAsyncThunk("update/blog", async (blog) => {
   const response = await updateBlog(blog.id, blog);
-  return response.data;
+  return {
+    id: response.data.id,
+    changes: response.data
+  };
 });
 
 export const incrementReaction = createAsyncThunk(
@@ -65,7 +68,10 @@ export const incrementReaction = createAsyncThunk(
     };
 
     const response = await updateBlog(blog.id, updatedBlog);
-    return response.data;
+    return {
+      id: response.data.id,
+      changes: response.data
+    };
   }
 );
 
@@ -86,41 +92,19 @@ const blogSlice = createSlice({
         state.status = "error";
         state.error = action.error.message;
       })
-      .addCase(storeBlog.fulfilled, (state, action) => {
-        blogAdaptor.addOne(action.payload);
-        // state.blogs.push(action.payload);
-      })
+      .addCase(storeBlog.fulfilled, blogAdaptor.addOne)
       .addCase(storeBlog.rejected, (state, action) => {
         console.error("store/blog/rejected", action.error.message);
       })
-      .addCase(destoryBlog.fulfilled, (state, action) => {
-        // state.blogs = state.blogs.filter(blog => blog.id != action.payload)
-        blogAdaptor.removeOne(state, action.payload);
-      })
+      .addCase(destoryBlog.fulfilled, blogAdaptor.removeOne)
       .addCase(destoryBlog.rejected, (state, action) => {
         console.error(`Delete blog failed: ${action.error.message}`);
       })
-      .addCase(modifyBlog.fulfilled, (state, action) => {
-        // const blogIndex = state.blogs.findIndex(blog => blog.id === action.payload.id)
-        // state.blogs[blogIndex] = action.payload
-
-        blogAdaptor.updateOne(state, {
-          id: action.payload.id,
-          changes: action.payload,
-        });
-      })
+      .addCase(modifyBlog.fulfilled, blogAdaptor.updateOne)
       .addCase(modifyBlog.rejected, (state, action) => {
         console.error(action.error.message);
       })
-      .addCase(incrementReaction.fulfilled, (state, action) => {
-        const updagedBlog = action.payload
-
-        blogAdaptor.updateOne(state, {
-          id: updagedBlog.id,
-          changes: updagedBlog
-        })
-        
-      })
+      .addCase(incrementReaction.fulfilled, blogAdaptor.updateOne)
       .addCase(incrementReaction.rejected, (state, action) => {
         console.error(action.error.message);
       });
