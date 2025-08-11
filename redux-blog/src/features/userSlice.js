@@ -1,5 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, createEntityAdapter } from "@reduxjs/toolkit";
 import { getAllUsers, storeUser, deleteUser } from "../services/userService";
+
+// Adapter
+const userAdapter = createEntityAdapter()
+
+const initialState = userAdapter.getInitialState()
 
 // Async actions
 export const fetchUsers = createAsyncThunk("fetch/users", async () => {
@@ -22,23 +27,17 @@ export const destroyUser = createAsyncThunk("delete/user", async (userId) => {
 // User slice object
 const userSlice = createSlice({
   name: "user",
-  initialState: [],
+  initialState: initialState,
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchUsers.fulfilled, (state, action) => {
-        return action.payload;
-      })
-      .addCase(createUser.fulfilled, (state, action) => {
-        state.push(action.payload);
-      })
-      .addCase(createUser.rejected, (state, action) => {
+      .addCase(fetchUsers.fulfilled, userAdapter.setAll)
+      .addCase(createUser.fulfilled, userAdapter.addOne)
+      .addCase(createUser.rejected, (_, action) => {
         console.error("Failed to create user:", action.error.message);
       })
-      .addCase(destroyUser.fulfilled, (state, action) => {
-        return state.filter((user) => user.id !== action.payload);
-      })
-      .addCase(destroyUser.rejected, (state, action) => {
+      .addCase(destroyUser.fulfilled, userAdapter.removeOne)
+      .addCase(destroyUser.rejected, (_, action) => {
         console.error("Failed to delete user:", action.error.message);
       })
   },
@@ -47,9 +46,14 @@ const userSlice = createSlice({
 // exports
 export default userSlice.reducer;
 
-export const userSelector = (state, userId) =>
-  state.users.find((user) => user.id == userId);
+// export const userSelector = (state, userId) =>
+//   state.users.find((user) => user.id == userId);
 
-export const allUsersSelector = (state) => state.users;
+// export const allUsersSelector = (state) => state.users;
+
+export const {
+  selectById: userSelector,
+  selectAll: allUsersSelector,
+} = userAdapter.getSelectors((state) => state.users)
 
 export const {} = userSlice.actions;
