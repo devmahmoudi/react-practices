@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { blogSelector, blogUpdated, modifyBlog } from "../features/blogSlice";
+import { blogSelector, modifyBlog } from "../../features/blogSlice";
 
 const EditBlog = () => {
   const { blogId } = useParams();

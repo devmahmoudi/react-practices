@@ -1,10 +1,10 @@
-import { Card } from "../components/ui/Card";
+import { Card } from "../../components/ui/Card";
 import { Link } from "react-router-dom";
-import ShowDate from "../components/ShowDate";
-import ShowAuthor from "../components/ShowAuthor";
-import ActionButtons from "../components/ActionButtons";
-import Spinner from "../components/ui/Spinner";
-import { useGetBlogsQuery } from "../api/apiSlice";
+import ShowDate from "../../components/ShowDate";
+import ShowAuthor from "../../components/ShowAuthor";
+import ActionButtons from "../../components/ActionButtons";
+import Spinner from "../../components/ui/Spinner";
+import { useGetBlogsQuery } from "../../api/apiSlice";
 
 const Blogs = () => {
   const {
