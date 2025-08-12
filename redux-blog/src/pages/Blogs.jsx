@@ -1,46 +1,29 @@
-import { useDispatch, useSelector } from "react-redux";
 import { Card } from "../components/ui/Card";
 import { Link } from "react-router-dom";
-import {
-  allBlogsSelector,
-  blogSliceErrorSelector,
-  blogSliceStatusSelector,
-} from "../features/blogSlice";
 import ShowDate from "../components/ShowDate";
 import ShowAuthor from "../components/ShowAuthor";
 import ActionButtons from "../components/ActionButtons";
-import { useEffect } from "react";
-import { fetchBlogs } from "../features/blogSlice";
 import Spinner from "../components/ui/Spinner";
+import { useGetBlogsQuery } from "../api/apiSlice";
 
 const Blogs = () => {
-  const blogSliceStatus = useSelector((state) =>
-    blogSliceStatusSelector(state)
-  );
+  const {
+    data: blogs = [],
+    isLoading,
+    isSuccess,
+    error
+  } = useGetBlogsQuery()
 
-  const blogSliceError = useSelector((state) => blogSliceErrorSelector(state));
-
-  const blogs = useSelector((state) => allBlogsSelector(state));
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (blogSliceStatus === "idle") {
-      dispatch(fetchBlogs());
-    }
-  }, [blogSliceStatus, dispatch]);
-
-  console.log(blogSliceStatus);
-
-  if (blogSliceStatus === "loading") {
+  if (isLoading) {
     return <Spinner />;
   }
 
-  if (blogSliceStatus === "error") {
-    return <p style={{ textAlign: "center" }}>{blogSliceError}</p>;
+  if (!isSuccess)
+  {
+    return <p style={{ textAlign: "center" }}>{error}</p>;
   }
 
-  if (blogSliceStatus === "success") {
+  if (isSuccess) {
     return (
       <div className="blogs">
         <div style={{ marginTop: 10 }}>
