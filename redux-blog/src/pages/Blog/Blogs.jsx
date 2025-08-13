@@ -11,15 +11,15 @@ const Blogs = () => {
     data: blogs = [],
     isLoading,
     isSuccess,
-    error
+    error,
+    refetch
   } = useGetBlogsQuery()
 
   if (isLoading) {
     return <Spinner />;
   }
 
-  if (!isSuccess)
-  {
+  if (!isSuccess) {
     return <p style={{ textAlign: "center" }}>{error}</p>;
   }
 
@@ -31,9 +31,12 @@ const Blogs = () => {
     return (
       <div className="blogs">
         <div style={{ marginTop: 10 }}>
-          <Link to={"/blogs/create-blog"} style={{ padding: 15 }}>
-            ساخت پست جدید
-          </Link>
+          <button style={{margin: 10}}>
+            <Link to={"/blogs/create-blog"} style={{ padding: 15 }}>
+              ساخت پست جدید
+            </Link>
+          </button>
+          <button style={{margin: 10}} onClick={refetch}>تازه سازی</button>
         </div>
         {orderBlogs.map((blog) => (
           <Card key={blog.id} className="blog">
