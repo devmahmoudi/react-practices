@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { allUsersSelector } from "../../features/userSlice";
 import { storeBlog } from "../../features/blogSlice";
+import { useAddNewBlogMutation } from "../../api/apiSlice"
 
 const CreateBlog = () => {
   const [data, setData] = useState({
@@ -19,9 +20,9 @@ const CreateBlog = () => {
     },
   });
 
-  const [status, setStatus] = useState("idle");
+  const [addNewBlog, { isLoading }] = useAddNewBlogMutation()
 
-  const dispatch = useDispatch();
+  const [status, setStatus] = useState("idle");
 
   const navigate = useNavigate();
 
@@ -41,7 +42,7 @@ const CreateBlog = () => {
 
         blog.date = new Date().toISOString();
 
-        await dispatch(storeBlog(blog));
+        await addNewBlog(blog).unwrap();
 
         navigate("/blogs");
       } catch (error) {
