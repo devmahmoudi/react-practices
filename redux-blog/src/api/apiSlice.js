@@ -5,9 +5,11 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 const apiSlice = createApi({
     reducerPath: "api", // default state.api
     baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:1011' }),
+    tagTypes: ['BLOG'],
     endpoints: builder => ({
         getBlogs: builder.query({
-            query: () => '/blogs'
+            query: () => '/blogs',
+            providesTags: ['BLOG']
         }),
         getBlog: builder.query({
             query: (blogId) => `/blogs/${blogId}`
@@ -17,7 +19,8 @@ const apiSlice = createApi({
                 url: 'blogs',
                 method: 'POST',
                 body: data
-            })
+            }),
+            invalidatesTags: ['BLOG']
         })
     })
 }
