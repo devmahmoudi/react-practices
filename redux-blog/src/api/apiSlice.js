@@ -11,11 +11,18 @@ const apiSlice = createApi({
         }),
         getBlog: builder.query({
             query: (blogId) => `/blogs/${blogId}`
+        }),
+        addNewBlog: builder.mutation({
+            query: (data) => ({
+                url: 'blogs',
+                method: 'POST',
+                body: data
+            })
         })
     })
 }
 )
 
-export const { useGetBlogsQuery, useGetBlogQuery } = apiSlice;
+export const { useGetBlogsQuery, useGetBlogQuery, useAddNewBlogMutation } = apiSlice;
 
 export default apiSlice;
