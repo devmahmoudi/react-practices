@@ -23,6 +23,10 @@ const Blogs = () => {
     return <p style={{ textAlign: "center" }}>{error}</p>;
   }
 
+  // ordering blogs descending according the blog create at
+  let orderBlogs = blogs.slice()
+  orderBlogs = orderBlogs.sort((a, b) => b.date.localeCompare(a))
+
   if (isSuccess) {
     return (
       <div className="blogs">
@@ -31,7 +35,7 @@ const Blogs = () => {
             ساخت پست جدید
           </Link>
         </div>
-        {blogs.map((blog) => (
+        {orderBlogs.map((blog) => (
           <Card key={blog.id} className="blog">
             <h2>{blog.title}</h2>
             <ShowDate date={blog.createdAt} />
