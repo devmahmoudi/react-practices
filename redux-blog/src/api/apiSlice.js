@@ -21,11 +21,19 @@ const apiSlice = createApi({
                 body: data
             }),
             invalidatesTags: ['BLOG']
+        }),
+        updateBlog: builder.mutation({
+            query: (data) => ({
+                url: `/blogs/${data.id}`,
+                method: 'PUT',
+                body: data
+            }),
+            invalidatesTags: ['BLOG']
         })
     })
 }
 )
 
-export const { useGetBlogsQuery, useGetBlogQuery, useAddNewBlogMutation } = apiSlice;
+export const { useGetBlogsQuery, useGetBlogQuery, useAddNewBlogMutation, useUpdateBlogMutation } = apiSlice;
 
 export default apiSlice;
