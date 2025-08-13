@@ -11,8 +11,7 @@ const Blogs = () => {
     data: blogs = [],
     isLoading,
     isSuccess,
-    error,
-    refetch
+    error
   } = useGetBlogsQuery()
 
   if (isLoading) {
@@ -36,7 +35,6 @@ const Blogs = () => {
               ساخت پست جدید
             </Link>
           </button>
-          <button style={{margin: 10}} onClick={refetch}>تازه سازی</button>
         </div>
         {orderBlogs.map((blog) => (
           <Card key={blog.id} className="blog">
