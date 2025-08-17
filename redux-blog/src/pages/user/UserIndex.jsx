@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { allUsersSelector } from "../../features/userSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { createUser, destroyUser } from "../../features/userSlice";
 import { Link } from "react-router-dom";
 import CreateUser from "../../components/user/CreateUser";
 
@@ -35,9 +34,9 @@ const UserIndex = () => {
                 <Link to={`/blogs?userId=${user.id}`}>{user.fullname}</Link>
               </td>
               <td>
-                <button onClick={() => dispatch(destroyUser(user.id))}>
+                {/* <button onClick={() => dispatch(destroyUser(user.id))}>
                   حذف
-                </button>
+                </button> */}
               </td>
             </tr>
           ))}
