@@ -12,8 +12,17 @@ const userSlice = createSlice({
 // exports
 export default userSlice.reducer;
 
+// apis
+export const extenedApi = apiSlice.injectEndpoints({
+  endpoints: (builder) => ({
+    getUsers : builder.query({
+      query: () => "/users"
+    })
+  })
+})
+
 // selectors
-const usersSelectorResult = apiSlice.endpoints.getUsers.select()
+const usersSelectorResult = extenedApi.endpoints.getUsers.select()
 
 export const allUsersSelector = createSelector(
   usersSelectorResult,
@@ -27,9 +36,6 @@ export const userSelector = createSelector(
 )
 
 
-// export const userSelector = (state, userId) =>
-//   state.users.find((user) => user.id == userId);
-
-// export const allUsersSelector = (state) => state.users;
-
 export const {} = userSlice.actions;
+
+export const {useGetUsersQuery} = extenedApi

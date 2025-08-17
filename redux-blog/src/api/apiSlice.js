@@ -35,9 +35,6 @@ const apiSlice = createApi({
         body: data,
       }),
       invalidatesTags: (result, err, blog) => [{ type: "BLOG", id: blog.id }],
-    }),
-    getUsers: builder.query({
-      query: () => '/users'
     })
   }),
 });
@@ -46,8 +43,7 @@ export const {
   useGetBlogsQuery,
   useGetBlogQuery,
   useAddNewBlogMutation,
-  useUpdateBlogMutation,
-  useGetUsersQuery
+  useUpdateBlogMutation
 } = apiSlice;
 
 export default apiSlice;
