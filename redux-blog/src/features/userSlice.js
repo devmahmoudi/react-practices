@@ -1,41 +1,35 @@
-import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createEntityAdapter, createSelector, createSlice } from "@reduxjs/toolkit";
 import { getAllUsers, storeUser, deleteUser } from "../services/userService";
 import apiSlice from "../api/apiSlice";
 
-// User slice object
-const userSlice = createSlice({
-  name: "user",
-  initialState: [],
-  reducers: {}
-});
+// adapter
+const userAdapter = createEntityAdapter()
 
-// exports
-export default userSlice.reducer;
+const initialState = userAdapter.getInitialState()
 
 // apis
 export const extenedApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUsers : builder.query({
-      query: () => "/users"
-    })
+      query: () => "/users",
+      transformResponse: data => {
+        return userAdapter.setAll(initialState, data)
+      }
+    })  
   })
 })
 
-// selectors
-const usersSelectorResult = extenedApi.endpoints.getUsers.select()
+// User slice object
+const userSlice = createSlice({
+  name: "user",
+  initialState: initialState,
+  reducers: {}
+});
 
-export const allUsersSelector = createSelector(
-  usersSelectorResult,
-  users => users.data ?? []
-)
+export default userSlice.reducer;
 
-export const userSelector = createSelector(
-  allUsersSelector,
-  (_, userId) => userId,
-  (users, userId) => users.find(user => user.id == userId)
-)
+const selectUsersData = createSelector(extenedApi.endpoints.getUsers.select(), (users) => users.data)
 
-
-export const {} = userSlice.actions;
+export const {selectAll: allUsersSelector, selectById: userSelector} = userAdapter.getSelectors((state) => selectUsersData(state) ?? initialState)
 
 export const {useGetUsersQuery} = extenedApi
