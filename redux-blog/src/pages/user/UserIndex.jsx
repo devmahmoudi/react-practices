@@ -31,7 +31,7 @@ const UserIndex = () => {
             <tr key={user.id}>
               <td>{user.id}</td>
               <td>
-                <Link to={`/blogs?userId=${user.id}`}>{user.fullname}</Link>
+                <Link to={`/user-blogs/${user.id}`}>{user.fullname}</Link>
               </td>
               <td>
                 {/* <button onClick={() => dispatch(destroyUser(user.id))}>
