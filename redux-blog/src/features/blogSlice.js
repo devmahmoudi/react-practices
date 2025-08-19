@@ -63,6 +63,13 @@ const blogApi = apiSlice.injectEndpoints({
         body: data,
       }),
       invalidatesTags: (result, err, blog) => [{ type: "BLOG", id: blog.id }],
+    }),
+    destroyBlog: builder.mutation({
+      query: (blogId) => ({
+        url: `/blogs/${blogId}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: ['BLOG']
     })
   })
 })
@@ -75,4 +82,4 @@ const blogSlice = createSlice({
 
 export default blogSlice;
 
-export const { useGetBlogQuery, useGetBlogsQuery, useAddNewBlogMutation, useUpdateBlogMutation } = blogApi;
+export const { useGetBlogQuery, useGetBlogsQuery, useAddNewBlogMutation, useUpdateBlogMutation, useDestroyBlogMutation } = blogApi;

@@ -1,17 +1,19 @@
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Card } from "../../components/ui/Card";
 import ShowAuthor from "../../components/ShowAuthor";
 import ShowDate from "../../components/ShowDate";
 import { Link } from "react-router-dom";
-// import { destoryBlog } from "../../features/blogSlice";
 import { userSelector } from "../../features/userSlice";
 import ActionButtons from "../../components/ActionButtons";
-import { useGetBlogQuery } from "../../features/blogSlice";
+import { useGetBlogQuery, useDestroyBlogMutation } from "../../features/blogSlice";
 import Spinner from "../../components/ui/Spinner";
+import DeleteBlogBtn from "../../components/blog/DeleteBlogBtn";
 
 const Blog = () => {
   const { blogId } = useParams();
+
+  const navigate = useNavigate()
 
   const {
     data: blog,
@@ -19,12 +21,6 @@ const Blog = () => {
     isSuccess,
     error
   } = useGetBlogQuery(blogId)
-
-  const handleDelete = () => {
-    // dispatch(destoryBlog(blogId));
-
-    navigate("/blogs");
-  };
 
   if (!blog) return <p>پستی که دنبالش می گردی وجود نداره دوست من 😁</p>;
 
@@ -43,13 +39,7 @@ const Blog = () => {
       </div>
       <p>{blog.body}</p>
       <ActionButtons blog={blog} />
-      <button
-        className="button"
-        style={{ marginLeft: 20 }}
-        onClick={handleDelete}
-      >
-        حذف
-      </button>
+      <DeleteBlogBtn blogId={blog.id} onDeleted={() => navigate('/blogs')}/>
       <Link to={`/blogs/edit-blog/${blogId}`}>ویرایش</Link>
     </Card>
   );
