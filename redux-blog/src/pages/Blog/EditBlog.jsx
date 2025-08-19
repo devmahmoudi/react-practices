@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useGetBlogQuery, useUpdateBlogMutation } from "../../api/apiSlice";
+import { useGetBlogQuery, useUpdateBlogMutation } from "../../features/blogSlice";
 
 const EditBlog = () => {
   const { blogId } = useParams();

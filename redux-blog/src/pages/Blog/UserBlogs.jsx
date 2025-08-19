@@ -4,7 +4,7 @@ import ShowDate from "../../components/ShowDate";
 import ShowAuthor from "../../components/ShowAuthor";
 import ActionButtons from "../../components/ActionButtons";
 import Spinner from "../../components/ui/Spinner";
-import { useGetBlogsQuery } from "../../api/apiSlice";
+import { useGetBlogsQuery } from "../../features/blogSlice";
 import { useMemo } from "react";
 import { createSelector } from "@reduxjs/toolkit";
 

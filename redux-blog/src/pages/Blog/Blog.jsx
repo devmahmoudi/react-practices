@@ -4,10 +4,10 @@ import { Card } from "../../components/ui/Card";
 import ShowAuthor from "../../components/ShowAuthor";
 import ShowDate from "../../components/ShowDate";
 import { Link } from "react-router-dom";
-import { destoryBlog } from "../../features/blogSlice";
+// import { destoryBlog } from "../../features/blogSlice";
 import { userSelector } from "../../features/userSlice";
 import ActionButtons from "../../components/ActionButtons";
-import { useGetBlogQuery } from "../../api/apiSlice";
+import { useGetBlogQuery } from "../../features/blogSlice";
 import Spinner from "../../components/ui/Spinner";
 
 const Blog = () => {
@@ -21,7 +21,7 @@ const Blog = () => {
   } = useGetBlogQuery(blogId)
 
   const handleDelete = () => {
-    dispatch(destoryBlog(blogId));
+    // dispatch(destoryBlog(blogId));
 
     navigate("/blogs");
   };

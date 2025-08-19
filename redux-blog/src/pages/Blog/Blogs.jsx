@@ -4,7 +4,7 @@ import ShowDate from "../../components/ShowDate";
 import ShowAuthor from "../../components/ShowAuthor";
 import ActionButtons from "../../components/ActionButtons";
 import Spinner from "../../components/ui/Spinner";
-import { useGetBlogsQuery } from "../../api/apiSlice";
+import { useGetBlogsQuery } from "../../features/blogSlice";
 
 const Blogs = () => {
   const {
@@ -42,7 +42,7 @@ const Blogs = () => {
             <ShowDate date={blog.createdAt} />
             <ShowAuthor userId={blog.userId} />
             <p>{blog.body}</p>
-            <ActionButtons blog={blog} />
+            {/* <ActionButtons blog={blog} /> */}
             <Link to={`/blogs/${blog.id}`}>مشاهده پست</Link>
           </Card>
         ))}

@@ -1,149 +1,78 @@
 import {
-  createAsyncThunk,
-  createEntityAdapter,
   createSlice,
-  nanoid,
 } from "@reduxjs/toolkit";
-import {
-  getAllBlogs,
-  createBlog,
-  deleteBlog,
-  updateBlog,
-} from "../services/blogService";
+import apiSlice from "../api/apiSlice";
 
-// BLOG ADAPTOR
-const blogAdaptor = createEntityAdapter({
-  sortComparer: (a, z) => z.date.localeCompare(a.date),
-});
 
-const initialState = blogAdaptor.getInitialState({
-  status: "idle",
-  error: null,
-});
 
-// ASYNC REDUCERS
-export const fetchBlogs = createAsyncThunk("fetch/blogs", async () => {
-  console.log("fetch blogs");
+// export const incrementReaction = createAsyncThunk(
+//   "/increment-reaction/blog",
+//   async ({ blogId, reactionName }, { getState, _ }) => {
+//     const state = getState();
 
-  const response = await getAllBlogs();
-  return response.data;
-});
+//     const blog = state.blogs.entities[blogId];
 
-export const storeBlog = createAsyncThunk("store/blog", async (blog) => {
-  const response = await createBlog(blog);
-  return response.data;
-});
+//     if (!blog)
+//       throw new Error(
+//         `Blog with id ${blogId} not found for reactioon increment`
+//       );
 
-export const destoryBlog = createAsyncThunk("destory/blog", async (blogId) => {
-  await deleteBlog(blogId);
-  return blogId;
-});
+//     const updatedBlog = {
+//       ...blog,
+//       reactions: {
+//         ...blog.reactions,
+//         [reactionName]: (blog.reactions[reactionName] || 0) + 1,
+//       },
+//     };
 
-export const modifyBlog = createAsyncThunk("update/blog", async (blog) => {
-  const response = await updateBlog(blog.id, blog);
-  return {
-    id: response.data.id,
-    changes: response.data
-  };
-});
+//     const response = await updateBlog(blog.id, updatedBlog);
+//     return {
+//       id: response.data.id,
+//       changes: response.data
+//     };
+//   }
+// );
 
-export const incrementReaction = createAsyncThunk(
-  "/increment-reaction/blog",
-  async ({ blogId, reactionName }, { getState, _ }) => {
-    const state = getState();
-
-    const blog = state.blogs.entities[blogId];
-
-    if (!blog)
-      throw new Error(
-        `Blog with id ${blogId} not found for reactioon increment`
-      );
-
-    const updatedBlog = {
-      ...blog,
-      reactions: {
-        ...blog.reactions,
-        [reactionName]: (blog.reactions[reactionName] || 0) + 1,
-      },
-    };
-
-    const response = await updateBlog(blog.id, updatedBlog);
-    return {
-      id: response.data.id,
-      changes: response.data
-    };
-  }
-);
+const blogApi = apiSlice.injectEndpoints({
+  endpoints: builder => ({
+    getBlogs: builder.query({
+      query: () => "/blogs",
+      providesTags: (result = [], err, arg) => [
+        "BLOG",
+        ...result.map(({ id }) => ({
+          type: "BLOG", id
+        })),
+      ],
+    }),
+    getBlog: builder.query({
+      query: (blogId) => `/blogs/${blogId}`,
+      providesTags: (result, err, blogId) => [{ type: "BLOG", id: blogId }],
+    }),
+    addNewBlog: builder.mutation({
+      query: (data) => ({
+        url: "blogs",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["BLOG"],
+    }),
+    updateBlog: builder.mutation({
+      query: (data) => ({
+        url: `/blogs/${data.id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: (result, err, blog) => [{ type: "BLOG", id: blog.id }],
+    })
+  })
+})
 
 // SLICE
 const blogSlice = createSlice({
   name: "blog",
-  initialState: initialState,
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchBlogs.pending, (state, _) => {
-        state.status = "pending";
-      })
-      .addCase(fetchBlogs.fulfilled, (state, action) => {
-        state.status = "success";
-        blogAdaptor.upsertMany(state, action.payload);
-      })
-      .addCase(fetchBlogs.rejected, (state, action) => {
-        state.status = "error";
-        state.error = action.error.message;
-      })
-      .addCase(storeBlog.fulfilled, blogAdaptor.addOne)
-      .addCase(storeBlog.rejected, (state, action) => {
-        console.error("store/blog/rejected", action.error.message);
-      })
-      .addCase(destoryBlog.fulfilled, blogAdaptor.removeOne)
-      .addCase(destoryBlog.rejected, (state, action) => {
-        console.error(`Delete blog failed: ${action.error.message}`);
-      })
-      .addCase(modifyBlog.fulfilled, blogAdaptor.updateOne)
-      .addCase(modifyBlog.rejected, (state, action) => {
-        console.error(action.error.message);
-      })
-      .addCase(incrementReaction.fulfilled, blogAdaptor.updateOne)
-      .addCase(incrementReaction.rejected, (state, action) => {
-        console.error(action.error.message);
-      });
-  },
-  reducers: {
-    blogDeleted: (state, action) => {
-      const { id } = action.payload;
-
-      state.blogs = state.blogs.filter((blog) => blog.id != id);
-    },
-    reactionIncrement: (state, action) => {
-      const { blogId, reaction } = action.payload;
-
-      const blog = state.entities[blogId];
-
-      blog.reactions[reaction]++;
-
-      modifyBlog(blog);
-    },
-  },
+  initialState: {}
 });
 
-export default blogSlice.reducer;
+export default blogSlice;
 
-export const blogSliceStatusSelector = (state) => state.blogs.status;
-
-export const blogSliceErrorSelector = (state) => state.blogs.error;
-
-// export const allBlogsSelector = (state, userId = null) => {
-//   return !userId ? state.blogs.blogs : state.blogs.blogs.filter(blog => blog.userId == userId)
-// };
-
-// export const blogSelector = (state, blogId) =>
-//   state.blogs.blogs.find((blog) => blog.id == blogId);
-
-export const {
-  selectAll: allBlogsSelector,
-  selectIds,
-  selectById: blogSelector,
-} = blogAdaptor.getSelectors((state) => state.blogs);
-
-export const { blogDeleted, reactionIncrement } = blogSlice.actions;
+export const { useGetBlogQuery, useGetBlogsQuery, useAddNewBlogMutation, useUpdateBlogMutation } = blogApi;
