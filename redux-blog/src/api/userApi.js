@@ -42,3 +42,11 @@ export default apiSlice.injectEndpoints({
     }),
   }),
 });
+
+export const {
+  useGetUsersQuery,
+  useGetUserQuery,
+  useCreateUserMutation,
+  useUpdateUserMutation,
+  useDeleteUserMutation,
+} = apiSlice;
