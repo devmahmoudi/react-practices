@@ -6,7 +6,7 @@ import ShowDate from "../../components/ShowDate";
 import { Link } from "react-router-dom";
 import { userSelector } from "../../features/userSlice";
 import ActionButtons from "../../components/ActionButtons";
-import { useGetBlogQuery, useDestroyBlogMutation } from "../../features/blogSlice";
+import { useGetBlogQuery, useDestroyBlogMutation } from "../../api/blogApi";
 import Spinner from "../../components/ui/Spinner";
 import DeleteBlogBtn from "../../components/blog/DeleteBlogBtn";
 

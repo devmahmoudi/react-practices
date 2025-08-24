@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useGetBlogQuery, useUpdateBlogMutation } from "../../features/blogSlice";
+import { useGetBlogQuery, useUpdateBlogMutation } from "../../api/blogApi";
 
 const EditBlog = () => {
   const { blogId } = useParams();
 
-  const {data: blog} = useGetBlogQuery(blogId);
+  const { data: blog } = useGetBlogQuery(blogId);
 
-  const [updateBlog, {}] = useUpdateBlogMutation()
+  const [updateBlog, {}] = useUpdateBlogMutation();
 
   if (!blog) return <p>پستی که دنبالش می گردی وجود نداره دوست من 😁</p>;
 
@@ -25,17 +25,22 @@ const EditBlog = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (data.title && data.body) {
-      const finalData = { ...blog, id: blogId, title: data.title, body: data.body }
+      const finalData = {
+        ...blog,
+        id: blogId,
+        title: data.title,
+        body: data.body,
+      };
 
       finalData.reactions = {
-        "thumbsUp": 0,
-        "hooray": 0,
-        "heart": 0,
-        "rocket": 0,
-        "eyes": 0
-      }
+        thumbsUp: 0,
+        hooray: 0,
+        heart: 0,
+        rocket: 0,
+        eyes: 0,
+      };
 
-      await updateBlog(finalData).unwrap()
+      await updateBlog(finalData).unwrap();
 
       navigate("/blogs");
     }

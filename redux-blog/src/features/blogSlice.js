@@ -1,9 +1,10 @@
 import {
+  createAsyncThunk,
+  createEntityAdapter,
   createSlice,
 } from "@reduxjs/toolkit";
 import apiSlice from "../api/apiSlice";
-
-
+import blogApi from "../api/blogApi";
 
 // export const incrementReaction = createAsyncThunk(
 //   "/increment-reaction/blog",
@@ -33,53 +34,38 @@ import apiSlice from "../api/apiSlice";
 //   }
 // );
 
-const blogApi = apiSlice.injectEndpoints({
-  endpoints: builder => ({
-    getBlogs: builder.query({
-      query: () => "/blogs",
-      providesTags: (result = [], err, arg) => [
-        "BLOG",
-        ...result.map(({ id }) => ({
-          type: "BLOG", id
-        })),
-      ],
-    }),
-    getBlog: builder.query({
-      query: (blogId) => `/blogs/${blogId}`,
-      providesTags: (result, err, blogId) => [{ type: "BLOG", id: blogId }],
-    }),
-    addNewBlog: builder.mutation({
-      query: (data) => ({
-        url: "blogs",
-        method: "POST",
-        body: data,
-      }),
-      invalidatesTags: ["BLOG"],
-    }),
-    updateBlog: builder.mutation({
-      query: (data) => ({
-        url: `/blogs/${data.id}`,
-        method: "PUT",
-        body: data,
-      }),
-      invalidatesTags: (result, err, blog) => [{ type: "BLOG", id: blog.id }],
-    }),
-    destroyBlog: builder.mutation({
-      query: (blogId) => ({
-        url: `/blogs/${blogId}`,
-        method: 'DELETE'
-      }),
-      invalidatesTags: ['BLOG']
-    })
-  })
-})
+// Async Thunk Reducers
+export const incrementReaction = createAsyncThunk(
+  "/blog/incrementReaction",
+  async ({ blogId, reactionName }, { getState, _ }) => {
+    const state = getState();
+    const blog = state.blogs.entities[blogId];
+  }
+);
+
+const blogAdapter = createEntityAdapter();
+
+const initialState = blogAdapter.getInitialState();
 
 // SLICE
 const blogSlice = createSlice({
   name: "blog",
-  initialState: {}
+  initialState: initialState,
+  extraReducers: (builder) => {
+    builder
+      .addCase(incrementReaction.fulfilled, (state, action) => {
+        console.log(action);
+      })
+      .addCase(incrementReaction.rejected, (state, action) => {
+        console.error(action.error.message);
+      })
+      .addMatcher(
+        blogApi.endpoints.getBlogs.matchFulfilled,
+        (state, action) => {
+          blogAdapter.setAll(state, action.payload);
+        }
+      );
+  },
 });
 
-export default blogSlice;
-
-export const { useGetBlogQuery, useGetBlogsQuery, useAddNewBlogMutation, useUpdateBlogMutation, useDestroyBlogMutation } = blogApi;
+export default blogSlice.reducer;

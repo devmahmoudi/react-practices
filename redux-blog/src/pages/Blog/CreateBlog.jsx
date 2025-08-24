@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { allUsersSelector } from "../../features/userSlice";
-import { useAddNewBlogMutation } from "../../features/blogSlice"
+import { useAddNewBlogMutation } from "../../api/blogApi";
 
 const CreateBlog = () => {
   const [data, setData] = useState({
@@ -19,7 +19,7 @@ const CreateBlog = () => {
     },
   });
 
-  const [addNewBlog, { isLoading }] = useAddNewBlogMutation()
+  const [addNewBlog, { isLoading }] = useAddNewBlogMutation();
 
   const [status, setStatus] = useState("idle");
 
@@ -37,7 +37,7 @@ const CreateBlog = () => {
       try {
         setStatus("loading");
 
-        const blog = data
+        const blog = data;
 
         blog.date = new Date().toISOString();
 

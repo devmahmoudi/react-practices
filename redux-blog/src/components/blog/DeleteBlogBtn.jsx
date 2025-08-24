@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDestroyBlogMutation } from "../../features/blogSlice";
+import { useDestroyBlogMutation } from "../../api/blogApi";
 import Spinner from "../ui/Spinner";
 
 const DeleteBlogBtn = ({ blogId, onDeleted }) => {
