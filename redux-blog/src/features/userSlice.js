@@ -7,18 +7,6 @@ const userAdapter = createEntityAdapter()
 
 const initialState = userAdapter.getInitialState()
 
-// apis
-export const extenedApi = apiSlice.injectEndpoints({
-  endpoints: (builder) => ({
-    getUsers : builder.query({
-      query: () => "/users",
-      transformResponse: data => {
-        return userAdapter.setAll(initialState, data)
-      }
-    })  
-  })
-})
-
 // User slice object
 const userSlice = createSlice({
   name: "user",
