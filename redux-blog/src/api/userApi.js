@@ -35,7 +35,7 @@ export default apiSlice.injectEndpoints({
     }),
     deleteUser: builder.mutation({
       query: (userId) => ({
-        url: $`/users/${userId}`,
+        url: `/users/${userId}`,
         method: "DELETE",
       }),
       invalidatesTags: (_, __, id) => [{ type: "USER", id }],

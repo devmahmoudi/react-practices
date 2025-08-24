@@ -1,7 +1,10 @@
 import { allUsersSelector } from "../../features/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { useCreateUserMutation } from "../../api/userApi";
+import {
+  useCreateUserMutation,
+  useDeleteUserMutation,
+} from "../../api/userApi";
 import CreateUser from "../../components/user/CreateUser";
 
 const UserIndex = () => {
@@ -10,13 +13,12 @@ const UserIndex = () => {
   const [createUser, { isLoading, error, isSuccess, isError }] =
     useCreateUserMutation();
 
-  const handleCreateNewUser = async (fullname) => {
-    createUser({ fullname });
-  };
+  const [deleteUser, { isDeleteLoading }] = useDeleteUserMutation();
+
 
   return (
     <>
-      <CreateUser onSubmit={handleCreateNewUser} isLoading={isLoading} />
+      <CreateUser onSubmit={(fullname) => createUser({ fullname })} isLoading={isLoading} />
       {isError ?? <span style={{ color: "red" }}>{error}</span>}
       <table className="rtl-table">
         {" "}
@@ -36,9 +38,9 @@ const UserIndex = () => {
                 <Link to={`/user-blogs/${user.id}`}>{user.fullname}</Link>
               </td>
               <td>
-                {/* <button onClick={() => dispatch(destroyUser(user.id))}> */}
-                حذف
-                {/* </button> */}
+                <button onClick={() => deleteUser(user.id)}>
+                  {isDeleteLoading ? <Spinner /> : <span>حذف</span>}
+                </button>
               </td>
             </tr>
           ))}
