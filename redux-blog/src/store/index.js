@@ -1,7 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import blogReducers from "../features/blogSlice";
-import userReducers, { extenedApi } from "../features/userSlice";
+import userReducers from "../features/userSlice";
 import apiSlice from "../api/apiSlice"
+import userApi from "../api/userApi"
 
 const store = configureStore({
   reducer: {
@@ -13,6 +14,6 @@ const store = configureStore({
 });
 
 // store.dispatch(fetchUsers())
-store.dispatch(extenedApi.endpoints.getUsers.initiate())
+store.dispatch(userApi.endpoints.getUsers.initiate())
 
 export default store;
