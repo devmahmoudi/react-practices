@@ -4,7 +4,6 @@ import { Card } from "../../components/ui/Card";
 import ShowAuthor from "../../components/ShowAuthor";
 import ShowDate from "../../components/ShowDate";
 import { Link } from "react-router-dom";
-import { userSelector } from "../../features/userSlice";
 import ActionButtons from "../../components/ActionButtons";
 import { useGetBlogQuery, useDestroyBlogMutation } from "../../api/blogApi";
 import Spinner from "../../components/ui/Spinner";
