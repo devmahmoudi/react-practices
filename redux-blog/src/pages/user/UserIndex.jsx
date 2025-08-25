@@ -1,22 +1,25 @@
-import { useEffect } from "react";
 import { allUsersSelector } from "../../features/userSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { createUser, destroyUser } from "../../features/userSlice";
 import { Link } from "react-router-dom";
+import {
+  useCreateUserMutation,
+  useDeleteUserMutation,
+} from "../../api/userApi";
 import CreateUser from "../../components/user/CreateUser";
 
 const UserIndex = () => {
-  const dispatch = useDispatch();
-
   const users = useSelector((state) => allUsersSelector(state));
 
-  const handleCreateNewUser = (fullname) => {
-    dispatch(createUser(fullname));
-  };
+  const [createUser, { isLoading, error, isSuccess, isError }] =
+    useCreateUserMutation();
+
+  const [deleteUser, { isDeleteLoading }] = useDeleteUserMutation();
+
 
   return (
     <>
-      <CreateUser onSubmit={handleCreateNewUser} />
+      <CreateUser onSubmit={(fullname) => createUser({ fullname })} isLoading={isLoading} />
+      {isError ?? <span style={{ color: "red" }}>{error}</span>}
       <table className="rtl-table">
         {" "}
         {/* Add class */}
@@ -32,11 +35,11 @@ const UserIndex = () => {
             <tr key={user.id}>
               <td>{user.id}</td>
               <td>
-                <Link to={`/blogs?userId=${user.id}`}>{user.fullname}</Link>
+                <Link to={`/user-blogs/${user.id}`}>{user.fullname}</Link>
               </td>
               <td>
-                <button onClick={() => dispatch(destroyUser(user.id))}>
-                  حذف
+                <button onClick={() => deleteUser(user.id)}>
+                  {isDeleteLoading ? <Spinner /> : <span>حذف</span>}
                 </button>
               </td>
             </tr>

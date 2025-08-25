@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
-import { userSelector } from "../features/userSlice";
+import { selectUser } from "../features/userSlice";
 
 const ShowAuthor = ({ userId }) => {
-  const author = useSelector((state) => userSelector(state, userId));
+  const author = useSelector((state) => selectUser(state, userId));
 
   return <small>{`توسط ${author?.fullname ?? "نویسنده ناشناس"}`}</small>;
 };

@@ -1,55 +1,42 @@
-import { useDispatch, useSelector } from "react-redux";
 import { Card } from "../../components/ui/Card";
-import { Link, useParams, useSearchParams } from "react-router-dom";
-import {
-  allBlogsSelector,
-  blogSliceErrorSelector,
-  blogSliceStatusSelector,
-} from "../../features/blogSlice";
+import { Link } from "react-router-dom";
 import ShowDate from "../../components/ShowDate";
 import ShowAuthor from "../../components/ShowAuthor";
 import ActionButtons from "../../components/ActionButtons";
-import { useEffect } from "react";
-import { fetchBlogs } from "../../features/blogSlice";
 import Spinner from "../../components/ui/Spinner";
+import { useGetBlogsQuery } from "../../api/blogApi";
 
 const Blogs = () => {
-  const [searchParams] = useSearchParams();
-  const userId = searchParams.get('userId'); // Correct way to get a param
+  const {
+    data: blogs = [],
+    isLoading,
+    isSuccess,
+    error
+  } = useGetBlogsQuery()
 
-  const blogSliceStatus = useSelector((state) =>
-    blogSliceStatusSelector(state)
-  );
-
-  const blogSliceError = useSelector((state) => blogSliceErrorSelector(state));
-
-  const blogs = useSelector((state) => allBlogsSelector(state, userId));
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (blogSliceStatus === "idle") {
-      dispatch(fetchBlogs());
-    }
-  }, [blogSliceStatus, dispatch]);
-
-  if (blogSliceStatus === "loading") {
+  if (isLoading) {
     return <Spinner />;
   }
 
-  if (blogSliceStatus === "error") {
-    return <p style={{ textAlign: "center" }}>{blogSliceError}</p>;
+  if (!isSuccess) {
+    return <p style={{ textAlign: "center" }}>{error}</p>;
   }
 
-  if (blogSliceStatus === "success") {
+  // ordering blogs descending according the blog create at
+  let orderBlogs = blogs.slice()
+  orderBlogs = orderBlogs.sort((a, b) => b.date.localeCompare(a))
+
+  if (isSuccess) {
     return (
       <div className="blogs">
         <div style={{ marginTop: 10 }}>
-          <Link to={"/blogs/create-blog"} style={{ padding: 15 }}>
-            ساخت پست جدید
-          </Link>
+          <button style={{margin: 10}}>
+            <Link to={"/blogs/create-blog"} style={{ padding: 15 }}>
+              ساخت پست جدید
+            </Link>
+          </button>
         </div>
-        {blogs.map((blog) => (
+        {orderBlogs.map((blog) => (
           <Card key={blog.id} className="blog">
             <h2>{blog.title}</h2>
             <ShowDate date={blog.createdAt} />

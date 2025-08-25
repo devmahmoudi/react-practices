@@ -1,6 +1,7 @@
 import { useState } from "react";
+import Spinner from '../ui/Spinner'
 
-const CreateUser = ({ onSubmit }) => {
+const CreateUser = ({ onSubmit, isLoading }) => {
   const [fullname, setFullname] = useState();
 
   const canSave = fullname && fullname.trim().length > 0;
@@ -21,8 +22,10 @@ const CreateUser = ({ onSubmit }) => {
         onChange={(e) => setFullname(e.target.value)}
         placeholder="لطفا نام نویسنده جدید را وارد کنید ..."
       />
-      <button disabled={!canSave} onClick={handleSubmit}>
-        ذخیره
+      <button disabled={!canSave && !isLoading} onClick={handleSubmit}>
+        {
+          isLoading ? <Spinner/> : <span>ذخیره</span>
+        }
       </button>
     </div>
   );

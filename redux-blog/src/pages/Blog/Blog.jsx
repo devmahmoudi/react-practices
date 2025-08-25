@@ -1,30 +1,33 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Card } from "../../components/ui/Card";
 import ShowAuthor from "../../components/ShowAuthor";
 import ShowDate from "../../components/ShowDate";
 import { Link } from "react-router-dom";
-import { blogDeleted, blogSelector, destoryBlog } from "../../features/blogSlice";
-import { userSelector } from "../../features/userSlice";
 import ActionButtons from "../../components/ActionButtons";
+import { useGetBlogQuery, useDestroyBlogMutation } from "../../api/blogApi";
+import Spinner from "../../components/ui/Spinner";
+import DeleteBlogBtn from "../../components/blog/DeleteBlogBtn";
 
 const Blog = () => {
   const { blogId } = useParams();
 
-  const blog = useSelector((state) => blogSelector(state, blogId));
+  const navigate = useNavigate()
 
-  const author = useSelector((state) => userSelector(state, blog.userId));
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const handleDelete = () => {
-    dispatch(destoryBlog(blogId));
-
-    navigate("/blogs");
-  };
+  const {
+    data: blog,
+    isLoading,
+    isSuccess,
+    error
+  } = useGetBlogQuery(blogId)
 
   if (!blog) return <p>پستی که دنبالش می گردی وجود نداره دوست من 😁</p>;
+
+  if(isLoading)
+    return <Spinner />;
+
+  if(!isSuccess)
+    return <p>{error}</p>
 
   return (
     <Card>
@@ -35,13 +38,7 @@ const Blog = () => {
       </div>
       <p>{blog.body}</p>
       <ActionButtons blog={blog} />
-      <button
-        className="button"
-        style={{ marginLeft: 20 }}
-        onClick={handleDelete}
-      >
-        حذف
-      </button>
+      <DeleteBlogBtn blogId={blog.id} onDeleted={() => navigate('/blogs')}/>
       <Link to={`/blogs/edit-blog/${blogId}`}>ویرایش</Link>
     </Card>
   );
