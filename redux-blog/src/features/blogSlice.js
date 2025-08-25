@@ -1,9 +1,4 @@
-import {
-  createAsyncThunk,
-  createEntityAdapter,
-  createSlice,
-} from "@reduxjs/toolkit";
-import apiSlice from "../api/apiSlice";
+import { createEntityAdapter, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import blogApi from "../api/blogApi";
 
 // Async Thunk Reducers
