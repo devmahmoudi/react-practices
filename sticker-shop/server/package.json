@@ -1,0 +1,14 @@
+{
+  "name": "sticker-shop-server",
+  "version": "1.0.0",
+  "description": "Json server for Sticker Shop practice project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "https://github.com/devmahmoudi",
+  "license": "ISC",
+  "dependencies": {
+    "json-server": "^1.0.0-beta.3"
+  }
+}
