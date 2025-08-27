@@ -1,7 +1,9 @@
-import apiSlice from './apiSlice'
+import apiSlice from "./apiSlice";
 
-export default apiSlice.injectEndpoints((builder) => ({
+export default apiSlice.injectEndpoints({
+  endpoints: (builder) => ({
     getProducts: builder.query({
-        query: () => "/stickers"
-    })
-}))
+      query: () => "/stickers",
+    }),
+  }),
+});
