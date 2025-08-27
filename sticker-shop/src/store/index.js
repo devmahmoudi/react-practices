@@ -5,7 +5,7 @@ import productApi from "../api/productApi";
 
 export const store = configureStore({
   reducer: {
-    products: productSlice,
+    products: productSlice.reducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefault) => {
