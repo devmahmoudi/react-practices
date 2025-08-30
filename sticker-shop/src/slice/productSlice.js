@@ -11,7 +11,10 @@ const productSlice = createSlice({
     name: 'product',
     initialState: initialState,
     extraReducers: (builder) => {
-        builder.addMatcher(productApi.endpoints.getProducts.matchFulfilled, productAdapter.setAll)
+        builder.addMatcher(productApi.endpoints.getProducts.matchFulfilled, (state, action) => {
+            productAdapter.setAll(state, action.payload)
+            state.status = 'success'
+        })
     }
 });
 
