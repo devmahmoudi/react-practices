@@ -32,15 +32,12 @@ const cartSlice = createSlice({
   initialState: initialState,
   reducers: {
     // add new item to the cart
-    addItem: (state, action) => {
-      if (state.items[action.payload.id])
-        state.items[action.payload.id].quent += action.payload.quent ?? 1;
-      else state.items.push(action.payload);
-    },
+    addItem: cartAdapter.addOne,
+    // update item
+    updateItem: cartAdapter.updateOne,
     // remove item from the cart
-    removeItem: (state, action) => {
-
-    },
+    removeItem: cartAdapter.removeOne,
+    // update cart total
     updateTotal: (state, action) => {state.total = action.payload}
   } 
 });
@@ -48,7 +45,7 @@ const cartSlice = createSlice({
 /**
  * Export the cart slice actions
  */
-export const {addItem, removeItem, updateTotal} = cartSlice.actions
+export const {addItem, updateItem, removeItem, updateTotal} = cartSlice.actions
 
 /**
  * Listen for add/remove item actions in order to re-calculate
@@ -59,11 +56,28 @@ cartMiddleware.startListening({
   effect: (action, listenerApi) => {
     const state = listenerApi.getState()
 
-    const items = state.cart.items
+    const items = state.cart.entities
 
     const newTotal = Object.values(items).map(item => item.price).reduce((a, b) => a + b)
 
     listenerApi.dispatch(updateTotal(newTotal))
+  }
+})
+
+/**
+ * Enrichment item when adds to the cart
+ * 
+ * Add some extra fileds which aren't exists in the original item
+ * for example 'quent'
+ */
+cartMiddleware.startListening({
+  matcher: isAnyOf(addItem),
+  effect: (action, listenerApi) => {
+    let item = {...action.payload}
+
+    item.quent = 1
+
+    listenerApi.dispatch(updateItem({id: item.id, changes: item}))
   }
 })
 
