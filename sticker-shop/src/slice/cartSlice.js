@@ -20,7 +20,7 @@ export const cartMiddleware = createListenerMiddleware()
  */
 const initialState = cartAdapter.getInitialState({
   items: localStorage.getItem("cart") ?? [],
-  amount: 0, // total amout
+  total: 0, // total amout
   quent: 0,
 });
 
@@ -40,9 +40,15 @@ const cartSlice = createSlice({
     // remove item from the cart
     removeItem: (state, action) => {
 
-    }
+    },
+    updateTotal: (state, action) => {state.total = action.payload}
   } 
 });
+
+/**
+ * Export the cart slice actions
+ */
+export const {addItem, removeItem, updateTotal} = cartSlice.actions
 
 /**
  * Listen for add/remove item actions in order to re-calculate
@@ -51,7 +57,13 @@ const cartSlice = createSlice({
 cartMiddleware.startListening({
   matcher: isAnyOf(addItem, removeItem),
   effect: (action, listenerApi) => {
-    console.log("Cart middleware executed !");
+    const state = listenerApi.getState()
+
+    const items = state.cart.items
+
+    const newTotal = Object.values(items).map(item => item.price).reduce((a, b) => a + b)
+
+    listenerApi.dispatch(updateTotal(newTotal))
   }
 })
 
@@ -61,8 +73,3 @@ cartMiddleware.startListening({
  * Exports as default
  */
 export default cartSlice;
-
-/**
- * Export the cart slice actions
- */
-export const {addItem, removeItem} = cartSlice.actions
