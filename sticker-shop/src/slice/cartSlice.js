@@ -19,7 +19,6 @@ export const cartMiddleware = createListenerMiddleware()
  * loads items from storage if exists
  */
 const initialState = cartAdapter.getInitialState({
-  items: localStorage.getItem("cart") ?? [],
   total: 0, // total amout
   quent: 0,
 });
@@ -64,22 +63,39 @@ cartMiddleware.startListening({
   }
 })
 
+
 /**
- * Enrichment item when adds to the cart
- * 
- * Add some extra fileds which aren't exists in the original item
- * for example 'quent'
+ * Merge new item with existance if its id exists in the slice
  */
-cartMiddleware.startListening({
-  matcher: isAnyOf(addItem),
-  effect: (action, listenerApi) => {
-    let item = {...action.payload}
+const mergeCartItemListener = store => next => action => {
+  if(addItem.match(action)){
+    const state = store.getState().cart
 
-    item.quent = 1
+    if(state.ids.includes(action.payload.id)){
+      // console.log(state.entities);
+      
 
-    listenerApi.dispatch(updateItem({id: item.id, changes: item}))
+      let quent = state.entities[action.payload.id]?.quent ?? 1
+
+      quent += 1
+
+      console.log(quent);
+
+      store.dispatch(updateItem({id:action.payload.id, changes: {...action.payload, quent}}))
+
+      return
+    }
   }
-})
+
+  action.payload = {...action.payload, quent: 1}
+
+  return next(action)
+}
+
+/**
+ * Export all middlewares in an array
+ */
+export const cartMiddlewares = [cartMiddleware.middleware, mergeCartItemListener]
 
 /**
  * The cart slice reducers
