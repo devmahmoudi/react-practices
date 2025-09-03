@@ -89,6 +89,18 @@ const mergeCartItemListener = store => next => action => {
 }
 
 /**
+ * store cart to local storage in every changes to make it persist
+ */
+cartMiddleware.startListening({
+  matcher: (action) => action.type.startsWith("cart/"),
+  effect: (action, listenerApi) => {
+    const state = listenerApi.getState().cart
+    
+    localStorage.setItem('cart', JSON.stringify(state))    
+  }
+})
+
+/**
  * Export all middlewares in an array
  */
 export const cartMiddlewares = [cartMiddleware.middleware, mergeCartItemListener]
