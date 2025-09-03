@@ -62,9 +62,6 @@ cartMiddleware.startListening({
 
     const newTotal = Object.values(items).map(item => item.price * item.quent).reduce((a, b) => a + b)
 
-    console.log(newTotal);
-    
-
     listenerApi.dispatch(updateTotal(newTotal))
   }
 })
@@ -78,14 +75,9 @@ const mergeCartItemListener = store => next => action => {
     const state = store.getState().cart
 
     if(state.ids.includes(action.payload.id)){
-      // console.log(state.entities);
-      
-
       let quent = state.entities[action.payload.id]?.quent ?? 1
 
       quent += 1
-
-      console.log(quent);
 
       store.dispatch(updateItem({id:action.payload.id, changes: {...action.payload, quent}}))
 
