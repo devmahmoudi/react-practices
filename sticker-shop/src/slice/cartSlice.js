@@ -37,7 +37,11 @@ const cartSlice = createSlice({
     // remove item from the cart
     removeItem: cartAdapter.removeOne,
     // update cart total
-    updateTotal: (state, action) => {state.total = action.payload}
+    updateTotal: (state, action) => {
+      // console.log(state.entities);
+      
+      state.total = Object.values(state.entities).map(item => (item.price * item.quent)).reduce((a, b) => a + b, 0)
+    }
   } 
 });
 
@@ -57,7 +61,10 @@ cartMiddleware.startListening({
 
     const items = state.cart.entities
 
-    const newTotal = Object.values(items).map(item => item.price).reduce((a, b) => a + b)
+    const newTotal = Object.values(items).map(item => item.price * item.quent).reduce((a, b) => a + b)
+
+    console.log(newTotal);
+    
 
     listenerApi.dispatch(updateTotal(newTotal))
   }
