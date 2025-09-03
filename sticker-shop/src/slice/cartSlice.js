@@ -19,8 +19,7 @@ export const cartMiddleware = createListenerMiddleware()
  * loads items from storage if exists
  */
 const initialState = cartAdapter.getInitialState({
-  total: 0, // total amout
-  quent: 0,
+  total: 0 // total amout
 });
 
 /**
