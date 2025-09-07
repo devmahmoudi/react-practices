@@ -1,4 +1,4 @@
-import productApi from "../api/productApi";
+import productApi from "../../api/productApi";
 
 import {
   createSlice,

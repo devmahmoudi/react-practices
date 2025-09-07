@@ -7,6 +7,15 @@
   text-align: center;
 }
 
+@media (max-width: 719px) {
+  #root {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    text-align: center;
+  }
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
