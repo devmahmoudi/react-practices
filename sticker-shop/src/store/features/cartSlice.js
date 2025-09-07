@@ -1,6 +1,11 @@
 import productApi from "../../api/productApi";
 
-import { createSlice, createEntityAdapter, createListenerMiddleware, isAnyOf } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createEntityAdapter,
+  createListenerMiddleware,
+  isAnyOf,
+} from "@reduxjs/toolkit";
 
 /**
  * Create entity adapter
@@ -11,16 +16,22 @@ const cartAdapter = createEntityAdapter();
  * Create the cart slice middlewares
  */
 
-export const cartMiddleware = createListenerMiddleware()
+export const cartMiddleware = createListenerMiddleware();
 
 /**
  * Inital state of the cart
  *
  * loads items from storage if exists
  */
-const initialState = cartAdapter.getInitialState({
-  total: 0 // total amout
-});
+const storedCart = localStorage.getItem("cart") ?? null;
+
+const initialState = cartAdapter.getInitialState(
+  storedCart
+    ? JSON.parse(storedCart)
+    : {
+        total: 0, // total amout
+      }
+);
 
 /**
  * Create cart slice
@@ -37,15 +48,18 @@ const cartSlice = createSlice({
     removeItem: cartAdapter.removeOne,
     // update cart total
     updateTotal: (state, action) => {
-      state.total = Object.values(state.entities).map(item => (item.price * item.quent)).reduce((a, b) => a + b, 0)
-    }
-  } 
+      state.total = Object.values(state.entities)
+        .map((item) => item.price * item.quent)
+        .reduce((a, b) => a + b, 0);
+    },
+  },
 });
 
 /**
  * Export the cart slice actions
  */
-export const {addItem, updateItem, removeItem, updateTotal} = cartSlice.actions
+export const { addItem, updateItem, removeItem, updateTotal } =
+  cartSlice.actions;
 
 /**
  * Listen for add/remove item actions in order to re-calculate
@@ -54,48 +68,69 @@ export const {addItem, updateItem, removeItem, updateTotal} = cartSlice.actions
 cartMiddleware.startListening({
   matcher: isAnyOf(addItem, removeItem),
   effect: (action, listenerApi) => {
-    const state = listenerApi.getState()
+    const state = listenerApi.getState();
 
-    const items = state.cart.entities
+    const items = state.cart.entities;
 
-    const newTotal = Object.values(items).map(item => item.price * item.quent).reduce((a, b) => a + b)
+    const newTotal = Object.values(items)
+      .map((item) => item.price * item.quent)
+      .reduce((a, b) => a + b);
 
-    listenerApi.dispatch(updateTotal(newTotal))
-  }
-})
-
+    listenerApi.dispatch(updateTotal(newTotal));
+  },
+});
 
 /**
  * Merge new item with existance if its id exists in the slice
  */
-const mergeCartItemListener = store => next => action => {
-  if(addItem.match(action)){
-    const state = store.getState().cart
+const mergeCartItemListener = (store) => (next) => (action) => {
+  if (addItem.match(action)) {
+    const state = store.getState().cart;
 
-    if(state.ids.includes(action.payload.id)){
-      let quent = state.entities[action.payload.id]?.quent ?? 1
+    if (state.ids.includes(action.payload.id)) {
+      let quent = state.entities[action.payload.id]?.quent ?? 1;
 
-      quent += 1
+      quent += 1;
 
-      store.dispatch(updateItem({id:action.payload.id, changes: {...action.payload, quent}}))
+      store.dispatch(
+        updateItem({
+          id: action.payload.id,
+          changes: { ...action.payload, quent },
+        })
+      );
 
-      return
+      return;
     }
   }
 
-  action.payload = {...action.payload, quent: 1}
+  action.payload = { ...action.payload, quent: 1 };
 
-  return next(action)
-}
+  return next(action);
+};
+
+/**
+ * store cart to local storage in every changes to make it persist
+ */
+cartMiddleware.startListening({
+  matcher: (action) => action.type.startsWith("cart/"),
+  effect: (action, listenerApi) => {
+    const state = listenerApi.getState().cart;
+
+    localStorage.setItem("cart", JSON.stringify(state));
+  },
+});
 
 /**
  * Export all middlewares in an array
  */
-export const cartMiddlewares = [cartMiddleware.middleware, mergeCartItemListener]
+export const cartMiddlewares = [
+  cartMiddleware.middleware,
+  mergeCartItemListener,
+];
 
 /**
  * The cart slice reducers
- * 
+ *
  * Exports as default
  */
 export default cartSlice;
