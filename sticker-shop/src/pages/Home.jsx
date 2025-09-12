@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet";
+import ProductList from "../components/product/ProductList";
 
 const Home = () => {
   return (
@@ -6,6 +7,7 @@ const Home = () => {
       <Helmet>
         <title>Sticker Shop</title>
       </Helmet>
+      <ProductList />
     </>
   );
 };
