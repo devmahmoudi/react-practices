@@ -1,9 +1,8 @@
-import productApi from "../../api/productApi";
 
 import {
-  createSlice,
   createEntityAdapter,
   createListenerMiddleware,
+  createSlice,
   isAnyOf,
 } from "@reduxjs/toolkit";
 
