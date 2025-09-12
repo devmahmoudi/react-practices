@@ -1,16 +1,16 @@
-import { Helmet } from "react-helmet";
+import React from "react";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
 import MainLayout from "./components/layouts/MainLayout";
+import Home from "./pages/Home";
 
 function App() {
   return (
-    <MainLayout>
-      <Helmet>
-        <title>
-          Sticker Shop
-        </title>
-      </Helmet>
-    </MainLayout>
+    <Routes>
+      <Route path="/" element={<MainLayout />}>
+        <Route index element={<Home />} />
+      </Route>
+    </Routes>
   );
 }
 
