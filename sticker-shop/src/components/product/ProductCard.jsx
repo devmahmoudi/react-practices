@@ -1,4 +1,5 @@
 import Badge from "../ui/Badge";
+import PriceFormat from "../ui/Price";
 
 const ProductCard = ({product}) => {
     const {title, price, description, sticker} = product;
@@ -10,7 +11,7 @@ const ProductCard = ({product}) => {
             <p className="text-justify">{description}</p>
             <span className="block text-end">
                 <Badge className='bg-blue-500 border-none text-white'>
-                    {price} تومان
+                    <PriceFormat value={price} displayType="text" thousandSeparator="," suffix=" تومان"/>
                 </Badge>
             </span>
         </div>
