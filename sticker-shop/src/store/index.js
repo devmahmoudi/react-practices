@@ -11,7 +11,14 @@ export const store = configureStore({
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefault) => {
-    return getDefault().concat(apiSlice.middleware).concat(cartMiddlewares);
+    let middlewares = getDefault().concat(apiSlice.middleware);
+
+    // register cart slice middlewares to the store
+    cartMiddlewares.forEach(middleware => {
+      middlewares.concat(middleware)
+    });
+
+    return middlewares
   },
 });
 
