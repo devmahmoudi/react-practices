@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <header className="border-b border-palette-lighter sticky top-0 z-20 bg-gray-400 rounded-lg text-palette-primary">
+    <nav className="border-b border-palette-lighter sticky top-0 z-20 bg-gray-400 rounded-lg text-palette-primary">
       <div className="flex items-center justify-between w-full p-5">
         <Link to="/" className="cursor-pointer pb-2">
           <h1 className="flex no-underline">
@@ -27,7 +27,7 @@ const Navbar = () => {
           </Link>
         </div>
       </div>
-    </header>
+    </nav>
   );
 };
 
