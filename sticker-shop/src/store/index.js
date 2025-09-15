@@ -15,7 +15,7 @@ export const store = configureStore({
 
     // register cart slice middlewares to the store
     cartMiddlewares.forEach(middleware => {
-      middlewares.concat(middleware)
+      middlewares = middlewares.concat(middleware)
     });
 
     return middlewares

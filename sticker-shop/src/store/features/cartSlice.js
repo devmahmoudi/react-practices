@@ -40,7 +40,20 @@ const cartSlice = createSlice({
   initialState: initialState,
   reducers: {
     // add new item to the cart
-    addItem: cartAdapter.addOne,
+    addItem: (state, action) => {
+      // define default quent = 1 if there is no in the action payload
+      if(!action.payload.quent)
+        action.payload.quent = 1
+
+      // updating item quent if it is already added
+      if(state.ids.includes(action.payload.id)){
+        cartAdapter.updateOne(state, {id: action.payload.id, changes: {quent: (state.entities[action.payload.id].quent + action.payload.quent)}})
+
+        return
+      }
+
+      cartAdapter.addOne(state, action.payload)
+    },
     // update item
     updateItem: cartAdapter.updateOne,
     // remove item from the cart
@@ -80,34 +93,6 @@ cartMiddleware.startListening({
 });
 
 /**
- * Merge new item with existance if its id exists in the slice
- */
-const mergeCartItemListener = (store) => (next) => (action) => {
-  if (addItem.match(action)) {
-    const state = store.getState().cart;
-
-    if (state.ids.includes(action.payload.id)) {
-      let quent = state.entities[action.payload.id]?.quent ?? 1;
-
-      quent += 1;
-
-      store.dispatch(
-        updateItem({
-          id: action.payload.id,
-          changes: { ...action.payload, quent },
-        })
-      );
-
-      return;
-    }
-  }
-
-  action.payload = { ...action.payload, quent: 1 };
-
-  return next(action);
-};
-
-/**
  * store cart to local storage in every changes to make it persist
  */
 cartMiddleware.startListening({
@@ -123,8 +108,7 @@ cartMiddleware.startListening({
  * Export all middlewares in an array
  */
 export const cartMiddlewares = [
-  cartMiddleware.middleware,
-  mergeCartItemListener,
+  cartMiddleware.middleware
 ];
 
 /**
