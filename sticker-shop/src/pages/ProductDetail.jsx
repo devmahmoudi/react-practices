@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { FaCartPlus } from "react-icons/fa6";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Badge from "../components/ui/Badge";
 import Button from "../components/ui/Button";
 import NumberInput from "../components/ui/NumberInput";
 import PriceFormat from "../components/ui/Price";
+import { addItem as addCartItem } from "../store/features/cartSlice";
 import NotFound from "./NotFound";
 
 
 const ProductDetail = () => {
+  const dispatch = useDispatch()
   const { productId } = useParams();
   const [count, setCount] = useState(1);
 
@@ -35,12 +37,11 @@ const ProductDetail = () => {
    * Add to cart button on click handler
    */
   const addToCart = () => {
-    console.log(count);
-    
+    dispatch(addCartItem({...product, quent: parseInt(count)}))
   };
 
   return (
-    <div className="flex font-primary shadow-lg shadow-green-300 border-2 border-gray-100 rounded-lg">
+    <div className="sm:flex font-primary shadow-lg shadow-green-300 border-2 border-gray-100 rounded-lg">
       {/* Product Image  */}
       <img
         src={`http://localhost:3000/images/${sticker}`}
