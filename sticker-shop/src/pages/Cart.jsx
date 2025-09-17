@@ -59,14 +59,27 @@ const Cart = () => {
       displayType="text"
       thousandSeparator=","
       suffix=" تومان"
-    />,
+    />
   ];
+
+  /**
+   * Add delete all items option button if items doesn't empty
+   */
+  if(items.length > 0)
+    tableFooter.push(<Button className="bg-red-500 py-1 hover:bg-red-600" onClick={() => clearCart()}>حذف همه</Button>,)
 
   /**
    * Remove cart item handler
    */
   const removeCartItem = (id) => {
     dispatch(removeItem(id))
+  }
+
+  /**
+   * Remove all cart's items
+   */
+  const clearCart = () => {
+    items.forEach(item => removeCartItem(item.id))    
   }
 
   return (
