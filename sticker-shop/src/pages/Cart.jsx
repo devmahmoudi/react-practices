@@ -1,9 +1,15 @@
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Button from "../components/ui/Button";
 import Price from "../components/ui/Price";
 import Table from "../components/ui/Table";
+import { removeItem } from "../store/features/cartSlice";
 
 const Cart = () => {
+  /**
+   * Use dispatch
+   */
+  const dispatch = useDispatch()
+
   /**
    * Select cart items from the cartSlice
    */
@@ -39,7 +45,7 @@ const Cart = () => {
       thousandSeparator=","
       suffix=" تومان"
     />,
-    "",
+    <Button className="bg-red-500 py-1 hover:bg-red-600" onClick={() => removeCartItem(item.id)}>حذف</Button>,
   ]);
 
   /**
@@ -55,6 +61,13 @@ const Cart = () => {
       suffix=" تومان"
     />,
   ];
+
+  /**
+   * Remove cart item handler
+   */
+  const removeCartItem = (id) => {
+    dispatch(removeItem(id))
+  }
 
   return (
     <div className="font-primary">
