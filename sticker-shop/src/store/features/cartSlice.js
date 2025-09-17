@@ -82,11 +82,11 @@ cartMiddleware.startListening({
   effect: (action, listenerApi) => {
     const state = listenerApi.getState();
 
-    const items = state.cart.entities;
+    const items = Object.values(state.cart.entities);
 
-    const newTotal = Object.values(items)
-      .map((item) => item.price * item.quent)
-      .reduce((a, b) => a + b);
+    const newTotal = items.length ?
+      items.map((item) => item.price * item.quent)
+      .reduce((a, b) => a + b) : 0;
 
     listenerApi.dispatch(updateTotal(newTotal));
   },
