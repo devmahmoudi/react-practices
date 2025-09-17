@@ -1,5 +1,7 @@
+import "react-confirm-alert/src/react-confirm-alert.css";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../components/ui/Button";
+import { confirm } from "../components/ui/Confirm";
 import Price from "../components/ui/Price";
 import Table from "../components/ui/Table";
 import { removeItem } from "../store/features/cartSlice";
@@ -8,7 +10,7 @@ const Cart = () => {
   /**
    * Use dispatch
    */
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   /**
    * Select cart items from the cartSlice
@@ -45,7 +47,12 @@ const Cart = () => {
       thousandSeparator=","
       suffix=" تومان"
     />,
-    <Button className="bg-red-500 py-1 hover:bg-red-600" onClick={() => removeCartItem(item.id)}>حذف</Button>,
+    <Button
+      className="bg-red-500 py-1 hover:bg-red-600"
+      onClick={() => removeCartItem(item.id)}
+    >
+      حذف
+    </Button>,
   ]);
 
   /**
@@ -59,28 +66,47 @@ const Cart = () => {
       displayType="text"
       thousandSeparator=","
       suffix=" تومان"
-    />
+    />,
   ];
 
   /**
    * Add delete all items option button if items doesn't empty
    */
-  if(items.length > 0)
-    tableFooter.push(<Button className="bg-red-500 py-1 hover:bg-red-600" onClick={() => clearCart()}>حذف همه</Button>,)
+  if (items.length > 0)
+    tableFooter.push(
+      <Button
+        className="bg-red-500 py-1 hover:bg-red-600"
+        onClick={() => clearCart()}
+      >
+        حذف همه
+      </Button>
+    );
 
   /**
    * Remove cart item handler
    */
   const removeCartItem = (id) => {
-    dispatch(removeItem(id))
-  }
+    confirm({
+      onConfirm: () => {
+        dispatch(removeItem(id))
+      },
+      title: "حذف محصول",
+      message: "آیا از حذف این مورد از سبد خرید مطمئن هستید ؟",
+    });
+  };
 
   /**
    * Remove all cart's items
    */
   const clearCart = () => {
-    items.forEach(item => removeCartItem(item.id))    
-  }
+    confirm({
+      onConfirm: () => {
+        items.forEach((item) => dispatch(removeItem(item.id)))
+      },
+      title: "حذف همه",
+      message: "آیا از حذف تمامی محصولات موجود در سبد خرید خود مطمئن هستید ؟",
+    });
+  };
 
   return (
     <div className="font-primary">
