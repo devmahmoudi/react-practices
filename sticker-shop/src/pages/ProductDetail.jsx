@@ -8,6 +8,7 @@ import NumberInput from "../components/ui/NumberInput";
 import PriceFormat from "../components/ui/Price";
 import { addItem as addCartItem } from "../store/features/cartSlice";
 import NotFound from "./NotFound";
+import toast from "react-hot-toast";
 
 
 const ProductDetail = () => {
@@ -38,6 +39,8 @@ const ProductDetail = () => {
    */
   const addToCart = () => {
     dispatch(addCartItem({...product, quent: parseInt(count)}))
+
+    toast.success("محصول به سبد خرید شما اضافه شد")
   };
 
   return (
