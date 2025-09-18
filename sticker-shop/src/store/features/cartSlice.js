@@ -29,6 +29,7 @@ const initialState = cartAdapter.getInitialState(
     ? JSON.parse(storedCart)
     : {
         total: 0, // total amout
+        count: 0, // sum of all items quent
       }
 );
 
@@ -60,17 +61,19 @@ const cartSlice = createSlice({
     removeItem: cartAdapter.removeOne,
     // update cart total
     updateTotal: (state, action) => {
-      state.total = Object.values(state.entities)
-        .map((item) => item.price * item.quent)
-        .reduce((a, b) => a + b, 0);
+      state.total = action.payload
     },
+    // update cart count
+    updateCount: (state, action) => {
+      state.count = action.payload
+    }
   },
 });
 
 /**
  * Export the cart slice actions
  */
-export const { addItem, updateItem, removeItem, updateTotal } =
+export const { addItem, updateItem, removeItem, updateTotal, updateCount } =
   cartSlice.actions;
 
 /**
@@ -81,14 +84,17 @@ cartMiddleware.startListening({
   matcher: isAnyOf(addItem, removeItem),
   effect: (action, listenerApi) => {
     const state = listenerApi.getState();
-
     const items = Object.values(state.cart.entities);
 
+    // update total
     const newTotal = items.length ?
       items.map((item) => item.price * item.quent)
       .reduce((a, b) => a + b) : 0;
-
     listenerApi.dispatch(updateTotal(newTotal));
+
+    // update count
+    const newCount = items.reduce((sum, item) => sum + item.quent, 0);
+    listenerApi.dispatch(updateCount(newCount))
   },
 });
 
