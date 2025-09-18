@@ -81,7 +81,7 @@ export const { addItem, updateItem, removeItem, updateTotal, updateCount } =
  * any fields that depend on the cart items list.
  */
 cartMiddleware.startListening({
-  matcher: isAnyOf(addItem, removeItem),
+  matcher: isAnyOf(addItem, removeItem, updateItem),
   effect: (action, listenerApi) => {
     const state = listenerApi.getState();
     const items = Object.values(state.cart.entities);
