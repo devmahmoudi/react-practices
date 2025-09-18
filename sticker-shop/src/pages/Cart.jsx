@@ -24,11 +24,9 @@ const Cart = () => {
   const cartTotalPrice = useSelector((state) => state.cart.total);
 
   /**
-   * Calculate total quent of all cart items
+   * Select cart items count ( sum of all itesm quent )
    */
-  const cartTotalQuent = items.length
-    ? items.reduce((a, b) => a + b.quent, 0)
-    : 0;
+  const cartItemsCount = useSelector((state) => state.cart.count);
 
   /**
    * Cart table headers object
@@ -60,7 +58,7 @@ const Cart = () => {
    */
   const tableFooter = [
     "مجموع",
-    cartTotalQuent,
+    cartItemsCount,
     <Price
       value={cartTotalPrice}
       displayType="text"
