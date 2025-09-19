@@ -4,7 +4,10 @@ import Button from "../components/ui/Button";
 import { confirm } from "../components/ui/Confirm";
 import Price from "../components/ui/Price";
 import Table from "../components/ui/Table";
-import { removeItem } from "../store/features/cartSlice";
+import NumberInput from "../components/ui/NumberInput";
+import { removeItem, updateItem } from "../store/features/cartSlice";
+import { QuentitySelector } from "../components/ui/QuentitySelector";
+import toast from "react-hot-toast";
 
 const Cart = () => {
   /**
@@ -15,8 +18,7 @@ const Cart = () => {
   /**
    * Select cart items from the cartSlice
    */
-  const items =
-    Object.values(useSelector((state) => state.cart.entities)) ?? [];
+  const items = useSelector((state) => state.cart.entities);
 
   /**
    * Select cart total price from the cartSlice
@@ -34,11 +36,30 @@ const Cart = () => {
   const tableHeaders = ["محصول", "تعداد", "قیمت", "حذف"];
 
   /**
+   * Increment item quent
+   */
+  const incrementItemQuent = (id) => {
+    dispatch(updateItem({ id, changes: { quent: items[id].quent + 1 } }));
+  };
+
+  /**
+   * Decrement item quent
+   */
+  const decrementItemQuent = (id) => {
+    if (items[id].quent > 1)
+      dispatch(updateItem({ id, changes: { quent: items[id].quent - 1 } }));
+  };
+
+  /**
    * Cart table rows object
    */
   const tableRows = Object.values(items).map((item) => [
     item.title,
-    item.quent,
+    <QuentitySelector
+      value={item.quent}
+      onDecrement={() => decrementItemQuent(item.id)}
+      onIncrement={() => incrementItemQuent(item.id)}
+    />,
     <Price
       value={item.price}
       displayType="text"
@@ -86,7 +107,7 @@ const Cart = () => {
   const removeCartItem = (id) => {
     confirm({
       onConfirm: () => {
-        dispatch(removeItem(id))
+        dispatch(removeItem(id));
       },
       title: "حذف محصول",
       message: "آیا از حذف این مورد از سبد خرید مطمئن هستید ؟",
@@ -99,7 +120,7 @@ const Cart = () => {
   const clearCart = () => {
     confirm({
       onConfirm: () => {
-        items.forEach((item) => dispatch(removeItem(item.id)))
+        items.forEach((item) => dispatch(removeItem(item.id)));
       },
       title: "حذف همه",
       message: "آیا از حذف تمامی محصولات موجود در سبد خرید خود مطمئن هستید ؟",
