@@ -23,7 +23,7 @@ const vazirFont = localFont({
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="fa-IR">
+    <html lang="fa-IR" dir="rtl">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${vazirFont.className} antialiased`}
       >
