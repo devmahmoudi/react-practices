@@ -1,0 +1,100 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { quiz } from "../data";
+
+export default function Quiz() {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [userAnswers, setUserAnswers] = useState({});
+  const [userCorrectAnswers, setUserCorrectAnswers] = useState([]);
+  const [showResult, setShowResult] = useState(false);
+
+  const question = quiz.questions[currentQuestionIndex];
+
+  /**
+   * Fitler correct user answers and set to the state
+   */
+  useEffect(() => {
+    const correctAnswers = quiz.questions.map((item, id) => item.correctAnswer);
+
+    const correctSelects = Object.values(userAnswers).filter((value) =>
+      correctAnswers.includes(value)
+    );
+
+    setUserCorrectAnswers(correctSelects);
+  }, [userAnswers]);
+
+  /**
+   * Reset the quiz
+   */
+  const reset = () => {
+    setCurrentQuestionIndex(0);
+
+    setUserAnswers({});
+
+    setUserCorrectAnswers([]);
+
+    setShowResult(false);
+  };
+
+  return showResult ? (
+    <div className="text-center my-8 rtl w-100 mx-auto">
+      <h3 className="text-2xl mb-4">نتایج آزمون</h3>
+      <div className="grid grid-cols-2 justify-center gap-4 mb-4">
+        <p>
+          <span>تعداد سوالات درست :</span>
+          <span>{userCorrectAnswers.length}</span>
+        </p>
+        <p>
+          <span>تعداد سوالات غلط :</span>
+          <span>
+            {Object.values(userAnswers).length - userCorrectAnswers.length}
+          </span>
+        </p>
+      </div>
+      <button className="border-solid border-1 px-3 py-2 rounded-3xl cursor-pointer hover:bg-white hover:text-black" onClick={reset}>
+        شروع مجدد آزمون
+      </button>
+    </div>
+  ) : (
+    <div className="text-center my-8 rtl">
+      <h3 className="text-2xl">{question.question} ؟</h3>
+      <ul className="flex justify-center gap-5 mt-3">
+        {question.answers.map((item, index) => (
+          <li
+            key={index}
+            className={`boder-solid outline-1 p-2 rounded-lg cursor-pointer ${
+              userAnswers[question.id] && userAnswers[question.id] == item
+                ? "bg-white text-black"
+                : "hover:bg-white hover:text-black"
+            }`}
+            onClick={() => {
+              setUserAnswers({ ...userAnswers, [question.id]: item });
+            }}
+          >
+            {item}
+          </li>
+        ))}
+      </ul>
+      {userAnswers[question.id] && (
+        <div className="flex justify-center mt-6">
+          {currentQuestionIndex === quiz.questions.length - 1 ? (
+            <button
+              className="decoration-white decoration-1 decoration-solid underline cursor-pointer hover:scale-105 transition-normal"
+              onClick={() => setShowResult(true)}
+            >
+              پایان و مشاهده نتایج آزمون
+            </button>
+          ) : (
+            <button
+              className="decoration-white decoration-1 decoration-solid underline cursor-pointer hover:scale-105 transition-normal"
+              onClick={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}
+            >
+              سوال بعدی
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
