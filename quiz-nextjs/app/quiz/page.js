@@ -9,7 +9,16 @@ export default function Quiz() {
   const [userCorrectAnswers, setUserCorrectAnswers] = useState([]);
   const [showResult, setShowResult] = useState(false);
 
-  const question = quiz.questions[currentQuestionIndex];
+  const [question, setQuestion] = useState(
+    quiz.questions[currentQuestionIndex]
+  );
+
+  /**
+   * Set question on question index change
+   */
+  useEffect(() => {
+    setQuestion(quiz.questions[currentQuestionIndex])
+  }, [currentQuestionIndex])
 
   /**
    * Fitler correct user answers and set to the state
@@ -37,6 +46,24 @@ export default function Quiz() {
     setShowResult(false);
   };
 
+  /**
+   * Executes after select answer by user
+   */
+  const selectAnswerHandler = (answer) => {
+    setUserAnswers({ ...userAnswers, [question.id]: answer });
+  };
+
+  /**
+   * Executes after click on next question button
+   */
+  const moveToNextQuestion = () => {
+    setQuestion(null);
+
+    setTimeout(() => {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    }, 2000);
+  };
+
   return showResult ? (
     <div className="text-center my-8 rtl w-100 mx-auto">
       <h3 className="text-2xl mb-4">نتایج آزمون</h3>
@@ -52,11 +79,14 @@ export default function Quiz() {
           </span>
         </p>
       </div>
-      <button className="border-solid border-1 px-3 py-2 rounded-3xl cursor-pointer hover:bg-white hover:text-black" onClick={reset}>
+      <button
+        className="border-solid border-1 px-3 py-2 rounded-3xl cursor-pointer hover:bg-white hover:text-black"
+        onClick={reset}
+      >
         شروع مجدد آزمون
       </button>
     </div>
-  ) : (
+  ) : question ? (
     <div className="text-center my-8 rtl">
       <h3 className="text-2xl">{question.question} ؟</h3>
       <ul className="flex justify-center gap-5 mt-3">
@@ -68,9 +98,7 @@ export default function Quiz() {
                 ? "bg-white text-black"
                 : "hover:bg-white hover:text-black"
             }`}
-            onClick={() => {
-              setUserAnswers({ ...userAnswers, [question.id]: item });
-            }}
+            onClick={() => selectAnswerHandler(item)}
           >
             {item}
           </li>
@@ -88,7 +116,7 @@ export default function Quiz() {
           ) : (
             <button
               className="decoration-white decoration-1 decoration-solid underline cursor-pointer hover:scale-105 transition-normal"
-              onClick={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}
+              onClick={moveToNextQuestion}
             >
               سوال بعدی
             </button>
@@ -96,5 +124,7 @@ export default function Quiz() {
         </div>
       )}
     </div>
+  ) : (
+    <h1>loading</h1>
   );
 }
