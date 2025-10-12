@@ -1,8 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { quiz } from "../data";
 import Loading from "./loading";
+import { serverDelaySimulator } from "../util/helper";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { AnswerButton } from "./AnswerButton";
 
 export default function Quiz() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -94,17 +97,24 @@ export default function Quiz() {
           <h3 className="text-2xl">{question.question} ؟</h3>
           <ul className="flex justify-center gap-5 mt-3">
             {question.answers.map((item, index) => (
-              <li
+              <Suspense
                 key={index}
-                className={`boder-solid outline-1 p-2 rounded-lg cursor-pointer ${
-                  userAnswers[question.id] && userAnswers[question.id] == item
-                    ? "bg-white text-black"
-                    : "hover:bg-white hover:text-black"
-                }`}
-                onClick={() => selectAnswerHandler(item)}
+                fallback={
+                  <SkeletonTheme baseColor="#202020" highlightColor="#444">
+                    <p>
+                      <Skeleton count={1} height={40} width={50} />
+                    </p>
+                  </SkeletonTheme>
+                }
               >
-                {item}
-              </li>
+                <AnswerButton
+                  onClick={() => selectAnswerHandler(item)}
+                  answer={item}
+                  isActive={
+                    userAnswers[question.id] && userAnswers[question.id] == item
+                  }
+                />
+              </Suspense>
             ))}
           </ul>
           {userAnswers[question.id] && (
