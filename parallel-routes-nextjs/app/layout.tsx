@@ -29,20 +29,30 @@ interface RootLayoutProps {
   children: React.ReactNode
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({
+  children,
+  chart,
+  payments,
+}: RootLayoutProps) {
+  console.log(payments)
+
   return (
     <>
       <html lang="en" suppressHydrationWarning>
         <head />
         <body
           className={cn(
-            "min-h-screen bg-background font-sans antialiased",
+            "min-h-screen bg-background font-sans antialiased container",
             fontSans.variable
           )}
         >
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <div className="relative flex min-h-screen flex-col">
               <SiteHeader />
+              <div className="grid grid-cols-2">
+                {chart}
+                {payments}
+              </div>
               <div className="flex-1">{children}</div>
             </div>
             <TailwindIndicator />
