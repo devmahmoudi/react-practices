@@ -29,7 +29,7 @@ interface RootLayoutProps {
   children: React.ReactNode
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children, chart }: RootLayoutProps) {
   return (
     <>
       <html lang="en" suppressHydrationWarning>
@@ -44,6 +44,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <div className="relative flex min-h-screen flex-col">
               <SiteHeader />
               <div className="flex-1">{children}</div>
+              <div className="grid grid-cols-2">{chart}</div>
             </div>
             <TailwindIndicator />
           </ThemeProvider>
