@@ -1,12 +1,21 @@
 import Link from "next/link"
 
-import { siteConfig } from "@/config/site"
-import { buttonVariants } from "@/components/ui/button"
+import { images } from "./data"
 
-export default function IndexPage() {
+export default function Images() {
   return (
-    <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
-      
-    </section>
+    <div className="grid grid-cols-3 gap-4">
+      {images.map((image) => (
+        <div className="p-2">
+          <Link href={`/images/${image.id}`}>
+            <img
+              key={image.id}
+              src={image.url}
+              className="w-full h-[250px] dark:border border-dark-400 rounded-lg cursor-pointer hover:scale-105 transition-all duration-300"
+            />
+          </Link>
+        </div>
+      ))}
+    </div>
   )
 }
