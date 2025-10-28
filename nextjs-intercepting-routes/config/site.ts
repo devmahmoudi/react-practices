@@ -6,8 +6,8 @@ export const siteConfig = {
     "Beautifully designed gallery with view image in modal using the NextJs intercepting routes",
   mainNav: [
     {
-      title: "Images",
-      href: "/images",
+      title: "Home",
+      href: "/",
     },
   ],
   links: {
