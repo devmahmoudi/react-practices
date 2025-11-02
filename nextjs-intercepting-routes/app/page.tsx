@@ -1,5 +1,4 @@
 import Link from "next/link"
-
 import { images } from "./data"
 
 export default function Images() {

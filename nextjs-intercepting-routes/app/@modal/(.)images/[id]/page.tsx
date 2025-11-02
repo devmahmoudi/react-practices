@@ -1,13 +1,16 @@
 import { images } from "@/app/data"
+import ImageDetail from "@/app/images/[id]/page"
 
-type ImageDetailParams = Promise<{
+import { Modal } from "./modal"
+
+type ImageModalParams = Promise<{
   id: Number
 }>
 
-export default async function ImageDetail({
+export default async function ImageModal({
   params,
 }: {
-  params: ImageDetailParams
+  params: ImageModalParams
 }) {
   const id = (await params).id
   const image = images.find((image) => image.id == id)
@@ -16,5 +19,5 @@ export default async function ImageDetail({
   if (!image) return <h3>Not found !</h3>
 
   // Return image detail response
-  return <img src={image.url}></img>
+  return <Modal image={image} />
 }
