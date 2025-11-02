@@ -16,5 +16,9 @@ export default async function ImageDetail({
   if (!image) return <h3>Not found !</h3>
 
   // Return image detail response
-  return <img src={image.url}></img>
+  return (
+    <div className="w-full flex justify-center items-center">
+      <img src={image.url}></img>
+    </div>
+  )
 }
