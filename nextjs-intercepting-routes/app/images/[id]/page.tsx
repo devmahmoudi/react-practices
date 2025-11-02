@@ -1,9 +1,30 @@
+import type { Metadata } from "next"
 import { images } from "@/app/data"
 
+/**
+ * Page params type
+ */
 type ImageDetailParams = Promise<{
   id: Number
 }>
 
+/**
+ * Set image object title as page layout title dynamically
+ */
+export async function generateMetadata(
+  { params }: { params: ImageDetailParams },
+): Promise<Metadata> {
+  const id = (await params).id
+  const image = images.find((image) => image.id == id)
+
+  return {
+    title: image?.title || "Image Detail Page",
+  }
+}
+
+/**
+ * Image Detail page
+ */
 export default async function ImageDetail({
   params,
 }: {
