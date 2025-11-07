@@ -21,7 +21,7 @@
     "@radix-ui/react-tooltip": "^1.2.8",
     "class-variance-authority": "^0.4.0",
     "clsx": "^1.2.1",
-    "lucide-react": "^0.105.0",
+    "lucide-react": "^0.553.0",
     "next": "^16.0.1",
     "next-themes": "^0.2.1",
     "react": "^18.2.0",
