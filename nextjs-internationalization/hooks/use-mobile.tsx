@@ -25,6 +25,6 @@ export const useDisplay = () => {
 
 export const useIsDesktop = () => useBreakpoint("md")
 
-export const useIsMobile = () => !useIsDesktop
+export const useIsMobile = () => !useIsDesktop()
 
 export const useIsLargeDisplay = () => useBreakpoint("lg")

@@ -180,6 +180,9 @@ function Sidebar({
     )
   }
 
+  console.log(`Is Mobile: ${isMobile}`);
+  
+
   if (isMobile) {
     return (
       <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
