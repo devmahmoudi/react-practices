@@ -3,7 +3,7 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
-import { SmileIcon } from "lucide-react"
+import { PanelLeftIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { useIsMobile } from "@/hooks/use-mobile"
@@ -180,9 +180,6 @@ function Sidebar({
     )
   }
 
-  console.log(`Is Mobile: ${isMobile}`);
-  
-
   if (isMobile) {
     return (
       <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
@@ -276,7 +273,7 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <SmileIcon />
+      <PanelLeftIcon />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )
