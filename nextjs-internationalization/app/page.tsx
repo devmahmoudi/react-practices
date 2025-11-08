@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Layers, SquareLibrary } from "lucide-react"
 
 import { siteConfig } from "@/config/site"
-import { buttonVariants } from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 
 export default function IndexPage() {
   return (
@@ -17,24 +17,18 @@ export default function IndexPage() {
         </p>
       </div>
       <div className="flex gap-4">
-        <Link
-          href={siteConfig.links.docs}
-          target="_blank"
-          rel="noreferrer"
-          className={buttonVariants({ variant: "outline" })}
-        >
-          <SquareLibrary className="pr-3" />
-          Categories
-        </Link>
-        <Link
-          target="_blank"
-          rel="noreferrer"
-          href={siteConfig.links.github}
-          className={buttonVariants({ variant: "outline" })}
-        >
-          <Layers className="pr-3" />
-          Blogs
-        </Link>
+        <Button variant="outline" asChild>
+          <Link href="/categories">
+            <SquareLibrary className="mr-2 h-4 w-4" />
+            Categories
+          </Link>
+        </Button>
+        <Button variant="outline" asChild>
+          <Link href="/blogs">
+            <Layers className="mr-2 h-4 w-4" />
+            Blogs
+          </Link>
+        </Button>
       </div>
     </section>
   )
