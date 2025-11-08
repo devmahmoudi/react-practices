@@ -47,7 +47,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               <AppSidebar />
               <main>
                 <SidebarTrigger />
-                {/* {children} */}
+                {children}
               </main>
             </SidebarProvider>
             <TailwindIndicator />
