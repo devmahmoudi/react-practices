@@ -12,8 +12,8 @@ export default function IndexPage() {
           NextJs Internationalization & Route Handler
         </h1>
         <p className="max-w-[700px] text-lg text-muted-foreground">
-          This is a practice project wrote with Mahdi Mahmoudi <br />
-          for learning about NextJs Internationaliztion and Route Handler
+          This is a practice project wrote by Mahdi Mahmoudi <br />
+          for learning about NextJs Internationalization and Route Handler
         </p>
       </div>
       <div className="flex gap-4">
