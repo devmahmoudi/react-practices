@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit"
 
 import { baseApi } from "./api"
+import { categoryApi } from "./api/categoryApi"
 import categorySlice from "./slice/categorySlice"
 
 export const store = configureStore({
