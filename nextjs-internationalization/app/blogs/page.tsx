@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useGetBlogsQuery } from "@/store/api"
+import { useGetBlogsQuery } from "@/store/api/blogApi"
 
 import {
   Table,
