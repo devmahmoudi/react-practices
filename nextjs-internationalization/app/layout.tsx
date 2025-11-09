@@ -1,5 +1,8 @@
 import "@/styles/globals.css"
 import { Metadata } from "next"
+import { store } from "@/store"
+import { ReduxProvider } from "@/store/Providers"
+import { Provider } from "react-redux"
 
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
@@ -42,16 +45,18 @@ export default function RootLayout({ children }: RootLayoutProps) {
             fontSans.variable
           )}
         >
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <SidebarProvider>
-              <AppSidebar />
-              <main className="w-full">
-                <SidebarTrigger />
-                {children}
-              </main>
-            </SidebarProvider>
-            <TailwindIndicator />
-          </ThemeProvider>
+          <ReduxProvider>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              <SidebarProvider>
+                <AppSidebar />
+                <main className="w-full">
+                  <SidebarTrigger />
+                  {children}
+                </main>
+              </SidebarProvider>
+              <TailwindIndicator />
+            </ThemeProvider>
+          </ReduxProvider>
         </body>
       </html>
     </>
