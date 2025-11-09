@@ -45,7 +45,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <SidebarProvider>
               <AppSidebar />
-              <main>
+              <main className="w-full">
                 <SidebarTrigger />
                 {children}
               </main>
