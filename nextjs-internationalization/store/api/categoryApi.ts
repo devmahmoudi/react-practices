@@ -1,10 +1,10 @@
-import type { Blog } from "@/types"
+import type { Category } from "@/types"
 
 import { baseApi } from "."
 
-const categoryApi = baseApi.injectEndpoints({
+export const categoryApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getCategories: build.query<Blog[], void>({
+    getCategories: build.query<Category[], void>({
       query: () => `/categories`,
     }),
   }),
