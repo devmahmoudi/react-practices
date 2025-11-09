@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently \"npx json-server db.json --port=3010\" \"next dev\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
