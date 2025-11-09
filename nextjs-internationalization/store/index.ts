@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit"
 
 import { baseApi } from "./api"
+import categorySlice from "./slice/categorySlice"
 
 export const store = configureStore({
   reducer: {
     // Add the generated reducer as a specific top-level slice
+    category: categorySlice,
     [baseApi.reducerPath]: baseApi.reducer,
   },
   // Adding the api middleware enables caching, invalidation, polling,
