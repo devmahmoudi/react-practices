@@ -19,6 +19,7 @@
     "@radix-ui/react-separator": "^1.1.8",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tooltip": "^1.2.8",
+    "@reduxjs/toolkit": "^2.10.1",
     "class-variance-authority": "^0.4.0",
     "clsx": "^1.2.1",
     "concurrently": "^9.2.1",
@@ -28,6 +29,7 @@
     "next-themes": "^0.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^9.2.0",
     "sharp": "^0.34.4",
     "tailwind-merge": "^1.13.2",
     "tailwindcss-animate": "^1.0.6"
