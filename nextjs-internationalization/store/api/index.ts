@@ -6,7 +6,7 @@ export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3010" }),
   endpoints: (build) => ({
-    getBlogs: build.query<Blog, void>({
+    getBlogs: build.query<Blog[], void>({
       query: () => `/blogs`,
     }),
   }),
