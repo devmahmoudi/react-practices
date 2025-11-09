@@ -1,7 +1,11 @@
 "use client"
 
 import Link from "next/link"
+import type { RootState } from "@/store"
 import { useGetBlogsQuery } from "@/store/api/blogApi"
+import { selectCategoryEntities } from "@/store/slice/categorySlice"
+import type { Category } from "@/types"
+import { useSelector } from "react-redux"
 
 import {
   Table,
@@ -15,6 +19,9 @@ import {
 
 export default function BlogsPage() {
   const { data, error, isLoading } = useGetBlogsQuery()
+  const categoryEntities = useSelector((state: RootState) =>
+    selectCategoryEntities(state)
+  ) as Record<number, Category>
 
   if (isLoading) return <p className="text-center">Loading Blogs ...</p>
 
@@ -40,7 +47,9 @@ export default function BlogsPage() {
                 <TableRow>
                   <TableCell className="font-medium">{blog.id}</TableCell>
                   <TableCell>{blog.title}</TableCell>
-                  <TableCell>{blog.category_id}</TableCell>
+                  <TableCell>
+                    {categoryEntities[blog.category_id]?.name || "N/A"}
+                  </TableCell>
                   <TableCell className="text-right">
                     <Link href="/">Edit</Link>
                   </TableCell>
