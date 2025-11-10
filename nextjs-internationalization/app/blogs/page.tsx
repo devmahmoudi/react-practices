@@ -35,8 +35,10 @@ export default function BlogsPage() {
             Blogs
           </h3>
           <Button className="pl-2">
-            <CirclePlus className="pr-2 box-content" />
-            <span>Draft New Blog</span>
+            <Link href={"/blogs/create"} className="flex align-middle">
+              <CirclePlus className="pr-2 box-content" />
+              <span className="pt-[2px]">Draft New Blog</span>
+            </Link>
           </Button>
         </div>
         <Table>
