@@ -44,7 +44,7 @@ export default function BlogsPage() {
             {data &&
               data.length &&
               data.map((blog) => (
-                <TableRow>
+                <TableRow key={blog.id}>
                   <TableCell className="font-medium">{blog.id}</TableCell>
                   <TableCell>{blog.title}</TableCell>
                   <TableCell>
