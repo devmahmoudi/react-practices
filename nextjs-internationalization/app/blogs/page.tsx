@@ -5,8 +5,10 @@ import type { RootState } from "@/store"
 import { useGetBlogsQuery } from "@/store/api/blogApi"
 import { selectCategoryEntities } from "@/store/slice/categorySlice"
 import type { Category } from "@/types"
+import { CirclePlus } from "lucide-react"
 import { useSelector } from "react-redux"
 
+import { Button } from "@/components/ui/button"
 import {
   Table,
   TableBody,
@@ -28,9 +30,15 @@ export default function BlogsPage() {
   return (
     <section className="container grid w-full items-center gap-6 pb-8 md:py-2">
       <div className="flex max-w-[980px] flex-col items-start gap-2">
-        <h1 className="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl">
-          Blogs
-        </h1>
+        <div className="flex justify-between align-middle w-full mb-3">
+          <h3 className="text-2xl font-extrabold leading-tight tracking-tighter md:text-3xl">
+            Blogs
+          </h3>
+          <Button className="pl-2">
+            <CirclePlus className="pr-2 box-content" />
+            <span>Draft New Blog</span>
+          </Button>
+        </div>
         <Table>
           <TableHeader>
             <TableRow>
