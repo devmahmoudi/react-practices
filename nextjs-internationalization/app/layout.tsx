@@ -12,6 +12,7 @@ import { AppSidebar } from "@/components/app-sidebar"
 import { SiteHeader } from "@/components/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
+import { ConfirmDialog } from "@/components/confirm-dialog"
 
 export const metadata: Metadata = {
   title: {
@@ -48,6 +49,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <ReduxProvider>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
               <SidebarProvider>
+                <ConfirmDialog/>
                 <AppSidebar />
                 <main className="w-full">
                   <SidebarTrigger />
