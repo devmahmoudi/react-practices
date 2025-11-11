@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import type { RootState } from "@/store"
-import { useGetBlogsQuery } from "@/store/api/blogApi"
+import { useDeleteBlogMutation, useGetBlogsQuery } from "@/store/api/blogApi"
 import { selectCategoryEntities } from "@/store/slice/categorySlice"
 import type { Category } from "@/types"
 import { CirclePlus } from "lucide-react"
@@ -18,13 +18,45 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { showConfirmDialog } from "@/components/confirm-dialog"
 
 export default function BlogsPage() {
+  /**
+   * Get blogs list
+   */
   const { data, error, isLoading } = useGetBlogsQuery()
+
+  /**
+   * Delete blog
+   */
+  const [deleteBlog, { isLoading: isDeleting }] = useDeleteBlogMutation()
+
+  /**
+   * Select categories
+   */
   const categoryEntities = useSelector((state: RootState) =>
     selectCategoryEntities(state)
   ) as Record<number, Category>
 
+  /**
+   * Delete blog button on click handler
+   */
+  const deleteBlogHandler = async (blogId: number) => {
+    const confirmed = await showConfirmDialog({
+      title: `Delete Blog Post ${blogId}`,
+      message:
+        "Are you sure you want to delete this blog post? This action cannot be undone.",
+      confirmText: "Delete",
+      cancelText: "Cancel",
+    })
+
+    if(confirmed)
+      deleteBlog(blogId)
+  }
+
+  /**
+   * Loading state
+   */
   if (isLoading) return <p className="text-center">Loading Blogs ...</p>
 
   return (
@@ -61,7 +93,12 @@ export default function BlogsPage() {
                     {categoryEntities[blog.category_id]?.name || "N/A"}
                   </TableCell>
                   <TableCell className="text-right">
-                    <Link href="/">Edit</Link>
+                    <Link href="/" className="text-blue-400">
+                      Edit
+                    </Link>
+                    <span className="ml-3 text-red-400 cursor-pointer" onClick={() => deleteBlogHandler(blog.id)}>
+                      Delete
+                    </span>
                   </TableCell>
                 </TableRow>
               ))}
