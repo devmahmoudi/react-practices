@@ -93,7 +93,7 @@ export default function BlogsPage() {
                     {categoryEntities[blog.category_id]?.name || "N/A"}
                   </TableCell>
                   <TableCell className="text-right">
-                    <Link href="/" className="text-blue-400">
+                    <Link href={`/blogs/edit/${blog.id}`} className="text-blue-400">
                       Edit
                     </Link>
                     <span className="ml-3 text-red-400 cursor-pointer" onClick={() => deleteBlogHandler(blog.id)}>
