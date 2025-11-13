@@ -50,8 +50,7 @@ export default function BlogsPage() {
       cancelText: "Cancel",
     })
 
-    if(confirmed)
-      deleteBlog(blogId)
+    if (confirmed) deleteBlog(blogId)
   }
 
   /**
@@ -83,7 +82,7 @@ export default function BlogsPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data &&
+            {(data &&
               data.length &&
               data.map((blog) => (
                 <TableRow key={blog.id}>
@@ -93,15 +92,22 @@ export default function BlogsPage() {
                     {categoryEntities[blog.category_id]?.name || "N/A"}
                   </TableCell>
                   <TableCell className="text-right">
-                    <Link href={`/blogs/edit/${blog.id}`} className="text-blue-400">
+                    <Link
+                      href={`/blogs/edit/${blog.id}`}
+                      className="text-blue-400"
+                    >
                       Edit
                     </Link>
-                    <span className="ml-3 text-red-400 cursor-pointer" onClick={() => deleteBlogHandler(blog.id)}>
+                    <span
+                      className="ml-3 text-red-400 cursor-pointer"
+                      onClick={() => deleteBlogHandler(blog.id)}
+                    >
                       Delete
                     </span>
                   </TableCell>
                 </TableRow>
-              ))}
+              ))) ||
+              ""}
           </TableBody>
         </Table>
       </div>
