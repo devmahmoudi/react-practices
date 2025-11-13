@@ -1,11 +1,11 @@
 export type Blog = {
-    id: number,
-    title: string,
-    category_id: number,
-    body: string
+  id: string
+  title: string
+  category_id: string
+  body: string
 }
 
 export type Category = {
-    id: number,
-    name: string
+  id: string
+  name: string
 }
