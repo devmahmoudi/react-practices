@@ -75,7 +75,6 @@ export default function BlogsPage() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px]">ID</TableHead>
               <TableHead>Title</TableHead>
               <TableHead>Category</TableHead>
               <TableHead className="text-right">Actions</TableHead>
@@ -86,7 +85,6 @@ export default function BlogsPage() {
               data.length &&
               data.map((blog) => (
                 <TableRow key={blog.id}>
-                  <TableCell className="font-medium">{blog.id}</TableCell>
                   <TableCell>{blog.title}</TableCell>
                   <TableCell>
                     {categoryEntities[blog.category_id]?.name || "N/A"}
