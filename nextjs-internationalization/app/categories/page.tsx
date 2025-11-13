@@ -68,7 +68,6 @@ export default function CategoriesPage() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px]">ID</TableHead>
               <TableHead>Name</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
@@ -78,7 +77,6 @@ export default function CategoriesPage() {
               data.length &&
               data.map((category) => (
                 <TableRow key={category.id}>
-                  <TableCell className="font-medium">{category.id}</TableCell>
                   <TableCell>{category.name}</TableCell>
                   <TableCell className="text-right">
                     <Link
