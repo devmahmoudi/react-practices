@@ -23,7 +23,7 @@ export default function EditCategoryPage() {
   /**
    * Get category data
    */
-  const { data: category, isLoading: isFetching } = useGetCategoryQuery(Number(id))
+  const { data: category, isLoading: isFetching } = useGetCategoryQuery(id)
 
   /**
    * Category state for form
@@ -67,7 +67,7 @@ export default function EditCategoryPage() {
    */
   const handleUpdate = (e: React.FormEvent) => {
     e.preventDefault()
-    updateCategory({ id: Number(id), ...formData })
+    updateCategory({ id, ...formData })
   }
 
   /**
