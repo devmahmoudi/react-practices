@@ -1,14 +1,5 @@
 {
-    "categories" : {
-        "index" : {
-            "title" : "دسته بندی ها",
-            "addNewCategory" : "اضافه کردن دسته بندی جدید",
-            "table" : {
-                "headers" : {
-                    "name" : "نام دسته بندی",
-                    "actions" : "عملیات ها"
-                }
-            }
-        }
-    }
+  "Categories": "دسته بندی ها",
+  "Add new category": "اضافه کردن دسته بندی جدید",
+  "Name": "نام"
 }

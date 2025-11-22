@@ -19,18 +19,22 @@ import {
 } from "@/components/ui/table"
 import { showConfirmDialog } from "@/components/confirm-dialog"
 
+import { translate } from "../localization/client"
+
 type Dictorinary = object
 
 type Props = {
-  dictionary: Dictorinary
+  dictionary: Dictorinary | null
   lang: string
 }
 
 export default function CategoriesClient({ dictionary }: Props) {
+  console.log(dictionary)
+
   /**
    * Parse dictionary prop to object
    */
-  dictionary = JSON.parse(dictionary.value)
+  dictionary = dictionary ? JSON.parse(dictionary.value) : null
 
   /**
    * Get categories list
@@ -69,13 +73,13 @@ export default function CategoriesClient({ dictionary }: Props) {
       <div className="flex max-w-[980px] flex-col items-start gap-2">
         <div className="flex justify-between align-middle w-full mb-3">
           <h3 className="text-2xl font-extrabold leading-tight tracking-tighter md:text-3xl">
-            {dictionary.categories.index.title}
+            {translate("Categories", dictionary)}
           </h3>
           <Button className="pl-2">
             <Link href={"/categories/create"} className="flex align-middle">
               <CirclePlus className="pr-2 box-content" />
               <span className="pt-[2px]">
-                {dictionary.categories.index.addNewCategory}
+                {translate("Add new category", dictionary)}
               </span>
             </Link>
           </Button>
@@ -83,12 +87,8 @@ export default function CategoriesClient({ dictionary }: Props) {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>
-                {dictionary.categories.index.table.headers.name}
-              </TableHead>
-              <TableHead className="text-right">
-                {dictionary.categories.index.table.headers.actions}
-              </TableHead>
+              <TableHead>{translate("Name", dictionary)}</TableHead>
+              <TableHead className="text-right">{translate("Actions", dictionary)}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
