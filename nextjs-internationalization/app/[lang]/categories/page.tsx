@@ -1,6 +1,7 @@
 import React from "react"
+
+import { getDictionary } from "../../../utils/localization/dictrionaries"
 import CategoriesClient from "./CategoriesClient"
-import { getDictionary } from "../localization/dictrionaries"
 
 export default async function CategoriesPage({
   params,
@@ -20,5 +21,5 @@ export default async function CategoriesPage({
   /**
    * Return client component as response
    */
-  return <CategoriesClient dictionary={dictionary}/>
+  return <CategoriesClient dictionary={dictionary} />
 }

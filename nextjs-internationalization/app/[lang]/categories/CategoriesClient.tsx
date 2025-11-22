@@ -1,6 +1,5 @@
 "use client"
 
-import React from "react"
 import Link from "next/link"
 import {
   useDeleteCategoryMutation,
@@ -19,9 +18,8 @@ import {
 } from "@/components/ui/table"
 import { showConfirmDialog } from "@/components/confirm-dialog"
 
-import { translate } from "../localization/client"
-
-type Dictorinary = object
+import { translate } from "../../../utils/localization/client"
+import { Dictorinary } from "@/types"
 
 type Props = {
   dictionary: Dictorinary | null
@@ -29,8 +27,6 @@ type Props = {
 }
 
 export default function CategoriesClient({ dictionary }: Props) {
-  console.log(dictionary)
-
   /**
    * Parse dictionary prop to object
    */
@@ -88,7 +84,9 @@ export default function CategoriesClient({ dictionary }: Props) {
           <TableHeader>
             <TableRow>
               <TableHead>{translate("Name", dictionary)}</TableHead>
-              <TableHead className="text-right">{translate("Actions", dictionary)}</TableHead>
+              <TableHead className="text-right">
+                {translate("Actions", dictionary)}
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

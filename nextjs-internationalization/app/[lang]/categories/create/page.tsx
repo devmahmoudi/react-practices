@@ -1,93 +1,23 @@
-"use client"
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
-import { useAddCategoryMutation } from "@/store/api/categoryApi"
-import { Button } from "@/components/ui/button"
-import {
-  Field,
-  FieldGroup,
-  FieldLabel,
-  FieldLegend,
-  FieldSeparator,
-  FieldSet,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
+import { getDictionary } from "@/utils/localization/dictrionaries"
+import CreateCategoryClient from "./CreateCategoryClient"
 
-export default function CreateCategoryPage() {
+export default async function CreateCategoryPage({
+  params,
+}: {
+  params: Promise<{ lang: string }>
+}) {
   /**
-   * Next.js router hook
+   * Destruct client selected language
    */
-  const router = useRouter()
+  const { lang } = await params
 
   /**
-   * New category object
+   * Load dictionary translation object through lang prop for localization
    */
-  const [category, setCategory] = useState({
-    name: "",
-  })
+  const dictionary = getDictionary(lang)
 
   /**
-   * Handle input on change event
+   * Return client component as result
    */
-  const onChangeHandler = (name: string, value: string) => {
-    setCategory({ ...category, [name]: value })
-  }
-
-  /**
-   * Add category RTK Query hook
-   */
-  const [addCategory, { isLoading, isSuccess }] = useAddCategoryMutation()
-
-  /**
-   * Navigate user to categories page after creation succeeds
-   */
-  useEffect(() => {
-    if (isSuccess) router.push("/categories")
-  }, [isSuccess, router])
-
-  /**
-   * Handle add category button on click event
-   */
-  const handleAdd = (e: React.FormEvent) => {
-    e.preventDefault()
-    addCategory(category)
-  }
-
-  return (
-    <div className="container">
-      <div className="w-full">
-        <form onSubmit={handleAdd}>
-          <FieldGroup>
-            <FieldSet>
-              <FieldLegend>Add New Category</FieldLegend>
-              <FieldSeparator />
-              <FieldGroup>
-                <Field>
-                  <FieldLabel htmlFor="category-name">
-                    Name
-                  </FieldLabel>
-                  <Input
-                    id="category-name"
-                    placeholder="Enter category name"
-                    onChange={(e) => onChangeHandler("name", e.target.value)}
-                    name="name"
-                    required
-                  />
-                </Field>
-              </FieldGroup>
-            </FieldSet>
-            <FieldSeparator />
-            <Field orientation="horizontal">
-              <Button type="submit" disabled={isLoading}>
-                {isLoading ? "Adding..." : "Add Category"}
-              </Button>
-              <Button variant="outline" type="button" onClick={() => router.push("/categories")}>
-                Cancel
-              </Button>
-            </Field>
-          </FieldGroup>
-        </form>
-      </div>
-    </div>
-  )
+  return <CreateCategoryClient dictionary={dictionary} />
 }
