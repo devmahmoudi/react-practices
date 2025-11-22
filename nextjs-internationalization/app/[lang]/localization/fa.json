@@ -2,7 +2,7 @@
     "categories" : {
         "index" : {
             "title" : "دسته بندی ها",
-            "addNewBtn" : "اضافه کردن دسته بندی جدید",
+            "addNewCategory" : "اضافه کردن دسته بندی جدید",
             "table" : {
                 "headers" : {
                     "name" : "نام دسته بندی",
