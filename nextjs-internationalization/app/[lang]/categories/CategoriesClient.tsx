@@ -74,15 +74,21 @@ export default function CategoriesClient({ dictionary }: Props) {
           <Button className="pl-2">
             <Link href={"/categories/create"} className="flex align-middle">
               <CirclePlus className="pr-2 box-content" />
-              <span className="pt-[2px]">Add New Category</span>
+              <span className="pt-[2px]">
+                {dictionary.categories.index.addNewCategory}
+              </span>
             </Link>
           </Button>
         </div>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
+              <TableHead>
+                {dictionary.categories.index.table.headers.name}
+              </TableHead>
+              <TableHead className="text-right">
+                {dictionary.categories.index.table.headers.actions}
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
