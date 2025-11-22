@@ -1,0 +1,14 @@
+{
+  "categories": {
+    "index": {
+      "title": "Categories",
+      "addNewBtn": "Add New Category",
+      "table": {
+        "headers": {
+          "name": "Name",
+          "actions": "Actions"
+        }
+      }
+    }
+  }
+}
