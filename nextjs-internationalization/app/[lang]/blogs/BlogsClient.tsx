@@ -98,18 +98,18 @@ export default function BlogsClient({
                   <TableCell>
                     {categoryEntities[blog.category_id]?.name || "N/A"}
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-right flex justify-end">
                     <Link
                       href={`/blogs/edit/${blog.id}`}
                       className="text-blue-400"
                     >
-                      Edit
+                      {translate("Edit", dictionary)}
                     </Link>
                     <span
                       className="ml-3 text-red-400 cursor-pointer"
                       onClick={() => deleteBlogHandler(blog.id)}
                     >
-                      Delete
+                      {translate("Delete", dictionary)}
                     </span>
                   </TableCell>
                 </TableRow>
