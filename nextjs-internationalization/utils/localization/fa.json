@@ -7,9 +7,15 @@
   "Save": "ذخیره",
   "Cancel": "انصراف",
   "Adding...": "در حال اضافه کردن ...",
+  "Sending...": "در حال ارسال",
   "Dashboard": "داشبورد",
   "Blogs": "بلاگ ها",
   "Draft New Blog": "نگاشت بلاگ جدید",
   "Title": "عنوان",
-  "Actions": "عملیات ها"
+  "Actions": "عملیات ها",
+  "Write blog title": "عنوان بلاگ را وارد کنید",
+  "Select blog category": "دسته بندی بلاگ را انتخاب کنید",
+  "Body": "متن",
+  "Write blog content": "محتوای بلاگ را وارد کنید",
+  "Draft": "انتشار"
 }
