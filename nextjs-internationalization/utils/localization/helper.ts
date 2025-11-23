@@ -1,5 +1,3 @@
-"use client"
-
 export function translate(
   key: string,
   dictionary: object | null = null
@@ -7,7 +5,7 @@ export function translate(
   if (!dictionary) return key
 
   try {
-    return dictionary[key]
+    return dictionary[key] ?? key
   } catch {
     return key
   }
