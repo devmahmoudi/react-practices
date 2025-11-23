@@ -1,121 +1,23 @@
-"use client"
-import { useEffect, useState } from "react"
-import { useRouter, useParams } from "next/navigation"
-import { useGetCategoryQuery, useUpdateCategoryMutation } from "@/store/api/categoryApi"
-import { Button } from "@/components/ui/button"
-import {
-  Field,
-  FieldGroup,
-  FieldLabel,
-  FieldLegend,
-  FieldSeparator,
-  FieldSet,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
+import { getDictionary } from "@/utils/localization/dictrionaries"
+import EditCategoryClient from "./EditCategoryClient"
 
-export default function EditCategoryPage() {
+export default async function ({
+  params,
+}: {
+  params: Promise<{ lang: string }>
+}) {
   /**
-   * Next.js router and params hooks
+   * Destruct client selected language
    */
-  const router = useRouter()
-  const { id } = useParams()
+  const { lang } = await params
 
   /**
-   * Get category data
+   * Load dictionary translation object through lang prop for localization
    */
-  const { data: category, isLoading: isFetching } = useGetCategoryQuery(id)
+  const dictionary = await getDictionary(lang)
 
-  /**
-   * Category state for form
+    /**
+   * Return client component as result
    */
-  const [formData, setFormData] = useState({
-    name: "",
-  })
-
-  /**
-   * Populate form with category data when fetched
-   */
-  useEffect(() => {
-    if (category) {
-      setFormData({
-        name: category.name || "",
-      })
-    }
-  }, [category])
-
-  /**
-   * Handle input on change event
-   */
-  const onChangeHandler = (name: string, value: string) => {
-    setFormData({ ...formData, [name]: value })
-  }
-
-  /**
-   * Update category RTK Query hook
-   */
-  const [updateCategory, { isLoading: isUpdating, isSuccess }] = useUpdateCategoryMutation()
-
-  /**
-   * Navigate user to categories page after update succeeds
-   */
-  useEffect(() => {
-    if (isSuccess) router.push("/categories")
-  }, [isSuccess, router])
-
-  /**
-   * Handle update category button on click event
-   */
-  const handleUpdate = (e: React.FormEvent) => {
-    e.preventDefault()
-    updateCategory({ id, ...formData })
-  }
-
-  /**
-   * Loading state
-   */
-  if (isFetching) return <p className="text-center">Loading Category...</p>
-
-  /**
-   * Handle case where category is not found
-   */
-  if (!category) return <p className="text-center">Category not found</p>
-
-  return (
-    <div className="container">
-      <div className="w-full">
-        <form onSubmit={handleUpdate}>
-          <FieldGroup>
-            <FieldSet>
-              <FieldLegend>Edit Category</FieldLegend>
-              <FieldSeparator />
-              <FieldGroup>
-                <Field>
-                  <FieldLabel htmlFor="category-name">
-                    Name
-                  </FieldLabel>
-                  <Input
-                    id="category-name"
-                    placeholder="Enter category name"
-                    value={formData.name}
-                    onChange={(e) => onChangeHandler("name", e.target.value)}
-                    name="name"
-                    required
-                  />
-                </Field>
-              </FieldGroup>
-            </FieldSet>
-            <FieldSeparator />
-            <Field orientation="horizontal">
-              <Button type="submit" disabled={isUpdating}>
-                {isUpdating ? "Updating..." : "Update Category"}
-              </Button>
-              <Button variant="outline" type="button" onClick={() => router.push("/categories")}>
-                Cancel
-              </Button>
-            </Field>
-          </FieldGroup>
-        </form>
-      </div>
-    </div>
-  )
+  return <EditCategoryClient dictionary={dictionary}/>
 }
