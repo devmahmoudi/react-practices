@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { useAddCategoryMutation } from "@/store/api/categoryApi"
 import { Dictorinary } from "@/types"
-import { translate } from "@/utils/localization/client"
+import { translate } from "@/utils/localization/helper"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -95,7 +95,9 @@ export default function CreateCategoryClient({ dictionary }: Props) {
             <FieldSeparator />
             <Field orientation="horizontal">
               <Button type="submit" disabled={isLoading}>
-                {isLoading ? translate("Adding...", dictionary) : translate("Save", dictionary)}
+                {isLoading
+                  ? translate("Adding...", dictionary)
+                  : translate("Save", dictionary)}
               </Button>
               <Button
                 variant="outline"

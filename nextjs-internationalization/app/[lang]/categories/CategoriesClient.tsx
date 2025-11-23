@@ -5,6 +5,7 @@ import {
   useDeleteCategoryMutation,
   useGetCategoriesQuery,
 } from "@/store/api/categoryApi"
+import { Dictorinary } from "@/types"
 import { CirclePlus } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -18,8 +19,7 @@ import {
 } from "@/components/ui/table"
 import { showConfirmDialog } from "@/components/confirm-dialog"
 
-import { translate } from "../../../utils/localization/client"
-import { Dictorinary } from "@/types"
+import { translate } from "../../../utils/localization/helper"
 
 type Props = {
   dictionary: Dictorinary | null
