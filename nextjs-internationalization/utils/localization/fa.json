@@ -8,6 +8,7 @@
   "Cancel": "انصراف",
   "Adding...": "در حال اضافه کردن ...",
   "Sending...": "در حال ارسال",
+  "Updating...": "در حال بروزرسانی",
   "Dashboard": "داشبورد",
   "Blogs": "بلاگ ها",
   "Draft New Blog": "نگاشت بلاگ جدید",
@@ -17,5 +18,11 @@
   "Select blog category": "دسته بندی بلاگ را انتخاب کنید",
   "Body": "متن",
   "Write blog content": "محتوای بلاگ را وارد کنید",
-  "Draft": "انتشار"
+  "Draft": "انتشار",
+  "Edit Blog": "ویرایش بلاگ",
+  "Update": "ویرایش",
+  "Yes, Cancel": "بله, انصراف میدهم",
+  "Continue Editing": "ادامه ویرایش",
+  "Cancel Edit": "لغو ویرایش",
+  "Are you sure you want to cancel editing this blog post? Unsaved changes will be lost.": "آیا مطمئن هستید میخواهید از ویرایش این بلاگ انصراف دهید. تمامی تغییرات ذخیره نشده حذف خواهند شد."
 }
