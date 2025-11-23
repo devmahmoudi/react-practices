@@ -1,4 +1,6 @@
 import Link from "next/link"
+import { getDictionary } from "@/utils/localization/dictrionaries"
+import { translate } from "@/utils/localization/helper"
 import { House, Layers, SquareLibrary } from "lucide-react"
 
 import {
@@ -31,7 +33,12 @@ const items = [
   },
 ]
 
-export function AppSidebar() {
+export function AppSidebar({ lang }: { lang: string }) {
+  /**
+   * Load dictionary translation object through lang prop for localization
+   */
+  const dictionary = getDictionary(lang)
+
   return (
     <Sidebar>
       <SidebarContent>
@@ -44,7 +51,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <Link href={item.url}>
                       <item.icon />
-                      <span>{item.title}</span>
+                      <span>{translate(item.title, dictionary)}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

@@ -9,10 +9,10 @@ import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
+import { ConfirmDialog } from "@/components/confirm-dialog"
 import { SiteHeader } from "@/components/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
-import { ConfirmDialog } from "@/components/confirm-dialog"
 
 export const metadata: Metadata = {
   title: {
@@ -33,9 +33,18 @@ export const metadata: Metadata = {
 
 interface RootLayoutProps {
   children: React.ReactNode
+  params: { lang: string }
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({
+  children,
+  params,
+}: RootLayoutProps) {
+  /**
+   * Destruct client selected language
+   */
+  const { lang } = await params
+
   return (
     <>
       <html lang="en" suppressHydrationWarning>
@@ -49,8 +58,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <ReduxProvider>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
               <SidebarProvider>
-                <ConfirmDialog/>
-                <AppSidebar />
+                <ConfirmDialog />
+                <AppSidebar lang={lang}/>
                 <main className="w-full">
                   <SidebarTrigger />
                   {children}
