@@ -1,5 +1,6 @@
 {
   "Categories": "دسته بندی ها",
+  "Category": "دسته بندی",
   "Add new category": "اضافه کردن دسته بندی جدید",
   "Enter category name": "نام دسته بندی را وارد کنید",
   "Name": "نام",
@@ -7,5 +8,8 @@
   "Cancel": "انصراف",
   "Adding...": "در حال اضافه کردن ...",
   "Dashboard": "داشبورد",
-  "Blogs": "بلاگ ها"
+  "Blogs": "بلاگ ها",
+  "Draft New Blog": "نگاشت بلاگ جدید",
+  "Title": "عنوان",
+  "Actions": "عملیات ها"
 }
