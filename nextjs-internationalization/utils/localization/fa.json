@@ -26,5 +26,7 @@
   "Yes, Cancel": "بله, انصراف میدهم",
   "Continue Editing": "ادامه ویرایش",
   "Cancel Edit": "لغو ویرایش",
-  "Are you sure you want to cancel editing this blog post? Unsaved changes will be lost.": "آیا مطمئن هستید میخواهید از ویرایش این بلاگ انصراف دهید. تمامی تغییرات ذخیره نشده حذف خواهند شد."
+  "Are you sure you want to cancel editing this blog post? Unsaved changes will be lost.": "آیا مطمئن هستید میخواهید از ویرایش این بلاگ انصراف دهید. تمامی تغییرات ذخیره نشده حذف خواهند شد.",
+  "Delete Category": "حذف دسته بندی",
+  "Are you sure you want to delete this category? This action cannot be undone.": "آیا از حذف این دسته بندی مطمئن هستید ؟ این عمل غیر قابل بازگشت می باشد."
 }

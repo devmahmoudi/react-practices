@@ -48,11 +48,13 @@ export default function CategoriesClient({ dictionary }: Props) {
    */
   const deleteCategoryHandler = async (categoryId: number) => {
     const confirmed = await showConfirmDialog({
-      title: `Delete Category ${categoryId}`,
-      message:
+      title: `${translate("Delete Category")} ${categoryId}`,
+      message: translate(
         "Are you sure you want to delete this category? This action cannot be undone.",
-      confirmText: "Delete",
-      cancelText: "Cancel",
+        dictionary
+      ),
+      confirmText: translate("Delete", dictionary),
+      cancelText: translate("Cancel", dictionary),
     })
     if (confirmed) {
       deleteCategory(categoryId)
@@ -95,18 +97,18 @@ export default function CategoriesClient({ dictionary }: Props) {
               data.map((category) => (
                 <TableRow key={category.id}>
                   <TableCell>{category.name}</TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-right flex justify-end">
                     <Link
                       href={`/categories/edit/${category.id}`}
                       className="text-blue-400"
                     >
-                      Edit
+                      {translate("Edit", dictionary)}
                     </Link>
                     <span
                       className="ml-3 text-red-400 cursor-pointer"
                       onClick={() => deleteCategoryHandler(category.id)}
                     >
-                      Delete
+                      {translate("Delete", dictionary)}
                     </span>
                   </TableCell>
                 </TableRow>
