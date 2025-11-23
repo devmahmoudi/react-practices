@@ -33,11 +33,11 @@ const items = [
   },
 ]
 
-export function AppSidebar({ lang }: { lang: string }) {
+export async function AppSidebar({ lang }: { lang: string }) {
   /**
    * Load dictionary translation object through lang prop for localization
    */
-  const dictionary = getDictionary(lang)
+  const dictionary = await getDictionary(lang)
 
   return (
     <Sidebar>
