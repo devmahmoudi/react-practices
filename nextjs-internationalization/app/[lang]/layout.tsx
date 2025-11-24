@@ -59,9 +59,9 @@ export default async function RootLayout({
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
               <SidebarProvider>
                 <ConfirmDialog />
-                <AppSidebar lang={lang}/>
+                <AppSidebar lang={lang} />
                 <main className="w-full">
-                  <SidebarTrigger />
+                  <SidebarTrigger className="ml-4" />
                   {children}
                 </main>
               </SidebarProvider>
