@@ -35,8 +35,6 @@ export default function CreateBlogClient({
 }: {
   dictionary: Dictorinary
 }) {
-  console.log(dictionary)
-
   /**
    * Nextjs router hook
    */
@@ -163,7 +161,7 @@ export default function CreateBlogClient({
                   ? translate("Sending ...", dictionary)
                   : translate("Draft", dictionary)}
               </Button>
-              <Button variant="outline" type="button">
+              <Button variant="outline" type="button" onClick={() => router.push("/blogs")}>
                 {translate("Cancel", dictionary)}
               </Button>
             </Field>
