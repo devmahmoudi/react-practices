@@ -10,7 +10,7 @@ let locales = ["en", "fa"]
 /**
  * Extract selected locales with client through request headers
  * @param request http request object
- * @returns 
+ * @returns
  */
 function getLocale(request: NextRequest) {
   let languages = new Negotiator({ headers: request.headers }).languages()
@@ -28,12 +28,24 @@ function getLocale(request: NextRequest) {
  */
 export function proxy(request: NextRequest) {
   // Check if there is any supported locale in the pathname
-  const { pathname } = request.nextUrl
+  let { pathname } = request.nextUrl
   const pathnameHasLocale = locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   )
 
   if (pathnameHasLocale) return
+
+  if (request.headers.has("referer")) {
+    const referer = request.headers.get("referer")
+
+    const refererPathName = new URL(referer).pathname.replace(/^\/+/, "")
+
+    const refererLocale = locales.find((locale) => refererPathName.startsWith(locale))
+
+    request.nextUrl.pathname = `/${refererLocale}${pathname}`
+
+    return NextResponse.redirect(request.nextUrl)
+  }
 
   // Redirect if there is no locale
   const locale = getLocale(request)
