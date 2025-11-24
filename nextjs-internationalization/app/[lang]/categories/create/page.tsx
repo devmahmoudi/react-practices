@@ -14,7 +14,7 @@ export default async function CreateCategoryPage({
   /**
    * Load dictionary translation object through lang prop for localization
    */
-  const dictionary = getDictionary(lang)
+  const dictionary = await getDictionary(lang)
 
   /**
    * Return client component as result
