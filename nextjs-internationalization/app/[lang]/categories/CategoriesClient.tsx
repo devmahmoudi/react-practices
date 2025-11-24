@@ -28,11 +28,6 @@ type Props = {
 
 export default function CategoriesClient({ dictionary }: Props) {
   /**
-   * Parse dictionary prop to object
-   */
-  dictionary = dictionary ? JSON.parse(dictionary.value) : null
-
-  /**
    * Get categories list
    */
   const { data, isLoading } = useGetCategoriesQuery()

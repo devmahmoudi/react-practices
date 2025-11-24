@@ -1,6 +1,4 @@
-import React from "react"
-
-import { getDictionary } from "../../../utils/localization/dictrionaries"
+import { getDictionary } from "@/utils/localization/dictrionaries"
 import CategoriesClient from "./CategoriesClient"
 
 export default async function CategoriesPage({
@@ -16,7 +14,10 @@ export default async function CategoriesPage({
   /**
    * Load dictionary translation object through lang prop for localization
    */
-  const dictionary = getDictionary(lang)
+  const dictionary = await getDictionary(lang)
+
+  console.log(dictionary);
+  
 
   /**
    * Return client component as response

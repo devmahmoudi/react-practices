@@ -24,11 +24,6 @@ type Props = {
 
 export default function CreateCategoryClient({ dictionary }: Props) {
   /**
-   * Parse dictionary prop to object
-   */
-  dictionary = dictionary ? JSON.parse(dictionary.value) : null
-
-  /**
    * Next.js router hook
    */
   const router = useRouter()
