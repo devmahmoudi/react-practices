@@ -119,6 +119,7 @@ export default function SignIn() {
             type="button"
             onClick={() => {
               // TODO: Implement GitHub OAuth sign-in logic
+              signIn("github", {callbackUrl: "/dashboard"})
             }}
             className="w-full py-3 px-4 flex items-center justify-center gap-3 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 rounded-lg font-medium hover:bg-zinc-50 dark:hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-zinc-50 focus:ring-offset-2 transition-colors"
           >
