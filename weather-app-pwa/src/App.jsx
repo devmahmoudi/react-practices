@@ -2,6 +2,7 @@ import axios from "axios";
 import "./App.css";
 import { useState } from "react";
 import WeatherCard from "./components/WeatherCard";
+import ErrorCard from "./components/ErrorCard";
 
 export default function () {
   /**
@@ -10,16 +11,32 @@ export default function () {
   const [weather, setWeather] = useState(null);
 
   /**
+   * Error state
+   */
+  const [error, setError] = useState(null);
+
+  const resetState = () => {
+    setWeather(null)
+    setError(null)
+  }
+
+  /**
    * Get weather from openweathermap
    * @param {string} city - The city name
    * @returns {Promise<void>}
    */
   const getWeather = async (city) => {
-    const res = await axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.REACT_APP_OPEN_WEATHER_KEY}`
-    );
+    resetState()
 
-    setWeather(res.data);
+    try {
+      const res = await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.REACT_APP_OPEN_WEATHER_KEY}`
+      );
+
+      setWeather(res.data);
+    } catch (error) {
+      setError(error.message);
+    }
   };
   return (
     <div className="container">
@@ -32,6 +49,7 @@ export default function () {
       </div>
 
       {weather && <WeatherCard weather={weather} />}
+      {error && <ErrorCard error={error} />}
     </div>
   );
 }
