@@ -1,6 +1,7 @@
 import axios from "axios";
 import "./App.css";
 import { useState } from "react";
+import WeatherCard from "./components/WeatherCard";
 
 export default function () {
   /**
@@ -29,6 +30,8 @@ export default function () {
           onKeyDown={(e) => e.key === "Enter" && getWeather(e.target.value)}
         />
       </div>
+
+      {weather && <WeatherCard weather={weather} />}
     </div>
   );
 }
