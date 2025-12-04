@@ -3,6 +3,7 @@ import "./App.css";
 import { useState } from "react";
 import WeatherCard from "./components/WeatherCard";
 import ErrorCard from "./components/ErrorCard";
+import InstallButton from "./components/InstallButton";
 
 export default function () {
   /**
@@ -16,9 +17,9 @@ export default function () {
   const [error, setError] = useState(null);
 
   const resetState = () => {
-    setWeather(null)
-    setError(null)
-  }
+    setWeather(null);
+    setError(null);
+  };
 
   /**
    * Get weather from openweathermap
@@ -26,11 +27,11 @@ export default function () {
    * @returns {Promise<void>}
    */
   const getWeather = async (city) => {
-    resetState()
+    resetState();
 
     try {
       const res = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.REACT_APP_OPEN_WEATHER_KEY}`
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.REACT_APP_OPEN_WEATHER_KEY}&lang=fa`
       );
 
       setWeather(res.data);
@@ -40,6 +41,7 @@ export default function () {
   };
   return (
     <div className="container">
+      <InstallButton />
       <div>
         <input
           type="text"
