@@ -179,3 +179,38 @@ input[type="range"]::-moz-range-thumb:hover {
   transform: scale(1.2);
   box-shadow: 0 3px 8px rgba(102, 126, 234, 0.5);
 }
+
+.container {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-container {
+  min-width: 300px;
+  max-width: 420px;
+  border-radius: 18px;
+  padding: 40px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.input-container > input[type="text"] {
+  width: 100%;
+  direction: rtl;
+  text-align: right;
+  font-size: 18px;
+}
+
+@media (max-width: 480px) {
+  .input-container {
+    min-width: 260px;
+    max-width: 340px;
+    padding: 32px 18px 28px;
+  }
+}

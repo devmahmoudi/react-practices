@@ -41,17 +41,16 @@ export default function () {
   };
   return (
     <div className="container">
-      <InstallButton />
-      <div>
+      <div className="input-container">
+        <InstallButton />
         <input
           type="text"
           placeholder="نام شهر را وارد کنید ..."
           onKeyDown={(e) => e.key === "Enter" && getWeather(e.target.value)}
         />
+        {weather && <WeatherCard weather={weather} />}
+        {error && <ErrorCard error={error} />}
       </div>
-
-      {weather && <WeatherCard weather={weather} />}
-      {error && <ErrorCard error={error} />}
     </div>
   );
 }

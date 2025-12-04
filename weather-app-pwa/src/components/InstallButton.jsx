@@ -7,17 +7,19 @@ import styled from "styled-components";
 const InstallButtonContainer = styled.div`
   width: 100%;
   text-align: center;
-  margin: auto auto;
-  padding: 1rem;
+  margin-bottom: 1.5rem;
 `;
 
 const InstallButtonComponent = styled.button`
-  padding: 0.5rem;
-  border-radius: 10px;
+  padding: 0.6rem 2.5rem;
+  border-radius: 999px;
   background-color: #00dc94;
   color: white;
   border: none;
   cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: 0 8px 18px rgba(0, 220, 148, 0.6);
 `;
 
 export default function InstallButton() {
