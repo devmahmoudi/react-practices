@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 /**
  * Heading Component Props
  */
@@ -11,4 +13,12 @@ export interface HeadingProps {
  */
 export interface AppConfig {
     heading : HeadingProps
+}
+
+/**
+ * Section component props interface
+ */
+export interface SectionComponentProps{
+  children: ReactNode,
+  title?: string
 }
