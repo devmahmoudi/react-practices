@@ -1,13 +1,20 @@
+import { useState } from "react";
 import "./App.css";
 import Heading from "./components/heading";
 import Section from "./components/section";
 import type { AppConfig } from "./types";
+import Counter from "./components/counter";
 
 /**
  * App
  * @returns ReactElement
  */
 function App({ config }: { config: AppConfig }) {
+  /**
+   * Counte state
+   */
+  const [count, setCount] = useState<number>(1);
+
   return (
     <div>
       <Heading
@@ -16,7 +23,7 @@ function App({ config }: { config: AppConfig }) {
       />
       <div className="text-center">
         <Section title="Hell World !">
-          <button>Click Me</button>
+          <Counter setCount={setCount}>Count is {count}</Counter>
         </Section>
       </div>
     </div>
