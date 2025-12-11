@@ -1,15 +1,18 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
-import Heading from "./assets/components/heading";
+import Heading from "./components/heading";
+import type { AppConfig } from "./types";
 
-function App() {
-  const [count, setCount] = useState(0);
-
+/**
+ *
+ * @returns
+ */
+function App({ config }: { config: AppConfig }) {
   return (
     <div>
-      <Heading title="Typescript & React tutorial" subTitle="Mahdi Mahmoudi" />
+      <Heading
+        title={config.heading.title}
+        subTitle={config.heading.subTitle}
+      />
     </div>
   );
 }

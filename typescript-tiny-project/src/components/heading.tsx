@@ -1,12 +1,5 @@
 import type { ReactElement } from "react";
-
-/**
- * Heading Component Props
- */
-type HeadingProps = {
-  title: string;
-  subTitle: string;
-};
+import type { HeadingProps } from "../types";
 
 /**
  * Heading Component
