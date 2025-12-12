@@ -14,7 +14,7 @@ const Counter = (props: CounterComponentProps) => {
         </button>
         <button
           style={{ backgroundColor: "red" }}
-          onClick={() => props.setCount(() => 1)}
+          onClick={() => props.setCount(() => 1)} 
         >
           Reset
         </button>
