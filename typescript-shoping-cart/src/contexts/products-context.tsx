@@ -39,7 +39,7 @@ export const ProductsProvider = ({
   useEffect(() => {
     const fetchProducts = async (): Promise<ProductType[]> => {
       return await axios
-        .get("http://localhost:8000/products")
+        .get("http://localhost:3000/products")
         .then((res) => {
           return res.data;
         })
