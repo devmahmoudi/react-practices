@@ -1,26 +1,31 @@
 {
   "products": [
     {
+      "id": 1,
       "name": "Premium Wireless Headphones",
       "img": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400",
       "price": 159.99
     },
     {
+      "id": 2,
       "name": "Smart Fitness Tracker",
       "img": "https://images.unsplash.com/photo-1576243345690-4e4b79b63288?w-400",
       "price": 89.99
     },
     {
+      "id": 3,
       "name": "Laptop Backpack",
       "img": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400",
       "price": 64.99
     },
     {
+      "id": 4,
       "name": "Blender Pro 5000",
       "img": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400",
       "price": 131.22
     },
     {
+      "id": 5,
       "name": "Yoga Mat Premium",
       "img": "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=400",
       "price": 44.99
