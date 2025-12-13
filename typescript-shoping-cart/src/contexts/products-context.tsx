@@ -6,15 +6,7 @@ import {
   useState,
   type ReactElement,
 } from "react";
-
-/**
- * Product type
- */
-type ProductType = {
-  name: string;
-  img: string;
-  price: number | Float32Array;
-};
+import type { ProductType } from "../types";
 
 /**
  * Product context type
