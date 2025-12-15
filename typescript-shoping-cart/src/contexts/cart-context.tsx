@@ -1,10 +1,16 @@
-import { createContext } from "react";
+import { createContext, useReducer } from "react";
 import type { CartItemType, ProductType } from "../types";
 
 /**
  * Cart context type
  */
-type CartStateType = { items: CartItemType[] };
+type CartStateType = {
+  items: CartItemType[];
+  dispatch?: React.Dispatch<CartAction>;
+  actions?: CartActionType;
+  totalItems?: number;
+  totalPrice?: number;
+};
 
 /**
  * Cart context
@@ -68,4 +74,50 @@ const reducer = (state: CartStateType, action: CartAction): CartStateType => {
     default:
       throw new Error(`Undefined action type: ${action.type}`);
   }
+};
+
+/**
+ * Cart provider
+ */
+export const CartProvider = ({
+  children,
+}: {
+  children: React.ReactElement | React.ReactElement[];
+}) => {
+  /**
+   * Cart state
+   */
+  const [state, dispatch] = useReducer(reducer, { items: [] });
+
+  /**
+   * Reducer actions
+   */
+  const actions: CartActionType = ACTION_TYPE;
+
+  /**
+   * Total items in cart
+   */
+  const totalItems = state.items.reduce(
+    (total, item) => total + (item.quantity ?? 1),
+    0
+  );
+
+  /**
+   * Total price of items in cart
+   */
+  const totalPrice = state.items.reduce(
+    (total, item) => total + item.price * (item.quantity ?? 1),
+    0
+  );
+
+  /**
+   * Render
+   */
+  return (
+    <CartContext.Provider
+      value={{ ...state, dispatch, actions, totalItems, totalPrice }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
 };
