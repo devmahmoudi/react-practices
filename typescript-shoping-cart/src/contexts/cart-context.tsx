@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 import type { CartItemType, ProductType } from "../types";
 
 /**
@@ -10,6 +10,7 @@ type CartStateType = {
   actions?: CartActionType;
   totalItems?: number;
   totalPrice?: number;
+  formatedTotalPrice?: string;
 };
 
 /**
@@ -111,13 +112,32 @@ export const CartProvider = ({
   );
 
   /**
+   * Formatted total price
+   */
+  const formatedTotalPrice = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(totalPrice);
+
+  /**
    * Render
    */
   return (
     <CartContext.Provider
-      value={{ ...state, dispatch, actions, totalItems, totalPrice }}
+      value={{ ...state, dispatch, actions, totalItems, totalPrice, formatedTotalPrice }}
     >
       {children}
     </CartContext.Provider>
   );
 };
+
+/**
+ * useCart hook
+ */
+export function useCart(): CartStateType {
+  const ctx = useContext(CartContext);
+  if (!ctx) {
+    throw new Error("useCart must be used inside CartProvider");
+  }
+  return ctx;
+}
