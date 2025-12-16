@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactElement } from "react";
 import Cart from "./components/cart";
 import ProductList from "./components/product-list";
 import Header from "./components/Header";
@@ -14,9 +14,12 @@ function App() {
   /**
    * Body content
    */
-  const body = viewCart ? <Cart/> : <ProductList />;
+  const body: ReactElement = viewCart ? <Cart/> : <ProductList />;
 
-  const content = (
+  /**
+   * Main content
+   */
+  const content: ReactElement = (
     <div className="container">
         <Header viewCart={viewCart} setViewCart={setViewCart}/>
         <div className="container body-content">
