@@ -11,7 +11,7 @@ import type { ProductType } from "../types";
 /**
  * Product context type
  */
-type ProductContextType = {
+export type ProductContextType = {
   products: ProductType[];
 };
 
