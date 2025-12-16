@@ -1,22 +1,30 @@
+import { useState } from "react";
 import { useProducts } from "./contexts/products-context";
+import Cart from "./components/cart";
+import ProductList from "./components/product-list";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 function App() {
-  const { products } = useProducts();
+  /**
+   * Define state of show cart
+   */
+  const [viewCart, setViewCart] = useState<boolean>(false);
 
-  return (
-    <div className="text-center">
-      <h1>Typescript Practice Project</h1>
-      <h3>Shoping Cart</h3>
-      <div>
-        {products.map((prod) => (
-          <div key={prod.id}>
-            <h2>{prod.name}</h2>
-            <small>{prod.price}</small>
-          </div>
-        ))}
-      </div>
+  /**
+   * Body content
+   */
+  const body = viewCart ? <Cart/> : <ProductList />;
+
+  const content = (
+    <div>
+        <Header viewCart={viewCart} setViewCart={setViewCart}/>
+        {body}
+        <Footer viewCart={viewCart}/>
     </div>
-  );
+  )
+
+  return content;
 }
 
 export default App;
