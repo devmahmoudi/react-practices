@@ -9,23 +9,23 @@ function App() {
   /**
    * Define state of show cart
    */
-  const [viewCart, setViewCart] = useState<boolean>(false);
+  const [showCart, setShowCart] = useState<boolean>(false);
 
   /**
    * Body content
    */
-  const body: ReactElement = viewCart ? <Cart/> : <ProductList />;
+  const body: ReactElement = showCart ? <Cart/> : <ProductList />;
 
   /**
    * Main content
    */
   const content: ReactElement = (
     <div className="container">
-        <Header viewCart={viewCart} setViewCart={setViewCart}/>
+        <Header showCart={showCart} setShowCart={setShowCart}/>
         <div className="container body-content">
           {body}
         </div>
-        <Footer viewCart={viewCart}/>
+        <Footer/>
     </div>
   )
 
