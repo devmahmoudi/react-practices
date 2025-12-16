@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useProducts } from "./contexts/products-context";
 import Cart from "./components/cart";
 import ProductList from "./components/product-list";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import './App.css';
 
 function App() {
   /**
