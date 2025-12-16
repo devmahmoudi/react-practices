@@ -17,9 +17,11 @@ function App() {
   const body = viewCart ? <Cart/> : <ProductList />;
 
   const content = (
-    <div>
+    <div className="container">
         <Header viewCart={viewCart} setViewCart={setViewCart}/>
-        {body}
+        <div className="container body-content">
+          {body}
+        </div>
         <Footer viewCart={viewCart}/>
     </div>
   )
