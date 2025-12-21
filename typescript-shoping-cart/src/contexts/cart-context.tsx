@@ -56,15 +56,23 @@ const reducer = (state: CartStateType, action: CartAction): CartStateType => {
   switch (action.type) {
     case ACTION_TYPE.ADD || ACTION_TYPE.QUANTITY:
       const product = action.payload as CartItemType;
-      const quantity =
-        product.quantity ??
-        ((state.items.find((item) => item.id === product.id)?.quantity ?? 0) +
-          1 ||
-          1);
-      return {
-        ...state,
-        items: [...state.items, { ...product, quantity }],
-      };
+      const item = state.items.find((i) => i.id === product.id);
+      if (item)
+        // Increment item quentity if already added into the cart items
+        return {
+          ...state,
+          items: state.items.map((i) =>
+            i.id === item.id
+              ? { ...item, quantity: (item.quantity ?? 1) + 1 }
+              : i
+          ),
+        };
+      // add new product into the cart items when the product wasn't added
+      else
+        return {
+          ...state,
+          items: [...state.items, { ...product, quantity: 1 }],
+        };
     case ACTION_TYPE.REMOVE:
       return {
         ...state,
@@ -89,6 +97,8 @@ export const CartProvider = ({
    * Cart state
    */
   const [state, dispatch] = useReducer(reducer, { items: [] });
+
+  useEffect(() => console.log(state.items), [state]);
 
   /**
    * Reducer actions
