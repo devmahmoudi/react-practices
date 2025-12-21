@@ -53,10 +53,13 @@ const reducer = (state: CartStateType, action: CartAction): CartStateType => {
     );
   }
 
+  var product: CartItemType
+  var item: any
+
   switch (action.type) {
-    case ACTION_TYPE.ADD || ACTION_TYPE.QUANTITY:
-      const product = action.payload as CartItemType;
-      const item = state.items.find((i) => i.id === product.id);
+    case ACTION_TYPE.ADD:
+      product = action.payload as CartItemType;
+      item = state.items.find((i) => i.id === product.id) ?? null;
       if (item)
         // Increment item quentity if already added into the cart items
         return {
@@ -73,6 +76,15 @@ const reducer = (state: CartStateType, action: CartAction): CartStateType => {
           ...state,
           items: [...state.items, { ...product, quantity: 1 }],
         };
+    case ACTION_TYPE.QUANTITY:
+      product = action.payload as CartItemType;
+      item = state.items.find(i => i.id === product.id)
+      if(!item)
+        throw Error(`Increment of have not been added product with ${product.id} id`)
+      return {
+        ...state, 
+        items: [...state.items, {...item, quantity: (item.quantity + (product.quantity ?? 1) )}]
+      }
     case ACTION_TYPE.REMOVE:
       return {
         ...state,
