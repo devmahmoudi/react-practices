@@ -81,9 +81,11 @@ const reducer = (state: CartStateType, action: CartAction): CartStateType => {
       item = state.items.find(i => i.id === product.id)
       if(!item)
         throw Error(`Increment of have not been added product with ${product.id} id`)
+      if(!product.quantity)
+        throw Error(`Quantity wasn't defined !`)
       return {
         ...state, 
-        items: [...state.items, {...item, quantity: (item.quantity + (product.quantity ?? 1) )}]
+        items: state.items.map(i => i.id === item.id ? {...item, quantity: product.quantity} : i)
       }
     case ACTION_TYPE.REMOVE:
       return {
@@ -109,8 +111,6 @@ export const CartProvider = ({
    * Cart state
    */
   const [state, dispatch] = useReducer(reducer, { items: [] });
-
-  useEffect(() => console.log(state.items), [state]);
 
   /**
    * Reducer actions
