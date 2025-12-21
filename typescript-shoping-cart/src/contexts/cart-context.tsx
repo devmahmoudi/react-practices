@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer } from "react";
-import type { CartItemType, ProductType } from "../types";
+import type { CartItemType } from "../types";
 
 /**
  * Cart context type
