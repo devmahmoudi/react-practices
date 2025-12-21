@@ -1,9 +1,11 @@
 import { useState, type ReactElement } from "react";
 import Cart from "./components/cart";
 import ProductList from "./components/product-list";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import './App.css';
+import Header from "./components/header";
+import Footer from "./components/footer";
+import "./App.css";
+import { CartProvider } from "./contexts/cart-context";
+import { ProductsProvider } from "./contexts/products-context";
 
 function App() {
   /**
@@ -14,20 +16,23 @@ function App() {
   /**
    * Body content
    */
-  const body: ReactElement = showCart ? <Cart/> : <ProductList />;
+  const body: ReactElement = showCart ? <Cart /> : <ProductList />;
 
   /**
    * Main content
    */
   const content: ReactElement = (
     <div className="container">
-        <Header showCart={showCart} setShowCart={setShowCart}/>
-        <div className="container body-content">
-          {body}
-        </div>
-        <Footer/>
+      <CartProvider>
+        <ProductsProvider>
+          <Header showCart={showCart} setShowCart={setShowCart} />
+          <div className="container body-content">{body}</div>
+        </ProductsProvider>
+      </CartProvider>
+
+      <Footer />
     </div>
-  )
+  );
 
   return content;
 }

@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import type { CartItemType } from "../types";
 
 /**
@@ -124,7 +124,14 @@ export const CartProvider = ({
    */
   return (
     <CartContext.Provider
-      value={{ ...state, dispatch, actions, totalItems, totalPrice, formatedTotalPrice }}
+      value={{
+        ...state,
+        dispatch,
+        actions,
+        totalItems,
+        totalPrice,
+        formatedTotalPrice,
+      }}
     >
       {children}
     </CartContext.Provider>
