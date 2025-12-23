@@ -1,7 +1,7 @@
-import { useQuery } from "@apollo/client/react";
 import { useState } from "react";
 import type { UserType } from "../types";
 import { GET_USER_DATA } from "../graphql/queries";
+import { useLazyQuery } from "@apollo/client/react";
 
 function User() {
   /**
@@ -12,12 +12,7 @@ function User() {
   /**
    * Send Graph query
    */
-  const { data, loading }: { data: { user: UserType }; loading: boolean } =
-    useQuery(GET_USER_DATA, {
-      variables: {
-        id: userId,
-      },
-    });
+  const [getUser, { data, loading, error }] = useLazyQuery(GET_USER_DATA);
 
   /**
    * User info render
@@ -48,6 +43,17 @@ function User() {
           value={userId}
           onChange={(e) => setUserId(parseInt(e.target.value))}
         />
+        <button
+          onClick={() =>
+            getUser({
+              variables: {
+                id: userId,
+              },
+            })
+          }
+        >
+          Fetch
+        </button>
         {userInfo()}
       </div>
     </div>
