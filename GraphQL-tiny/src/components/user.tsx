@@ -1,17 +1,7 @@
-import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/client/react";
-import React, { useState } from "react";
+import { useState } from "react";
 import type { UserType } from "../types";
-
-const GET_USER_DATA = gql`
-  query getUserData($id: ID!) {
-    user(id: $id) {
-      name
-      username
-      id
-    }
-  }
-`;
+import { GET_USER_DATA } from "../graphql/queries";
 
 function User() {
   /**
