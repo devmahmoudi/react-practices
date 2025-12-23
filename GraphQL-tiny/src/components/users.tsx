@@ -1,12 +1,7 @@
 import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/client/react";
 import React from "react";
-
-type User = {
-  name: string;
-  username: string;
-  id: number;
-};
+import type { UserType } from "../types";
 
 const GET_ALL_USERS_QUERY = gql`
   query {
@@ -21,7 +16,7 @@ const GET_ALL_USERS_QUERY = gql`
 `;
 
 const Users = () => {
-  const { data, loading, error }: { data: { users: { data: User[] } } } =
+  const { data, loading, error }: { data: { users: { data: UserType[] } } } =
     useQuery(GET_ALL_USERS_QUERY);
 
   if (loading) return <h1>LOADING ...</h1>;
