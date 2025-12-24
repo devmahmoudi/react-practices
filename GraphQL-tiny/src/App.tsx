@@ -1,15 +1,18 @@
-import './App.css'
-import User from './components/User'
-import Users from './components/users'
+import "./App.css";
+import CreateUser from "./components/create-user";
+import User from "./components/user";
+import Users from "./components/users";
 
 function App() {
   return (
     <>
-      <User/>
-      <hr/>
-      <Users/>
+      <CreateUser />
+      <hr />
+      <User />
+      <hr />
+      <Users />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
